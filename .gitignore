@@ -9,13 +9,13 @@ client/out-tsc
 client/node_modules
 
 # IDEs and editors
-client/.idea
-client/.project
-client/.classpath
-client/.c9/
-client/*.launch
-client/.settings/
-client/*.sublime-workspace
+.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
 
 # IDE - VSCode
 .vscode/*
