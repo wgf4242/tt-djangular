@@ -1,0 +1,87 @@
+<div *ngIf="status==Status.Add">
+  <h3>添加记录</h3>
+</div>
+<div *ngIf="status==Status.Edit">
+  <h3>编辑记录</h3>
+</div>
+<div class="alert alert-success" *ngIf="submited_list.length > 0">
+  <p *ngFor="let item of submited_list">
+    {{item.date}}{{item.line}}{{item.branch}}{{item.position}}#杆{{item.description}}
+  </p>
+</div>
+
+<div class="container" *ngIf="object">
+  <form #form="ngForm" (ngSubmit)="onSubmit()" novalidate>
+    <div class="form-group">
+      <label for="">类别</label>
+      <select [(ngModel)]="object.type" name="type">
+        <option *ngFor="let type of types" [value]="type.id">{{type.name}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="">线路名称</label>
+      <select [(ngModel)]="object.line" name="line" class="custom-select" (change)="onChange($event)" #selected>
+        <option *ngFor="let line of lines" [value]="line?.id">{{line?.name}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="">分支名称</label>
+      <select [(ngModel)]="object.branch" name="branch" class="custom-select" *ngIf="object.line">
+        <option *ngFor="let branch of lineBranches" [value]="branch.id">{{branch.name}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="">杆号</label>
+      <input required [(ngModel)]="object.position" name="position" type="text" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="">缺陷分类</label>
+      <!--<input required ngModel name="category" type="text" class="form-control">-->
+      <select [(ngModel)]="object.category" name="category" class="form-control" required (change)="onChangeCat($event)">
+        <option [value]="category.id" *ngFor="let category of categories">{{category.name}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="">缺陷内容</label>
+      <input required [(ngModel)]="object.description" name="description" type="text" class="form-control">
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary" *ngFor="let item of cat_suggest?.select" (click)="addDescription($event)">{{item}}</button>
+    </div>
+    <div class="form-group">
+      <label for="">备注</label>
+      <input [(ngModel)]="object.comment" name="comment" type="text" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="">日期</label>
+      <input required [(ngModel)]="object.date" name="date" type="text" class="form-control"
+             placeholder="2017-01-01这种格式">
+    </div>
+
+    <div class="form-group">
+      <label for="">处理日期</label>
+      <input [(ngModel)]="object.finish_date" name="finish_date" type="text" class="form-control"
+             placeholder="2017-01-01这种格式">
+    </div>
+
+
+    <div class="form-group">
+      <label for="">巡视人员</label>
+      <input required [(ngModel)]="object.person" name="person" type="text" class="form-control">
+    </div>
+
+
+
+    <button [disabled]="form.invalid" type="submit" class="btn btn-primary">提交</button>
+    <button [disabled]="form.invalid" type="button" class="btn btn-primary" title="再记一条" (click)="onDuplicate()"><span class="glyphicon glyphicon-duplicate"></span></button>
+  </form>
+  {{form.value | json}}
+  <p>{{form.valid}}</p>
+  <!-- <p>cookie::{{document.cookie}}</p> -->
+</div>

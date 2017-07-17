@@ -1,0 +1,50 @@
+<h3>添加设备</h3>
+
+<div class="container">
+  <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
+    <!-- <button (click)="c1()">Click</button> -->
+    <div class="form-group">
+      <label for="">线路名称</label>
+      <select [(ngModel)]="selectedLine" name="line" class="custom-select" (change)="onChange($event)" #selected>
+        <option *ngFor="let line of lines" [value]="line?.id">{{line?.name}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="">分支名称</label>
+      <!-- <p *ngIf="selectedLine">selectedLine value is {{selectedLine}}.</p> -->
+      <!-- <p>selected value is {{selected.value}}.</p> -->
+      <select ngModel name="branch" class="custom-select" *ngIf="selected.value">
+        <option *ngFor="let branch of getTheBranch(selected.value)" [value]="branch.id">{{branch.name}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="">杆号</label>
+      <input required ngModel name="position" type="text" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="">类型</label>
+      <input required ngModel name="category" type="text" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="">详细内容</label>
+      <input ngModel name="description" type="text" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="">备注</label>
+      <input ngModel name="comment" type="text" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="">日期</label>
+      <input required ngModel name="date" type="text" class="form-control" placeholder="2017-01-01这种格式">
+    </div>
+
+    <button [disabled]="form.invalid" type="submit" class="btn btn-primary">提交</button>
+  </form>
+  {{form.value | json}}
+  <p>{{form.valid}}</p>
+  <!-- <p>cookie::{{document.cookie}}</p> -->
+</div>

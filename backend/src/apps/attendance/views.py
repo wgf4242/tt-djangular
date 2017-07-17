@@ -1,23 +1,31 @@
-from django.contrib.auth.models import User
-from rest_framework import generics
-from apps.attendance.models import Person, MonthInfo, Attend
 from apps.attendance.serializers import *
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import generics, viewsets
+
 
 class PersonList(generics.ListCreateAPIView):
-    queryset = Person.objects.all()
+    queryset = Person.objects.filter(active=True)
     serializer_class = PersonSerializer
+    pagination_class = None
     permission_classes = []
 
 
-class MonthList(generics.ListCreateAPIView):
-    queryset = MonthInfo.objects.all()
+class MonthViewSet(viewsets.ModelViewSet):
     serializer_class = MonthSerializer
     permission_classes = []
+
+    def get_queryset(self):
+        if 'month-list-active' in self.request.resolver_match.url_name:
+            qs = MonthInfo.objects.active()
+        else:
+            qs = MonthInfo.objects.all()
+        return qs
 
 
 class AttendList(generics.ListCreateAPIView):
     serializer_class = AttendSerializer
     permission_classes = []
+    pagination_class = None
 
     def get_queryset(self):
         month_id = self.request.GET.get("month_id")
@@ -38,13 +46,15 @@ class AttendSumList(generics.ListCreateAPIView):
         return Attend.objects.sum(self.kwargs.get('month_id'))
 
 
-class MonthDetail(generics.RetrieveAPIView):
-# class MonthDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = MonthInfo.objects.all()
-    serializer_class = MonthSerializer
-
-class AttendDetail(generics.RetrieveAPIView):
-# class AttendDetail(generics.RetrieveUpdateDestroyAPIView):
+class AttendViewSet(viewsets.ModelViewSet):
     queryset = Attend.objects.all()
     serializer_class = AttendSerializer
+    pagination_class = None
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('month',)
+
+    def get_serializer_class(self):
+        if self.action == 'retrieve':
+            return AttendDetailSerializer
+        return super().get_serializer_class()
 

@@ -1,0 +1,80 @@
+{{errorMessage}}
+<div class="container-fluid">
+
+    <div class="row">
+    <div class="col-xs-12">
+      <div class="margin-20">
+        <h4>添加工时记录</h4>
+         <!-- <button (click)="a()"></button> -->
+        <!-- {{months | json}} -->
+      </div>
+      <form [formGroup]="myForm" novalidate (ngSubmit)="onSubmit(myForm)">
+
+        <!--attendforms-->
+        <div formArrayName="attendFormSet">
+          <!--  [formGroupName]="i" -->
+          <div *ngFor="let attendFormDay of myForm['controls'].attendFormSet['controls']; let i=index" class="panel panel-default">
+            <div class="panel-heading">
+              <span>记录 {{i + 1}}</span>
+              <span class="glyphicon glyphicon-remove pull-right" *ngIf="myForm['controls'].attendFormSet['controls'].length > 1" (click)="removeFormSet(i)"></span>
+
+              <!-- attendFormSet -->
+              <span class="panel-body" [formGroupName]="i">
+                <label>日期</label>
+                <input placeholder="2017-03-21 格式" type="text" class="" formControlName="date" pattern="[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}">
+                <small [hidden]="attendFormDay['controls'].date.valid || attendFormDay['controls'].date.pristine" class="text-danger">
+                  日期不能为空，必须为 2017-03-21 这种格式
+                </small>
+                <label>月份: {{monthname}}</label>
+                <!--<label>月份: {{attendFormDay['controls'].month.value}}</label>-->
+
+
+                <angular2-multiselect [data]="dropdownList" [(ngModel)]="selectedItems[i]" formControlName="personArray" [settings]="dropdownSettings"
+                  (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+                  (onDeSelectAll)="onDeSelectAll($event)"></angular2-multiselect>
+                <!-- <div *ngFor="let form of attendFormDay['controls'].personArray.value; let j=index">Inner{{ j }}, {{form|json}}</div> -->
+                <div *ngFor="let personForm of attendFormDay['controls'].attendforms['controls']; let k=index">
+                  <app-attend-form [addressForm]="attendFormDay['controls'].attendforms['controls'][k]" [person]="filterName(personForm['controls'].person.value)" [index]="k"></app-attend-form>
+                  <!-- <p>{{k}}: {{personForm['controls'].person.value | json}}</p> -->
+                </div>
+
+                <!-- <input type="text" class="form-control" formControlName="month">
+                <select class="" formControlName="month" required>
+                  <option *ngFor="let month of months?.results" [value]="month.id">{{month.monthname}}</option>
+                  <option *ngFor="let month of months?.results; let i = index" [selected]="i == 0" [(value)]="month.id">{{month.monthname}}</option>
+                </select>
+                <small [hidden]="addressForm['controls'].month.valid || addressForm['controls'].month.pristine" class="text-danger">
+                  需要选择一个月份
+                </small> -->
+              </span>
+
+            </div>
+
+
+
+          </div>
+        </div>
+
+        <div class="margin-20">
+          <a (click)="addForm()" style="cursor: default">
+            添加记录 +
+          </a>
+        </div>
+
+        <div class="margin-20">
+          <button type="submit" class="btn btn-primary pull-right" [disabled]="!myForm.valid">提交</button>
+        </div>
+        <div class="clearfix"></div>
+
+        <div *ngIf="isSubmit" class="alert alert-success">添加成功</div>
+
+
+        <div class="margin-20">
+          <div>myForm details:-</div>
+          <pre>Is myForm valid?: <br>{{myForm.valid | json}}</pre>
+          <pre>form value: <br>{{myForm.value | json}}</pre>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

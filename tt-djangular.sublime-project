@@ -11,6 +11,19 @@
 	"folders":
 	[
 		{
+			"file_exclude_patterns":
+			[
+				"**/inline.bundle.js",
+				"**/inline.bundle.js.map",
+				"**/main.bundle.js",
+				"**/main.bundle.js.map",
+				"**/polyfills.bundle.js",
+				"**/polyfills.bundle.js.map",
+				"**/styles.bundle.css",
+				"**/styles.bundle.css.map",
+				"**/vendor.bundle.js",
+				"**/vendor.bundle.js.map"
+			],
 			"folder_exclude_patterns":
 			[
 				".idea",
@@ -18,6 +31,8 @@
 				"Scripts",
 				"Include",
 				"tcl",
+				"e2e",
+				"node_modules",
 				".vscode"
 			],
 			"path": "."

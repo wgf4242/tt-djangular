@@ -1,0 +1,20 @@
+.finished {
+  color: red;
+}
+
+/*@media only screen and (max-width: 40em) {*/
+  /*thead th:not(:first-child) {*/
+    /*display: none;*/
+  /*}*/
+
+  /*td, th {*/
+    /*display: block;*/
+  /*}*/
+
+  /*td[data-th]:before  {*/
+    /*content: attr(data-th);*/
+  /*}*/
+  /*td[data-th]  {*/
+    /*display: inline-block;*/
+  /*}*/
+/*}*/

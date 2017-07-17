@@ -10,11 +10,11 @@
   </div>
   <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
     <ul class="nav navbar-nav navbar-right">
-        <li><a routerLink='/attendance' routerLinkActive="active">工时管理</a></li>
-        <li><a routerLink='/line/tour' routerLinkActive="active">线路巡视</a></li>
-      <li><a routerLink='/line/defect' routerLinkActive="active">缺陷管理</a></li>
-      <li><a href=#>修改密码</a></li>
-      <li><a href=#>退出</a></li>
+      <!--<li><a href=#>修改密码</a></li>-->
+        <li><a routerLink='/line/tour' routerLinkActive="active">巡视检修记录</a></li>
+        <li><a routerLink='/line/facility' routerLinkActive="active">设备管理</a></li>
+        <li><a routerLink='/line/defect' routerLinkActive="active">缺陷管理</a></li>
+        <li><a [routerLink]="['/login']">退出</a></li>
     </ul>
   </div>
 </nav>
@@ -26,15 +26,18 @@
       <ul class="sidebar-nav">
 
         <li><a routerLink='/attendance' routerLinkActive="active">工时管理</a></li>
-        <li><a href=#>线路检修</a></li>
-        <li><a routerLink='/line/tour' routerLinkActive="active">线路巡视</a></li>
+        <!--<li><a href=#>线路检修</a></li>-->
+        <li><a routerLink='/line/tour' routerLinkActive="active">巡视检修记录</a></li>
         <li><a routerLink='/line/facility' routerLinkActive="active">设备管理</a></li>
         <li><a routerLink='/line/defect' routerLinkActive="active">缺陷管理</a></li>
+        <li><a routerLink='/line/production' routerLinkActive="active">投产验收</a></li>
+        <li><a [routerLink]="['/line/info']">线路信息</a></li>
+        <li><a [routerLink]="['/line/summary']">月报统计</a> </li>
       </ul>
     </nav>
     <!-- Page Content -->
     <main class="col-sm-9 offset-sm-3 col-md-10 col-md-offset-2 pt-3">
-      <router-outlet></router-outlet>  
+      <router-outlet></router-outlet>
     </main>
     <!-- page-content-wrapper -->
   </div>

@@ -1,0 +1,22 @@
+{{errorMessage}}
+<div class="container-fluid">
+
+  <div class="margin-20">
+    <h4>添加月份</h4>
+  </div>
+
+  <form #myForm="ngForm" novalidate (ngSubmit)="onSubmit(myForm)" class="col-xs-6">
+    <div class="form-group">
+      <label for="monthname">月份</label>
+      <input ngModel required name="monthname" class="form-control col-xs-5" placeholder="请输入本月名称">
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="!myForm.valid">提交</button>
+
+    <div class="margin-20">
+      <div>myForm details:</div>
+      <pre>Is myForm valid?: <br>{{myForm.valid | json}}</pre>
+      <pre>form value: <br>{{myForm.value | json}}</pre>
+    </div>
+  </form>
+</div>

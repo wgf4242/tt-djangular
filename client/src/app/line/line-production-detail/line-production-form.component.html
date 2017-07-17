@@ -1,0 +1,68 @@
+<form class="col-lg-4" (ngSubmit)="onSubmit()" #form="ngForm">
+  <div class="form-group">
+    <label for="production_date">投产时间</label>
+    <input type="text" class="form-control" [(ngModel)]="item.production_date" id="production_date"
+           name="production_date">
+  </div>
+  <div class="form-group">
+    <label for="line">线路名称</label>
+    <select name="line" id="line" class="form-control" [(ngModel)]="item.line" (change)="onChange($event)">
+      <option *ngFor="let line of lines" [value]="line.id">{{line.name}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="branch">分支名称</label>
+    <select name="branch" id="branch" class="form-control" [(ngModel)]="item.branch" *ngIf="item.line">
+      <option *ngFor="let branch of getTheBranch(item.line)" [value]="branch.id">{{branch.name}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="position">位置</label>
+    <input type="text" class="form-control" [(ngModel)]="item.position" id="position" name="position">
+  </div>
+  <div class="form-group">
+    <label for="transformer">变压器</label>
+    <input type="text" class="form-control" [(ngModel)]="item.transformer" id="transformer" name="transformer">
+  </div>
+  <div class="form-group">
+    <label for="single_disconnector">单刀闸</label>
+    <input type="text" class="form-control" [(ngModel)]="item.single_disconnector" id="single_disconnector"
+           name="single_disconnector">
+  </div>
+  <div class="form-group">
+    <label for="breaker">开关</label>
+    <input type="text" class="form-control" [(ngModel)]="item.breaker" id="breaker" name="breaker">
+  </div>
+  <div class="form-group">
+    <label for="disconnector">刀闸</label>
+    <input type="text" class="form-control" [(ngModel)]="item.disconnector" id="disconnector" name="disconnector">
+  </div>
+  <div class="form-group">
+    <label for="grounding_device">接地装置</label>
+    <input type="text" class="form-control" [(ngModel)]="item.grounding_device" id="grounding_device"
+           name="grounding_device">
+  </div>
+  <div class="form-group">
+    <label for="arrester">避雷器</label>
+    <input type="text" class="form-control" [(ngModel)]="item.arrester" id="arrester" name="arrester">
+  </div>
+  <div class="form-group">
+    <label for="pole">电杆</label>
+    <input type="text" class="form-control" [(ngModel)]="item.pole" id="pole" name="pole">
+  </div>
+  <div class="form-group">
+    <label for="length">公里</label>
+    <input type="text" class="form-control" [(ngModel)]="item.length" id="length" name="length">
+  </div>
+  <div class="form-group">
+    <label for="well">油井</label>
+    <input type="text" class="form-control" [(ngModel)]="item.well" id="well" name="well">
+  </div>
+  <div class="form-group">
+    <label for="comment">备注</label>
+    <input type="text" class="form-control" [(ngModel)]="item.comment" id="comment" name="comment" placeholder="变压器容量 kVA, 其他数据新增数值为正，拆除数值为负">
+  </div>
+
+  <button type="submit" class="btn btn-default">提交</button>
+</form>
+

@@ -100,6 +100,12 @@ body,button, input, select, textarea{
 
 
 /*-------------------------------------*/
+
+/* custom style */
+nav a.active {
+  color: #039be5;
+}
+
 /*print*/
 @media print {
 
@@ -110,9 +116,4 @@ body,button, input, select, textarea{
   nav, .nav, .noprint {
     display: none !important;
     }
-}
-
-/* custom style */
-nav a.active {
-  color: #039be5;
 }
