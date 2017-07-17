@@ -54,3 +54,4 @@ CLIENT/Thumbs.db
 **/db.sqlite3
 **/_gsdata_/
 *.sublime-workspace
+**/ang/

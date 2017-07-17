@@ -1,3 +1,10 @@
+## input 学习一下
+
+# ng serve
+
+ng build --prod --output-path "..\backend\src\static\ang" --watch --output-hashing none 
+
+
 # Client
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.

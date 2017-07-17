@@ -5,11 +5,36 @@ from django.core.urlresolvers import reverse
 import datetime
 from django.db.models import Q
 
-# Create your models here.
+class AttendQuerySet(models.query.QuerySet):
+	def search(self, month_id, start_date=None, end_date=None):
+		q = None
+		if month_id:
+			q = Q(month__id=month_id)
+		elif start_date:
+			q = Q(date__gte=start_date) & Q(date__lte=end_date) | q
+		return self.filter(q)
+
+class AttendManager(models.Manager):
+	def get_queryset(self):
+		return AttendQuerySet(self.model, using=self._db)
+
+	def search(self, month_id, start_date, end_date):
+		return self.get_queryset().search(month_id, start_date, end_date)
+
+	def sum(self, month_id):
+		queryset = self.get_queryset().search(month_id).values("person__id", "person__name", "person__no").annotate( \
+		    Sum('attend'), Sum('workhour'), Sum('climbhour')).values( \
+		    'person__id', 'person__name', 'attend__sum', 'workhour__sum', 'climbhour__sum').order_by('person__no')
+		return queryset
+
+
 class Person(models.Model):
     name = models.CharField(max_length=100, unique=True)
     no = models.IntegerField(validators=[MaxValueValidator(999)],default=0, verbose_name="序号", unique=True)
 
+    class Meta:
+        ordering = ['no']
+    
 
 class MonthInfo(models.Model):
     monthname= models.CharField(max_length=100,verbose_name='月份名称')
@@ -19,6 +44,9 @@ class MonthInfo(models.Model):
     archived = models.IntegerField(validators=[MaxValueValidator(999)],default=0 ,verbose_name='已存档',)
     timestamps = models.DateField(auto_now_add=True) 
 
+    class Meta:
+        ordering = ['timestamps']
+    
 
 class Attend(models.Model):
     date = models.DateField(verbose_name='日期',)
@@ -30,6 +58,8 @@ class Attend(models.Model):
     month = models.ForeignKey(MonthInfo, on_delete=models.CASCADE,verbose_name='月份' )
     comment = models.CharField(max_length=500,verbose_name='备注', null=True, blank=True)
 
+    
+    objects = AttendManager()
     # 引起聚合错误，person会重复
     class Meta:
         ordering = ['date']

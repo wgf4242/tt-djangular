@@ -18,3 +18,9 @@ class AttendSerializer(serializers.ModelSerializer):
         model = Attend
         fields = '__all__'
 
+class AttendSumSerializer(serializers.Serializer):
+    person__id = serializers.IntegerField() 
+    person__name = serializers.CharField(max_length=200) 
+    attend__sum = serializers.IntegerField() 
+    workhour__sum = serializers.IntegerField() 
+    climbhour__sum = serializers.IntegerField() 
