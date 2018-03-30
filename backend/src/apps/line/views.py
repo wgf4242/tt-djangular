@@ -80,27 +80,15 @@ class FacilityViewSet(viewsets.ModelViewSet):
     serializer_class = FacilitySerializer
     queryset = Facility.objects.all()
 
+    def get_serializer_class(self):
+        if self.action == 'list':
+            self.serializer_class = FacilitySerializerList
+        return super().get_serializer_class()
+
 
 class FacilityCategoryViewSet(viewsets.ModelViewSet):
     """
     设备分类管理
-    """
-    serializer_class = FacilityCategorySerializer
-    queryset = FacilityCategory.objects.all()
-
-
-# class FacilityList(generics.ListCreateAPIView):
-#     """
-#     设备管理
-#     """
-#     serializer_class = FacilitySerializer
-#     queryset = Facility.objects.all()
-#     pagination_class = None
-
-
-class FacilityCategoryList(generics.ListCreateAPIView):
-    """
-    设备类型
     """
     serializer_class = FacilityCategorySerializer
     queryset = FacilityCategory.objects.all()
@@ -124,7 +112,6 @@ class ProductionRecordViewSet(viewsets.ModelViewSet):
     serializer_class = ProductionRecordSerializer
     filter_backends = (DjangoFilterBackend,)
     filter_class = ProductionRecordFilter
-    pagination_class = None
 
     def get_serializer_class(self):
         if self.action == 'list':

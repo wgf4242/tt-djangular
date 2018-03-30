@@ -27,6 +27,9 @@ python3 manage.py collectstatic
 sudo /etc/init.d/nginx restart
 
 # TODO
+Added: All Component Supportted Pagination
+TODO: 巡视检修记录没有分页
+
 done edit-form 添加日期，月份等readonly模式。
 done 本月备注的修改
 done 编辑时显示的是是人的id，不是名字。

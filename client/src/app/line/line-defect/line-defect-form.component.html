@@ -51,7 +51,7 @@
       <input required [(ngModel)]="object.description" name="description" type="text" class="form-control">
     </div>
     <div class="form-group">
-      <button class="btn btn-primary" *ngFor="let item of cat_suggest?.select" (click)="addDescription($event)">{{item}}</button>
+      <button class="btn btn-primary" *ngFor="let item of cat_suggest?.select" type="button" (click)="addDescription($event)">{{item}}</button>
     </div>
     <div class="form-group">
       <label for="">备注</label>
@@ -60,14 +60,17 @@
 
     <div class="form-group">
       <label for="">日期</label>
-      <input required [(ngModel)]="object.date" name="date" type="text" class="form-control"
-             placeholder="2017-01-01这种格式">
+      <!--<input required [(ngModel)]="object.date" name="date" type="text" class="form-control" placeholder="2017-01-01这种格式">-->
+      <!--<dp-date-picker required [(ngModel)]="object.date" name="date" [config]="datePickerConfig"></dp-date-picker>-->
+      <el-date-picker [(ngModel)]="object.date" name="date"></el-date-picker>
+
+
     </div>
 
     <div class="form-group">
       <label for="">处理日期</label>
-      <input [(ngModel)]="object.finish_date" name="finish_date" type="text" class="form-control"
-             placeholder="2017-01-01这种格式">
+      <!--<input [(ngModel)]="object.finish_date" name="finish_date" type="text" class="form-control" placeholder="2017-01-01这种格式">-->
+      <el-date-picker [(ngModel)]="object.finish_date" name="finish_date"></el-date-picker>
     </div>
 
 
@@ -75,8 +78,6 @@
       <label for="">巡视人员</label>
       <input required [(ngModel)]="object.person" name="person" type="text" class="form-control">
     </div>
-
-
 
     <button [disabled]="form.invalid" type="submit" class="btn btn-primary">提交</button>
     <button [disabled]="form.invalid" type="button" class="btn btn-primary" title="再记一条" (click)="onDuplicate()"><span class="glyphicon glyphicon-duplicate"></span></button>

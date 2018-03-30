@@ -30,7 +30,7 @@
 
     </table>
     <div>新设备投运情况：</div>
-    <p *ngFor="let production_record of production_records">
+    <p *ngFor="let production_record of production_records?.results | paginate: { itemsPerPage: 20, currentPage: page, totalItems: production_records?.count }">
       {{production_record.production_date}},
       {{production_record.line.name}}
       {{production_record.branch.name}}

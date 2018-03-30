@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {LineService} from 'app/_services/line.service';
-import {Branch} from 'app/_models/line';
-import {Defect, DefectsCategory} from "../../_models/line";
-import {PageObject} from "../../_models/shared";
+import {Branch, Line} from 'app/_models/line';
+import {Defect, DefectsCategory, DefectsType} from '../../_models/line';
+import {PageObject} from '../../_models/shared';
 import {NgForm} from '@angular/forms';
-import {HttpClient, HttpParams} from "@angular/common/http";
-import * as FileSaver from 'file-saver';
+import {HttpParams} from '@angular/common/http';
 
 @Component({
   selector: 'app-line-defect',
@@ -15,28 +14,27 @@ import * as FileSaver from 'file-saver';
 })
 export class LineDefectComponent implements OnInit {
   objects: PageObject<Defect>;
-  isActive = true;
   lines: Line[];
   branches: Branch[];
   categories: DefectsCategory[];
-  page: number;
+  page = 1;
   params: HttpParams;
   url: string;
+  types: DefectsType;
 
-  constructor(private lineService: LineService,
-              private http: HttpClient) {
-  }
+  constructor(private lineService: LineService, ) {}
 
   ngOnInit() {
-    console.log(this.isActive);
     this.lineService.getLines().subscribe(lines => this.lines = lines);
     this.lineService.getBranches().subscribe(branches => this.branches = branches);
     this.lineService.getDefects().subscribe(objects => this.objects = objects);
     this.lineService.getCategories().subscribe(categories => this.categories = categories);
+    this.lineService.getDefectType().subscribe(types => this.types = types);
   }
 
   pageChanged(p: any) {
-    const url_params = this.objects.next.replace(/^.*\/\??/, "");
+    const uri = p > this.page ? this.objects.next : this.objects.previous;
+    const url_params = uri.replace(/^.*\/\??/, '');
     this.params = new HttpParams({fromString: url_params})
     this.lineService.getDefects(this.params.set('page', p)).subscribe(objects => this.objects = objects);
     this.page = p;
@@ -50,9 +48,19 @@ export class LineDefectComponent implements OnInit {
 
   download(): void {
     if (this.objects.next) {
-      const url_params = this.objects.next.replace(/^.*\/\??/, "");
+      const url_params = this.objects.next.replace(/^.*\/\??/, '');
       this.params = new HttpParams({fromString: url_params})
     }
     this.lineService.getDefectsXLSX(this.params);
   }
+
+  c1(form: NgForm) {
+    console.log(form);
+  }
+  handle(time: number): void {
+    // [time] is string
+    // date style follow format props
+    console.log(time);
+  }
+
 }

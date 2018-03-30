@@ -3,6 +3,7 @@ import {LineService} from '../../_services/line.service';
 import {Tour} from '../../_models/line-tour';
 import {HttpParams} from '@angular/common/http';
 import {Line, ProductionRecord} from '../../_models/line';
+import {PageObject} from "../../_models/shared";
 
 @Component({
   selector: 'app-line-summary',
@@ -14,7 +15,8 @@ export class LineSummaryComponent implements OnInit {
   lines: Line[];
   lines_sum: number;
   tours_sum: number;
-  production_records: ProductionRecord[];
+  production_records: PageObject<ProductionRecord[]>;
+  page: number;
 
   constructor(private lineServie: LineService) {
   }

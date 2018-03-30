@@ -35,4 +35,4 @@ class DefectFilter(django_filters.rest_framework.FilterSet):
 
     class Meta:
         model = Defect
-        fields = ['is_done', 'category', 'line']
+        fields = ['is_done', 'category', 'line', 'type']

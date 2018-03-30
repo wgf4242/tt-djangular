@@ -10,10 +10,9 @@ import {PageNotFoundComponent} from 'app/not-found.component';
 import {LineModule} from 'app/line/line.module';
 import {LoginModule} from 'app/user/login.module';
 import {HttpClientModule} from '@angular/common/http';
-import {HttpModule} from "@angular/http";
-import {AuthGuard} from "./_guards/auth.guard";
-import {AuthenticationService} from "./_services/authentication.service";
-import { LineSummaryComponent } from './line/line-summary/line-summary.component';
+import {HttpModule} from '@angular/http';
+import {AuthGuard} from './_guards/auth.guard';
+import {AuthenticationService} from './_services/authentication.service';
 
 @NgModule({
   declarations: [AppComponent, PageNotFoundComponent],

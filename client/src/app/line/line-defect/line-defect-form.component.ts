@@ -43,6 +43,7 @@ export class LineDefectFormComponent implements OnInit {
   types: DefectsType;
 
   submited_list: Defect[] = [];
+  datePickerConfig = {'format': 'YYYY-MM-DD' , 'firstDayOfWeek':'mo', 'locale':'zh-cn' };
 
   constructor(private lineService: LineService,
               private router: Router,
@@ -68,6 +69,7 @@ export class LineDefectFormComponent implements OnInit {
         // Add form
         this.status = Status.Add;
         this.lineService.getLines().subscribe(lines => this.lines = lines);
+        console.log( format(new Date(), 'YYYY-MM-DD'));
         this.object.date = format(new Date(), 'YYYY-MM-DD');
       }
     });
@@ -134,4 +136,5 @@ export class LineDefectFormComponent implements OnInit {
       this.object.description = $event.target.innerHTML + ',';
     }
   }
+
 }

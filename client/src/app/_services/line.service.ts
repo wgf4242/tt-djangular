@@ -8,8 +8,8 @@ import {
   Branch, Defect, DefectsCategory, DefectsType, Facility, FacilityCategory, Line,
   ProductionRecord
 } from '../_models/line';
-import {PageObject} from "../_models/shared";
-import * as FileSaver from "file-saver";
+import {PageObject} from '../_models/shared';
+import * as FileSaver from 'file-saver';
 
 
 @Injectable()
@@ -59,7 +59,7 @@ export class LineService {
     return this.http.get<PageObject<Defect>>('api/defects/', {params: params}).catch(this.handleError);
   }
 
-  addDefect(defect : Defect): Observable<Defect> {
+  addDefect(defect: Defect): Observable<Defect> {
     return this.http.post<Defect>(`api/defects/`, defect).catch(this.handleError);
   }
   getDefect(id: number): Observable<Defect> {
@@ -71,10 +71,10 @@ export class LineService {
   }
 
   getDefectsXLSX(params?: HttpParams) {
-    return this.http.get('api/defects.xlsx/', {params: params, responseType: "blob"}).catch(this.handleError).subscribe(
+    return this.http.get('api/defects.xlsx/', {params: params, responseType: 'blob'}).catch(this.handleError).subscribe(
       data => {
-        let blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
-        FileSaver.saveAs(blob, "export.xlsx");
+        const blob = new Blob([data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+        FileSaver.saveAs(blob, 'export.xlsx');
       }
     );
     // return this.http.get('api/defects.xlsx/', {params: params, responseType: "blob"}).catch(this.handleError);
@@ -109,8 +109,8 @@ export class LineService {
     return this.http.post<Object>(url, object);
   }
 
-  getProductionRecords(params?: HttpParams): Observable<ProductionRecord[]> {
-    return this.http.get<ProductionRecord[]>('api/production-records/', {params: params}).catch(this.handleError);
+  getProductionRecords(params?: HttpParams): Observable<PageObject<ProductionRecord[]>> {
+    return this.http.get<PageObject<ProductionRecord[]>>('api/production-records/', {params: params}).catch(this.handleError);
   }
 
   addProductionRecord(obj: ProductionRecord): Observable<ProductionRecord> {
@@ -120,7 +120,6 @@ export class LineService {
 
   getDefectType(): Observable<DefectsType> {
     return this.http.get<DefectsType>('api/defects-type/').catch(this.handleError);
-
   }
 
   // getObjects(url): Observable<Object[]> {

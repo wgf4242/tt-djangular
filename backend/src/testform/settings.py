@@ -119,15 +119,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
+# LANGUAGE_CODE = 'en-us'
+# TIME_ZONE = 'UTC'
+# USE_I18N = True
+# USE_L10N = True
+# USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
@@ -140,14 +136,16 @@ STATICFILES_DIRS = [
 
 LANGUAGE_CODE = "zh-hans"
 
+USE_L10N = False
 DATE_INPUT_FORMATS = (
-    # '%d.%m.%Y', '%d.%m.%Y', '%d.%m.%y',  # '25.10.2006', '25.10.2006', '25.10.06'
-    # '%d-%m-%Y', '%d/%m/%Y', '%d/%m/%y',  # '25-10-2006', '25/10/2006', '25/10/06'
-    # '%d %b %Y',  # '25 Oct 2006', 
-    # '%d %B %Y',  # '25 October 2006', 
-    '%Y-%m-%d',
+    '%d.%m.%Y', '%d.%m.%Y', '%d.%m.%y',  # '25.10.2006', '25.10.2006', '25.10.06'
+    '%d-%m-%Y', '%d/%m/%Y', '%d/%m/%y',  # '25-10-2006', '25/10/2006', '25/10/06'
+    '%d %b %Y',  # '25 Oct 2006',
+    '%d %B %Y',  # '25 October 2006',
+    '%Y-%m-%d', '%Y-%m-%d %H:%M:%S',
 )
 DATE_FORMAT = ('Y-m-d', 'Y/m/d')
+
 
 REST_FRAMEWORK = {
     'PAGE_SIZE': 20,
@@ -163,6 +161,10 @@ REST_FRAMEWORK = {
         'rest_pandas.renderers.PandasExcelRenderer',
     ),
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+    'USE_TZ': 'True',
+    'DATE_INPUT_FORMATS': [
+        'iso-8601', '%Y-%m-%d', '%Y/%m/%d',
+    ],
 }
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticsites/")

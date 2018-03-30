@@ -17,7 +17,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let object of objects.results | paginate: { itemsPerPage: 20, currentPage: page, totalItems: objects.count }" >
+    <tr *ngFor="let object of objects?.results | paginate: { itemsPerPage: 20, currentPage: page, totalItems: objects?.count }" >
       <td>{{object.id}}</td>
       <td>{{object.line}}</td>
       <td>{{object.branch}}</td>
@@ -31,4 +31,4 @@
     </tr>
   </tbody>
 </table>
-<pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+<pagination-controls (pageChange)="pageChanged($event)" previousLabel="上一页" nextLabel="下一页"></pagination-controls>

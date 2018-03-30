@@ -50,10 +50,17 @@ class DefectListSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class FacilitySerializer(serializers.ModelSerializer):
+class FacilitySerializerList(serializers.ModelSerializer):
     line = serializers.CharField(source='line.name')
     branch = serializers.CharField(source='branch.name')
     category = serializers.CharField(source='category.name')
+
+    class Meta:
+        model = Facility
+        fields = '__all__'
+
+
+class FacilitySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Facility

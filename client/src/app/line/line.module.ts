@@ -14,6 +14,9 @@ import { LineProductionDetailComponent } from './line-production-detail/line-pro
 import {LineProductionFormComponent} from "./line-production-detail/line-production-form.component";
 import {LineSummaryComponent} from "./line-summary/line-summary.component";
 import { LineInfoComponent } from './line-info/line-info.component';
+import { ElChildModules } from 'element-angular';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+
 
 
 @NgModule({
@@ -22,7 +25,10 @@ import { LineInfoComponent } from './line-info/line-info.component';
     FormsModule,
     ReactiveFormsModule,
     LineRoutingModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    BrowserAnimationsModule,
+    ElChildModules.ElInputsModule.forRoot(),
+    ElChildModules.ElDateModule.forRoot()
   ],
   declarations: [
     LineTourComponent,
