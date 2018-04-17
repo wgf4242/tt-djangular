@@ -131,3 +131,41 @@ class ProductionRecordViewSet(viewsets.ModelViewSet):
         line.length += instance.length or 0
         line.well += instance.well or 0
         line.save()
+
+
+class RepairRecordViewSet(viewsets.ModelViewSet):
+    """
+    检修记录管理
+    """
+    serializer_class = RepairRecordSerializer
+    queryset = RepairRecord.objects.all()
+    pagination_class = None
+
+
+class RepairRecordCategoryViewSet(viewsets.ModelViewSet):
+    """
+    检修分类管理
+    """
+    serializer_class = RepairRecordCategorySerializer
+    queryset = RepairRecordCategory.objects.all()
+    pagination_class = None
+
+
+class RepairSingleRecordViewSet(viewsets.ModelViewSet):
+    """
+    检修单条记录管理
+    """
+    serializer_class = RepairSingleRecordSerializer
+    queryset = RepairSingleRecord.objects.all()
+    pagination_class = None
+
+
+class TransformerViewSet(viewsets.ModelViewSet):
+    """
+    检修单条记录管理
+    """
+    serializer_class = TransformerSerializer
+    queryset = Transformer.objects.all()
+    pagination_class = None
+
+

@@ -1,5 +1,4 @@
-<div class="container">
-  <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+<form #form="ngForm" (ngSubmit)="onSubmit(form)">
     <div class="form-group">
       <label for="">线路名称</label>
       <select class="custom-select" [(ngModel)]="tour.line" name="line">
@@ -26,5 +25,3 @@
     <button [disabled]="form.invalid || form.pristine" type="submit" class="btn btn-primary">提交</button>
     <button *ngIf="status !== 1" (click)="delete()" type="submit" class="btn btn-danger">删除</button>
   </form>
-
-</div>

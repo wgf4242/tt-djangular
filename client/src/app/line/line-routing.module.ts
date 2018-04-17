@@ -12,6 +12,8 @@ import {LineProductionDetailComponent} from "./line-production-detail/line-produ
 import {LineProductionFormComponent} from "./line-production-detail/line-production-form.component";
 import {LineSummaryComponent} from "./line-summary/line-summary.component";
 import {LineInfoComponent} from "./line-info/line-info.component";
+import {LineRepairComponent} from "./line-repair/line-repair.component";
+import {LineTransformerComponent} from "./line-transformer/line-transformer.component";
 
 const routes: Routes = [
 
@@ -27,6 +29,8 @@ const routes: Routes = [
   {path: 'line/production/add', component: LineProductionFormComponent, data: {title: '线路管理-投产验收'}, canActivate: [AuthGuard]},
   {path: 'line/summary', component: LineSummaryComponent, data: {title: '线路管理-月报统计'}, canActivate: [AuthGuard]},
   {path: 'line/info', component: LineInfoComponent, data: {title: '线路管理-线路信息'}, canActivate: [AuthGuard]},
+  {path: 'line/repair', component: LineRepairComponent, data: {title: '线路管理-检修管理'}, canActivate: [AuthGuard]},
+  {path: 'line/transformer', component: LineTransformerComponent, data: {title: '线路管理-变压器管理'}, canActivate: [AuthGuard]},
 
 ];
 

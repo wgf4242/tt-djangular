@@ -9,7 +9,7 @@ import {HttpParams} from '@angular/common/http';
 @Component({
   selector: 'app-line-defect',
   templateUrl: './line-defect.component.html',
-  styleUrls: ['./line-defect.component.css'],
+  styleUrls: ['./line-defect.component.scss'],
 
 })
 export class LineDefectComponent implements OnInit {

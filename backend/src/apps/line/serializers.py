@@ -102,6 +102,41 @@ class ProductionRecordListSerializer(serializers.ModelSerializer):
         model = ProductionRecord
         fields = '__all__'
 
+
 class MyCustomPandasSerializer(PandasSerializer):
     def transform_dataframe(self, dataframe):
+        instance = self.instance[0]
+        if not instance:
+            return
+
+        columns_new = []
+        for column_name in list(dataframe):
+            title = instance._meta.get_field(column_name).verbose_name.title()
+            columns_new.append(title)
+        dataframe.columns = columns_new
         return dataframe
+
+
+class RepairRecordSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RepairRecord
+        fields = ['id', 'person', 'place', 'date', 'summary']
+        depth = 2
+
+
+class RepairRecordCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RepairRecordCategory
+        fields = '__all__'
+
+
+class RepairSingleRecordSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RepairSingleRecord
+        fields = '__all__'
+
+
+class TransformerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Transformer
+        fields = '__all__'

@@ -37,37 +37,19 @@
                   <app-attend-form [addressForm]="attendFormDay['controls'].attendforms['controls'][k]" [person]="filterName(personForm['controls'].person.value)" [index]="k"></app-attend-form>
                   <!-- <p>{{k}}: {{personForm['controls'].person.value | json}}</p> -->
                 </div>
-
-                <!-- <input type="text" class="form-control" formControlName="month">
-                <select class="" formControlName="month" required>
-                  <option *ngFor="let month of months?.results" [value]="month.id">{{month.monthname}}</option>
-                  <option *ngFor="let month of months?.results; let i = index" [selected]="i == 0" [(value)]="month.id">{{month.monthname}}</option>
-                </select>
-                <small [hidden]="addressForm['controls'].month.valid || addressForm['controls'].month.pristine" class="text-danger">
-                  需要选择一个月份
-                </small> -->
               </span>
 
             </div>
 
-
-
           </div>
+          <!--  [formGroupName]="i" end -->
         </div>
+        <!--attendforms end-->
 
-        <div class="margin-20">
-          <a (click)="addForm()" style="cursor: default">
-            添加记录 +
-          </a>
-        </div>
-
-        <div class="margin-20">
-          <button type="submit" class="btn btn-primary pull-right" [disabled]="!myForm.valid">提交</button>
-        </div>
-        <div class="clearfix"></div>
+        <div class="mt-3"><button type="button" class="btn btn-primary" (click)="addForm()" >添加记录 +</button></div>
+        <div class="mt-3"><button type="submit" class="btn btn-primary pull-right" [disabled]="!myForm.valid">提交</button></div>
 
         <div *ngIf="isSubmit" class="alert alert-success">添加成功</div>
-
 
         <div class="margin-20">
           <div>myForm details:-</div>

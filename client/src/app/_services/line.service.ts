@@ -2,14 +2,17 @@ import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
 
 import {Observable} from 'rxjs/Observable';
+import { _throw } from 'rxjs/observable/throw';
 import {Tour} from 'app/_models/line-tour';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {
   Branch, Defect, DefectsCategory, DefectsType, Facility, FacilityCategory, Line,
   ProductionRecord
 } from '../_models/line';
 import {PageObject} from '../_models/shared';
 import * as FileSaver from 'file-saver';
+import {Transformer} from "../_models/line-transformers";
+import {catchError} from "rxjs/operators";
 
 
 @Injectable()
@@ -122,6 +125,10 @@ export class LineService {
     return this.http.get<DefectsType>('api/defects-type/').catch(this.handleError);
   }
 
+  addTransformer(obj: Transformer): Observable<Transformer> {
+    return this.http.post<Transformer>('api/transformers/', obj).catch(this.handleError4);
+  }
+
   // getObjects(url): Observable<Object[]> {
   //   return this.http.get(url)
   //     .map(this.extractData)
@@ -130,7 +137,8 @@ export class LineService {
 
 
   getCatSuggest(): Observable<CatSuggest[]> {
-    return this.http.get<CatSuggest[]>('static/ang/assets/mock/cat.json').catch(this.handleError);
+    // return this.http.get<CatSuggest[]>('static/ang/assets/mock/cat.json').catch(this.handleError);
+    return this.http.get<CatSuggest[]>('static/ang/assets/mock/cat.json').pipe(catchError(this.handleError1));
   }
 
   private extractData(res: Response) {
@@ -138,6 +146,7 @@ export class LineService {
     console.log(body);
     return body || {};
   }
+
 
   private handleError(error: Response | any) {
     // In a real world app, you might use a remote logging infrastructure
@@ -153,6 +162,41 @@ export class LineService {
     return Observable.throw(errMsg);
   }
 
+  private handleError1(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
+    }
+    // return an observable with a user-facing error message
+    return _throw('Something bad happened; please try again later.');
+    // return throwError('Something bad happened; please try again later.');
+  }
+
+  private handleError3(err: HttpErrorResponse) {
+    let errorMessage = '';
+    if (err.error instanceof Error) {
+      // A client-side or network error occurred.
+      errorMessage = `An error occurred: ${err.error.message}`;
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      errorMessage = `Server returned code: ${err.status}, error message is: ${err.message}`;
+    }
+    console.error(errorMessage);
+    console.error(err.error);
+    return Observable.throw(errorMessage);
+  }
+
+  private handleError4(error: HttpErrorResponse) {
+    console.error(error);
+    return Observable.throw(error.error || 'Server error')
+  }
 }
 
 export class CatSuggest {

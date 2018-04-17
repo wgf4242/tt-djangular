@@ -15,7 +15,9 @@ Including another URLconf
 """
 import apps.attendance.views
 import apps.line.views
+from django.conf import settings
 from django.conf.urls import url, include
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
 from rest_framework.documentation import include_docs_urls
@@ -33,6 +35,10 @@ router.register(r'months', apps.attendance.views.MonthViewSet, base_name="month"
 router.register(r'tours', apps.line.views.TourListViewSet, base_name="tour")
 router.register(r'facilities', apps.line.views.FacilityViewSet, base_name="facility")
 router.register(r'facilities-cat', apps.line.views.FacilityCategoryViewSet, base_name="facility-cat")
+router.register(r'repair-record', apps.line.views.RepairRecordViewSet, base_name="repair-record")
+router.register(r'repair-record-cat', apps.line.views.RepairRecordCategoryViewSet, base_name="repair-record-cat")
+router.register(r'repair-record-single', apps.line.views.RepairSingleRecordViewSet, base_name="repair-record-single")
+router.register(r'transformers', apps.line.views.TransformerViewSet, base_name="transformer")
 
 urlpatterns = [
     url(r'^api/', include(router.urls, namespace='api')),
@@ -41,12 +47,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/persons/?$', apps.attendance.views.PersonList.as_view(), name='person-list'),
     url(r'^api/attends/sum/(?P<month_id>[0-9]+)/?$', apps.attendance.views.AttendSumList.as_view(), name='attend-sum'),
-    # url(r'^api/tours/(?P<pk>[0-9]+)/?$', apps.line.views.TourDetail.as_view()),
-    # url(r'^api/tours/?$', apps.line.views.TourList.as_view()),
     url(r'^api/branches/?$', apps.line.views.BranchList.as_view()),
-    # url(r'^api/facilities/?$', apps.line.views.FacilityList.as_view()),
-    # url(r'^api/facilitiescat/?$', apps.line.views.FacilityCategoryList.as_view()),
 
     url(r'^api/authenticate/', obtain_jwt_token),
     url(r'^.*', TemplateView.as_view(template_name="ang_home.html"), name='home'),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

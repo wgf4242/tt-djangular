@@ -1,30 +1,28 @@
 import {BrowserModule, Title} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
 
 import {AppComponent} from './app.component';
-import {AppRoutingModule} from 'app/app-routing.module';
 
 import {AttendanceModule} from 'app/attendance/attendance.module';
 import {PageNotFoundComponent} from 'app/not-found.component';
 import {LineModule} from 'app/line/line.module';
 import {LoginModule} from 'app/user/login.module';
-import {HttpClientModule} from '@angular/common/http';
 import {HttpModule} from '@angular/http';
 import {AuthGuard} from './_guards/auth.guard';
 import {AuthenticationService} from './_services/authentication.service';
+import {CoreModule} from "./core/core.module";
+import {SharedModule} from "./shared/shared.module";
 
 @NgModule({
   declarations: [AppComponent, PageNotFoundComponent],
   imports: [
     BrowserModule,
-    FormsModule,
     HttpModule,
-    HttpClientModule,
     AttendanceModule,
     LoginModule,
     LineModule,
-    AppRoutingModule //put the default and wildcard routes last,
+    SharedModule,
+    CoreModule,
   ],
   providers: [
     Title,

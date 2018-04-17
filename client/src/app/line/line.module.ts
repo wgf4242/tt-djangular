@@ -1,6 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LineRoutingModule } from 'app/line/line-routing.module';
 import { LineTourFormComponent } from 'app/line/line-tour/line-tour-form.component';
 import { LineTourComponent } from 'app/line/line-tour/line-tour.component';
@@ -14,21 +12,19 @@ import { LineProductionDetailComponent } from './line-production-detail/line-pro
 import {LineProductionFormComponent} from "./line-production-detail/line-production-form.component";
 import {LineSummaryComponent} from "./line-summary/line-summary.component";
 import { LineInfoComponent } from './line-info/line-info.component';
+import {SharedModule} from "../shared/shared.module";
 import { ElChildModules } from 'element-angular';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-
+import { LineRepairComponent } from './line-repair/line-repair.component';
+import { LineTransformerComponent } from './line-transformer/line-transformer.component'
 
 
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
+    SharedModule,
     LineRoutingModule,
     NgxPaginationModule,
-    BrowserAnimationsModule,
+    ElChildModules.ElDateModule.forRoot(),
     ElChildModules.ElInputsModule.forRoot(),
-    ElChildModules.ElDateModule.forRoot()
   ],
   declarations: [
     LineTourComponent,
@@ -41,7 +37,9 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     LineProductionDetailComponent,
     LineProductionFormComponent,
     LineSummaryComponent,
-    LineInfoComponent
+    LineInfoComponent,
+    LineRepairComponent,
+    LineTransformerComponent
   ],
   providers: []
 })

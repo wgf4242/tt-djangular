@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {CatSuggest, LineService} from 'app/_services/line.service';
 import {Branch} from 'app/_models/line';
-import {FormGroup, NgForm} from '@angular/forms';
+import {FormBuilder, FormGroup, NgForm, Validators} from '@angular/forms';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Defect, DefectsCategory, DefectsType, Line} from '../../_models/line';
 import {format} from 'date-fns';
@@ -47,17 +47,19 @@ export class LineDefectFormComponent implements OnInit {
 
   constructor(private lineService: LineService,
               private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private fb: FormBuilder) {
+    this.createForm();
   }
 
   ngOnInit() {
+
     this.lineService.getBranches().subscribe(branches => this.allBranches = branches);
     this.lineService.getCategories().subscribe(categories => this.categories = categories);
     this.lineService.getDefectType().subscribe(types => {
       this.types = types;
       if (!this.object.type) { this.object.type = types[0].id }
     });
-
 
     this.route.params.subscribe((params: Params) => {
       this.defectId = params['id'];
@@ -68,10 +70,27 @@ export class LineDefectFormComponent implements OnInit {
       } else {
         // Add form
         this.status = Status.Add;
-        this.lineService.getLines().subscribe(lines => this.lines = lines);
-        console.log( format(new Date(), 'YYYY-MM-DD'));
         this.object.date = format(new Date(), 'YYYY-MM-DD');
+        this.object.line = 1;
+        this.object.category = 1;
+        this.lineService.getLines().subscribe(lines => {this.lines = lines;this.getTheBranch(1)});
+        console.log( format(new Date(), 'YYYY-MM-DD'));
       }
+    });
+  }
+
+  private createForm() {
+    this.form = this.fb.group({
+      type: ['1', [Validators.required]],
+      line: ['1', [Validators.required]],
+      branch: ['1', [Validators.required]],
+      position: ['', [Validators.required, Validators.min(1), Validators.max(400)]],
+      category: ['1', [Validators.required]],
+      description: ['', [Validators.required]],
+      comment: '',
+      date: ['', [Validators.required]],
+      finish_date: '',
+      person: ['', [Validators.required]],
     });
   }
 
@@ -113,7 +132,7 @@ export class LineDefectFormComponent implements OnInit {
 
   onChange($event) {
     const value = $event.target.value;
-    console.log(value);
+    console.log('This is line change,', value);
     this.getTheBranch(value);
   }
 

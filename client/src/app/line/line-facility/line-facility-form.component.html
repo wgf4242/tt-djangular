@@ -21,7 +21,7 @@
 
     <div class="form-group">
       <label for="">杆号</label>
-      <input required ngModel name="position" type="text" class="form-control" max="300">
+      <input required ngModel name="position" type="number" class="form-control" max="300">
     </div>
 
     <div class="form-group">
@@ -43,7 +43,6 @@
       <label for="">日期</label>
       <!--<input required ngModel name="date" type="text" class="form-control" placeholder="2017-01-01这种格式">-->
       <el-date-picker ngModel name="date"></el-date-picker>
-
     </div>
 
     <button [disabled]="form.invalid" type="submit" class="btn btn-primary">提交</button>
