@@ -24,19 +24,23 @@ export class MonthDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.month = new Month;
-    const monthId = this.route.snapshot.params['id'];
-
-    if (monthId) {
-      this.monthService.getMonth(monthId).subscribe(month => this.month = month);
-      this.attendService.getAttends(monthId).subscribe(attends => (this.attends = attends, console.log(attends)))
-    } else {
-
-      this.monthService.getMonths().subscribe(months => {
-        this.month = months.results[0];
-        this.attendService.getAttends(this.month.id).subscribe(attends => (this.attends = attends, console.log(attends)))
-      });
-    }
+    const monthId = this.route.snapshot.params['month'];
+    // const monthId = this.route.snapshot.params['id'];
+    console.log(this.route.params);
+    this.route.params.subscribe(value =>
+      this.attendService.getAttendsByParams(value).subscribe(attends => this.attends =attends )
+    );
+    if (monthId) {this.monthService.getMonth(monthId).subscribe(month => this.month = month);}
+    // if (monthId) {
+    //   this.monthService.getMonth(monthId).subscribe(month => this.month = month);
+    //   this.attendService.getAttends(monthId).subscribe(attends => (this.attends = attends, console.log(attends)))
+    // } else {
+    //
+    //   this.monthService.getMonths().subscribe(months => {
+    //     this.month = months.results[0];
+    //     this.attendService.getAttends(this.month.id).subscribe(attends => (this.attends = attends, console.log(attends)))
+    //   });
+    // }
     this.personService.getPersons().subscribe(persons => this.persons = persons);
   }
 

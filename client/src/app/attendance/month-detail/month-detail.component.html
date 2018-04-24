@@ -19,7 +19,7 @@
   <!-- <tbody *ngFor="let item of pageObj?.results"> -->
   <tr *ngFor="let item of attends | paginate: { itemsPerPage: 20, currentPage: p }">
     <td>{{item.id}}</td>
-    <td>{{item.date}}</td>
+    <td>{{item?.date}}</td>
     <td>{{filterPerson(item.person)}}</td>
     <td>{{item.attend}}</td>
     <td>{{item.workhour}}</td>

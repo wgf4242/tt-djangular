@@ -7,6 +7,7 @@ import {
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { ElChildModules } from 'element-angular';
+import {MyfilterPipe} from "../pipes/myfilter.pipe";
 
 
 @NgModule({
@@ -23,7 +24,7 @@ import { ElChildModules } from 'element-angular';
     // ElChildModules.ElDateModule.forRoot(),
     // ElChildModules.ElInputsModule.forRoot(),
   ],
-  declarations: [],
+  declarations: [MyfilterPipe],
   exports:[
     CommonModule,
     FormsModule,
@@ -35,6 +36,7 @@ import { ElChildModules } from 'element-angular';
     MatListModule,
     MatInputModule,
     MatDatepickerModule,
+    MyfilterPipe,
   ]
 })
 export class SharedModule { }

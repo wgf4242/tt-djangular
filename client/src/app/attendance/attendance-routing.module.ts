@@ -27,7 +27,6 @@ const routes: Routes = [
           { path: 'months/:id', component: MonthSummaryComponent, data: { title: '本月汇总' } },
           { path: 'add', component: AddNormalComponent, data: { title: '添加记录' } },
           { path: 'edit/:id', component: EditFormComponent, data: { title: '编辑记录' } },
-          { path: 'detail/:id', component: MonthDetailComponent, data: { title: '明细表格' } },
           { path: 'detail', component: MonthDetailComponent, data: { title: '明细表格' } },
 
         ],

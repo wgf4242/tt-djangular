@@ -1,5 +1,5 @@
 <h1>{{month?.monthname}}
-  <a *ngIf="month" href="javascript:void(0)" [routerLink]="['/attendance/detail', month?.id]">本月明细</a>
+  <a *ngIf="month" href="javascript:void(0)" [routerLink]="['/attendance/detail', {month: month.id}]">本月明细</a>
 </h1>
 <hr>
 <h1>
@@ -16,7 +16,10 @@
   </thead>
   <tbody>
   <tr *ngFor="let attendSum of page?.results">
-    <td>{{attendSum.person__name}}</td>
+    <td>
+      <!--{{(perseon$ | async | myfilter: attendSum.person__name)?.id}}, {{id}}-->
+      <a [routerLink]="['/attendance/detail', { person: (perseon$ | async | myfilter: attendSum.person__name)?.id, month:id }]">{{attendSum.person__name}}</a>
+      </td>
     <td>{{attendSum.attend__sum}}</td>
     <td>{{attendSum.workhour__sum}}</td>
     <td>{{attendSum.climbhour__sum}}</td>

@@ -6,6 +6,8 @@ import {MonthService} from 'app/_services/month.service';
 import {AttendService} from 'app/_services/attend.service';
 import {PageAttendSumObj} from 'app/_models/attend';
 import {PersonService} from "../../_services/person.service";
+import {Observable} from "rxjs/Observable";
+import {Person} from "../../_models/person";
 
 @Component({
   templateUrl: './month-summary.component.html'
@@ -16,7 +18,8 @@ export class MonthSummaryComponent implements OnInit {
   isEdit = false;
   isSubmit = false;
   params = {};
-
+  perseon$ : Observable<Person[]>;
+  id: number;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -31,12 +34,13 @@ export class MonthSummaryComponent implements OnInit {
     let id: number;
     this.route.params.subscribe(
       params => {
-        id = params["id"];
-        this.monthService.getMonth(id).subscribe(month => (this.month = month, console.log(month)));
-        this.attendService.getAttendsSum(id).subscribe(page => this.page = page);
+        this.id = params["id"];
+        this.monthService.getMonth(this.id).subscribe(month => (this.month = month, console.log(month)));
+        this.attendService.getAttendsSum(this.id).subscribe(page => this.page = page);
+        this.perseon$ = this.personService.getPersons();
       }
     );
-    console.log(id);
+    console.log(this.id);
   }
 
   mySubmit() {

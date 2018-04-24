@@ -43,6 +43,12 @@ export class AttendService {
     return this.http.get<Attend[]>(this.attendsUrl, {params: params});
   }
 
+  getAttendsByParams(p: {}): Observable<Attend[]> {
+
+    const params = new HttpParams({fromObject: p});
+    return this.http.get<Attend[]>(this.attendsUrl, {params: params});
+  }
+
   getAttendsByPage(month_id: number): Observable<AttendPageObject> {
     const url = month_id ? this.attendsUrl + '?month_id=' + month_id : this.attendsUrl;
     return this.http.get(url)

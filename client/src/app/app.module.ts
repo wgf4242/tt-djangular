@@ -12,6 +12,7 @@ import {AuthGuard} from './_guards/auth.guard';
 import {AuthenticationService} from './_services/authentication.service';
 import {CoreModule} from "./core/core.module";
 import {SharedModule} from "./shared/shared.module";
+import { MyfilterPipe } from './pipes/myfilter.pipe';
 
 @NgModule({
   declarations: [AppComponent, PageNotFoundComponent],
