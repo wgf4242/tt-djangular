@@ -1,5 +1,6 @@
+from apps.attendance.filters import AttendFilter
 from apps.attendance.serializers import *
-from django_filters.rest_framework import DjangoFilterBackend
+from django_filters.rest_framework import DjangoFilterBackend, filters
 from rest_framework import generics, viewsets
 
 
@@ -50,8 +51,11 @@ class AttendViewSet(viewsets.ModelViewSet):
     queryset = Attend.objects.all()
     serializer_class = AttendSerializer
     pagination_class = None
-    filter_backends = (DjangoFilterBackend,)
-    filter_fields = ('month',)
+    filter_backends = (DjangoFilterBackend, )
+    # filter_fields = ('month',)
+    filter_class = AttendFilter
+    # filter_backends = (DjangoFilterBackend, filters.DateFilter)
+    # filter_fields = ('month', 'date')
 
     def get_serializer_class(self):
         if self.action == 'retrieve':

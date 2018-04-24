@@ -37,6 +37,7 @@ export class LineTransformerComponent implements OnInit {
   }
 
   onSubmit({value, valid}, ev: Event) {
+    console.log(value);
     if (valid) {
       this.lineService.addTransformer(value).subscribe(value2 => {
           console.log(value2);

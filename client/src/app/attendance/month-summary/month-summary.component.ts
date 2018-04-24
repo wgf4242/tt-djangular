@@ -5,6 +5,7 @@ import {Month} from 'app/_models/month';
 import {MonthService} from 'app/_services/month.service';
 import {AttendService} from 'app/_services/attend.service';
 import {PageAttendSumObj} from 'app/_models/attend';
+import {PersonService} from "../../_services/person.service";
 
 @Component({
   templateUrl: './month-summary.component.html'
@@ -14,12 +15,14 @@ export class MonthSummaryComponent implements OnInit {
   page: PageAttendSumObj;
   isEdit = false;
   isSubmit = false;
+  params = {};
 
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private monthService: MonthService,
               private attendService: AttendService,
+              private personService: PersonService,
               // private attenceHome: AttandenceHomeComponent
   ) {
   }

@@ -6,6 +6,8 @@ import {HttpClientModule} from "@angular/common/http";
 import {AppRoutingModule} from "../app-routing.module";
 import {SharedModule} from "../shared/shared.module";
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   imports: [
@@ -13,10 +15,12 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     HttpClientModule,
     AppRoutingModule
   ],
-  declarations: [SidebarComponent],
+  declarations: [SidebarComponent, HeaderComponent, FooterComponent],
   exports: [
     AppRoutingModule,
-    SidebarComponent
+    SidebarComponent,
+    HeaderComponent,
+    FooterComponent
   ]
 })
 export class CoreModule {
