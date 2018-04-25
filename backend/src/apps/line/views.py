@@ -162,10 +162,9 @@ class RepairSingleRecordViewSet(viewsets.ModelViewSet):
 
 class TransformerViewSet(viewsets.ModelViewSet):
     """
-    检修单条记录管理
+    变压器记录管理
     """
     serializer_class = TransformerSerializer
     queryset = Transformer.objects.all()
-    pagination_class = None
 
 

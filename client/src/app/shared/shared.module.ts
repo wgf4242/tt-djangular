@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {
-  MatDatepickerModule, MatDialogModule, MatIconModule, MatInputModule, MatLineModule, MatListModule,
-  MatNativeDateModule
+  MatButtonModule,
+  MatDatepickerModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatLineModule,
+  MatListModule, MatRadioModule
 } from "@angular/material";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import { ElChildModules } from 'element-angular';
 import {MyfilterPipe} from "../pipes/myfilter.pipe";
 
 
@@ -21,6 +21,10 @@ import {MyfilterPipe} from "../pipes/myfilter.pipe";
     MatLineModule,
     MatListModule,
     MatInputModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatRadioModule,
     // ElChildModules.ElDateModule.forRoot(),
     // ElChildModules.ElInputsModule.forRoot(),
   ],
@@ -35,7 +39,10 @@ import {MyfilterPipe} from "../pipes/myfilter.pipe";
     MatLineModule,
     MatListModule,
     MatInputModule,
-    MatDatepickerModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatRadioModule,
     MyfilterPipe,
   ]
 })

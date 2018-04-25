@@ -84,9 +84,20 @@
     <p *ngIf="errorMessage">{{errorMessage | json}}</p>
   </div>
 
-  <div class="alert-success">
-    <p *ngFor="let item of list">{{item}}</p>
+  <div class="alert-success" *ngFor="let item of list">
+      <span>已添加井号： {{item.well}}</span>
+    <a >[编辑]</a>
+    <a >[删除]</a>
   </div>
+
+  <!--<button class="fab-button" mat-fab type="button" (click)="openDialog()">-->
+    <!--<mat-icon>add</mat-icon>-->
+  <!--</button>-->
+
   <p>Form valid: {{form.valid | json}}</p>
   <p>Form value: {{form.value | json}}</p>
 </form>
+
+<button mat-button (click)="openDialog()">Open dialog</button>
+
+

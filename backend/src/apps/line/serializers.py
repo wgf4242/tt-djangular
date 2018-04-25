@@ -137,6 +137,8 @@ class RepairSingleRecordSerializer(serializers.ModelSerializer):
 
 
 class TransformerSerializer(serializers.ModelSerializer):
+    manufacturers = serializers.CharField(max_length=180, label="厂家", allow_blank=True, allow_null=True)
+
     class Meta:
         model = Transformer
         fields = '__all__'

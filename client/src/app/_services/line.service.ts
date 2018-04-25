@@ -13,13 +13,18 @@ import {PageObject} from '../_models/shared';
 import * as FileSaver from 'file-saver';
 import {Transformer} from "../_models/line-transformers";
 import {catchError} from "rxjs/operators";
+import {LoggerService} from "./logger.service";
+import {logger} from "codelyzer/util/logger";
 
 
 @Injectable()
 export class LineService {
   private tourUrl = 'api/tours/';  // URL to web api
-  constructor(private http: HttpClient, httpx: Http) {
-  }
+  constructor(
+    private http: HttpClient,
+    httpx: Http,
+    private logger: LoggerService
+  ) {}
 
 
   addTour(tour): Observable<Tour> {
@@ -195,6 +200,7 @@ export class LineService {
 
   private handleError4(error: HttpErrorResponse) {
     console.error(error);
+    // this.logger.info(error);
     return Observable.throw(error.error || 'Server error')
   }
 }

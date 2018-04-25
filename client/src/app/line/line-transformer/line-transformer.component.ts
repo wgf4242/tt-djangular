@@ -3,6 +3,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {LineService} from "../../_services/line.service";
 import {Line} from "../../_models/line";
 import {Observable} from "rxjs/Observable";
+import {NewTransformerDialogComponent} from "../../new-transformer-dialog.component";
+import {MatDialog} from "@angular/material";
 
 @Component({
   selector: 'app-line-transformer',

@@ -28,9 +28,13 @@
 </table>
 
 <div>备注：
-  <input *ngIf="month" [disabled]="!isEdit" type="text" [(ngModel)]="month.comment">
-  <button *ngIf="!isEdit" type="button" (click)="isEdit =!isEdit">编辑</button>
-  <button *ngIf="isEdit" type="button" (click)="mySubmit()">提交</button>
+  <div class="input-group input-group-sm mb-3">
+    <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-sm" *ngIf="month" [disabled]="!isEdit" [(ngModel)]="month.comment">
+    <div class="input-group-append">
+      <button *ngIf="!isEdit" type="button" (click)="isEdit =!isEdit">编辑</button>
+      <button *ngIf="isEdit" type="button" (click)="mySubmit()">提交</button>
+    </div>
+  </div>
   <div *ngIf="isSubmit" class="alert alert-success">添加成功</div>
 </div>
 

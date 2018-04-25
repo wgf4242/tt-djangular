@@ -16,6 +16,7 @@ import {SharedModule} from "../shared/shared.module";
 import { ElChildModules } from 'element-angular';
 import { LineRepairComponent } from './line-repair/line-repair.component';
 import { LineTransformerComponent } from './line-transformer/line-transformer.component'
+import {NewTransformerDialogComponent} from "../new-transformer-dialog.component";
 
 
 @NgModule({
@@ -39,9 +40,10 @@ import { LineTransformerComponent } from './line-transformer/line-transformer.co
     LineSummaryComponent,
     LineInfoComponent,
     LineRepairComponent,
-    LineTransformerComponent
+    LineTransformerComponent,
+    NewTransformerDialogComponent
   ],
-  providers: []
+
 })
 
 export class LineModule { }
