@@ -9,7 +9,7 @@ import { Title } from "@angular/platform-browser";
 })
 export class AppComponent {
   title = 'app works!';
-  
+
     constructor(titleService:Title, router:Router, activatedRoute:ActivatedRoute) {
     router.events.subscribe(event => {
       if(event instanceof NavigationEnd) {

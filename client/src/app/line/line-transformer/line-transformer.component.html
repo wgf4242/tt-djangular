@@ -1,7 +1,7 @@
 <h3>变压器管理</h3>
 <form novalidate [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
   <div class="form-group form-inline">
-    <label for="exampleInputEmail1" class="col-sm-1 col-form-label">所属线路</label>
+    <label for="exampleInputEmail1" class="col-sm-4 col-form-label">所属线路</label>
     <div class="col-sm-6">
       <select formControlName="line">
         <option value="" *ngFor="let line of lines | async" [value]="line.id">{{line.name}}</option>
@@ -10,35 +10,35 @@
     </div>
   </div>
   <div class="form-group form-inline">
-    <label for="exampleInputEmail1" class="col-sm-1 col-form-label">平台号或井号</label>
+    <label for="exampleInputEmail1" class="col-sm-4 col-form-label">平台号或井号</label>
     <div class="col-sm-6">
       <input formControlName="well" type="text" class="form-control" id="" aria-describedby="emailHelp" placeholder="请输入包含井号">
     </div>
   </div>
 
   <div class="form-group form-inline">
-    <label for="exampleInputEmail1" class="col-sm-1 col-form-label">型号</label>
+    <label for="exampleInputEmail1" class="col-sm-4 col-form-label">型号</label>
     <div class="col-sm-6">
       <input formControlName="category" type="text" class="form-control" id="" aria-describedby="emailHelp" placeholder="请输入型号">
     </div>
   </div>
 
   <div class="form-group form-inline">
-    <label for="exampleInputEmail1" class="col-sm-1 col-form-label">额定容量(kVA)</label>
+    <label for="exampleInputEmail1" class="col-sm-4 col-form-label">额定容量(kVA)</label>
     <div class="col-sm-6">
       <input formControlName="capacity" type="text" class="form-control" id="" aria-describedby="emailHelp" placeholder="请输入额定容量">
     </div>
   </div>
 
   <div class="form-group form-inline">
-    <label for="exampleInputEmail1" class="col-sm-1 col-form-label">二次电压</label>
+    <label for="exampleInputEmail1" class="col-sm-4 col-form-label">二次电压</label>
     <div class="col-sm-6">
       <input formControlName="voltage" type="text" class="form-control" id="" aria-describedby="emailHelp" placeholder="请输入二次电压">
     </div>
   </div>
 
   <div class="form-group form-inline">
-    <label for="exampleInputEmail1" class="col-sm-1 col-form-label">出厂日期</label>
+    <label for="exampleInputEmail1" class="col-sm-4 col-form-label">出厂日期</label>
     <div class="col-sm-6">
       <!--<input formControlName="date" name="date">-->
       <el-date-picker formControlName="date" name="date" [change-on-blur]="true"></el-date-picker>
@@ -48,14 +48,14 @@
   </div>
 
   <div class="form-group form-inline">
-    <label for="exampleInputEmail1" class="col-sm-1 col-form-label">出厂序号</label>
+    <label for="exampleInputEmail1" class="col-sm-4 col-form-label">出厂序号</label>
     <div class="col-sm-6">
       <input formControlName="no" type="text" class="form-control" id="" aria-describedby="emailHelp" placeholder="请输入出厂序号">
     </div>
   </div>
 
   <div class="form-group form-inline">
-    <label for="exampleInputEmail1" class="col-sm-1 col-form-label">厂家</label>
+    <label for="exampleInputEmail1" class="col-sm-4 col-form-label">厂家</label>
     <div class="col-sm-6">
       <input formControlName="manufacturers" type="text" class="form-control" id="" aria-describedby="emailHelp" placeholder="请输入厂家">
     </div>
@@ -71,7 +71,7 @@
   </div>
 
   <div class="form-group form-inline">
-    <label for="exampleInputEmail1" class="col-sm-1 col-form-label">备注</label>
+    <label for="exampleInputEmail1" class="col-sm-4 col-form-label">备注</label>
     <div class="col-sm-6">
       <input formControlName="comment" type="text" class="form-control" id="" aria-describedby="emailHelp" placeholder="备注">
     </div>
@@ -96,8 +96,9 @@
 
   <p>Form valid: {{form.valid | json}}</p>
   <p>Form value: {{form.value | json}}</p>
+
+
 </form>
 
-<button mat-button (click)="openDialog()">Open dialog</button>
 
 

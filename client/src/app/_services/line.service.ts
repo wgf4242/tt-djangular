@@ -4,7 +4,7 @@ import {Http, Response} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import { _throw } from 'rxjs/observable/throw';
 import {Tour} from 'app/_models/line-tour';
-import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpParams, HttpResponse} from '@angular/common/http';
 import {
   Branch, Defect, DefectsCategory, DefectsType, Facility, FacilityCategory, Line,
   ProductionRecord
@@ -29,7 +29,7 @@ export class LineService {
 
   addTour(tour): Observable<Tour> {
     return this.http.post(this.tourUrl, tour)
-      .catch(this.handleError);
+      .catch(this.handleError2);
   }
 
   getTours(params?: HttpParams): Observable<Tour[]> {
@@ -39,20 +39,20 @@ export class LineService {
   getTour(id: number): Observable<Tour> {
     return this.http.get(this.tourUrl + id)
       .map(this.extractData)
-      .catch(this.handleError);
+      .catch(this.handleError2);
   }
 
   putTour(id: number, tour: Tour): Observable<Tour> {
     return this.http.put(this.tourUrl + id, tour)
       .map(this.extractData)
-      .catch(this.handleError);
+      .catch(this.handleError2);
   }
 
 
   deleteTour(id: number): Observable<Tour> {
     return this.http.delete(this.tourUrl + id)
       .map(this.extractData)
-      .catch(this.handleError);
+      .catch(this.handleError2);
   }
 
   getLines(): Observable<Line[]> {
@@ -64,22 +64,22 @@ export class LineService {
   }
 
   getDefects(params?: HttpParams): Observable<PageObject<Defect>> {
-    return this.http.get<PageObject<Defect>>('api/defects/', {params: params}).catch(this.handleError);
+    return this.http.get<PageObject<Defect>>('api/defects/', {params: params}).catch(this.handleError2);
   }
 
   addDefect(defect: Defect): Observable<Defect> {
-    return this.http.post<Defect>(`api/defects/`, defect).catch(this.handleError);
+    return this.http.post<Defect>(`api/defects/`, defect).catch(this.handleError2);
   }
   getDefect(id: number): Observable<Defect> {
-    return this.http.get<Defect>(`api/defects/${id}/`).catch(this.handleError);
+    return this.http.get<Defect>(`api/defects/${id}/`).catch(this.handleError2);
   }
 
   updateDefect(defect: Defect): Observable<Defect> {
-    return this.http.put<Defect>(`api/defects/${defect.id}/`, defect).catch(this.handleError);
+    return this.http.put<Defect>(`api/defects/${defect.id}/`, defect).catch(this.handleError2);
   }
 
   getDefectsXLSX(params?: HttpParams) {
-    return this.http.get('api/defects.xlsx/', {params: params, responseType: 'blob'}).catch(this.handleError).subscribe(
+    return this.http.get('api/defects.xlsx/', {params: params, responseType: 'blob'}).catch(this.handleError2).subscribe(
       data => {
         const blob = new Blob([data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
         FileSaver.saveAs(blob, 'export.xlsx');
@@ -95,6 +95,7 @@ export class LineService {
   getFacilities(params?: HttpParams): Observable<PageObject<Facility[]>> {
     return this.http.get<PageObject<Facility[]>>('api/facilities/', {params: params});
   }
+
   getFacilitiesCategories(): Observable<FacilityCategory[]> {
     return this.http.get<FacilityCategory[]>('api/facilities-cat/');
   }
@@ -112,38 +113,33 @@ export class LineService {
     return this.http.get<Object[]>(url);
   }
 
-
   addObject(url, object): Observable<Object> {
     return this.http.post<Object>(url, object);
   }
 
   getProductionRecords(params?: HttpParams): Observable<PageObject<ProductionRecord[]>> {
-    return this.http.get<PageObject<ProductionRecord[]>>('api/production-records/', {params: params}).catch(this.handleError);
+    return this.http.get<PageObject<ProductionRecord[]>>('api/production-records/', {params: params}).catch(this.handleError2);
   }
 
   addProductionRecord(obj: ProductionRecord): Observable<ProductionRecord> {
-    return this.http.post<ProductionRecord>('api/production-records/', obj).catch(this.handleError);
+    return this.http.post<ProductionRecord>('api/production-records/', obj).catch(this.handleError2);
   }
 
-
   getDefectType(): Observable<DefectsType> {
-    return this.http.get<DefectsType>('api/defects-type/').catch(this.handleError);
+    return this.http.get<DefectsType>('api/defects-type/').catch(this.handleError2);
   }
 
   addTransformer(obj: Transformer): Observable<Transformer> {
-    return this.http.post<Transformer>('api/transformers/', obj).catch(this.handleError4);
+    return this.http.post<Transformer>('api/transformers/', obj).catch(this.handleError);
   }
 
-  // getObjects(url): Observable<Object[]> {
-  //   return this.http.get(url)
-  //     .map(this.extractData)
-  //     .catch(this.handleError);
-  // }
-
+  getTransformers(params?: HttpParams): Observable<PageObject<Transformer[]>> {
+    return this.http.get('api/transformers/', {params: params}).map(this.extractData4).catch(this.handleError);
+  }
 
   getCatSuggest(): Observable<CatSuggest[]> {
     // return this.http.get<CatSuggest[]>('static/ang/assets/mock/cat.json').catch(this.handleError);
-    return this.http.get<CatSuggest[]>('static/ang/assets/mock/cat.json').pipe(catchError(this.handleError1));
+    return this.http.get<CatSuggest[]>('static/ang/assets/mock/cat.json').pipe(catchError(this.handleError1Extend));
   }
 
   private extractData(res: Response) {
@@ -152,22 +148,19 @@ export class LineService {
     return body || {};
   }
 
-
-  private handleError(error: Response | any) {
-    // In a real world app, you might use a remote logging infrastructure
-    let errMsg: string;
-    if (error instanceof Response) {
-      const body = error.json() || '';
-      const err = body.error || JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-    } else {
-      errMsg = error.message ? error.message : error.toString();
-    }
-    console.error(errMsg);
-    return Observable.throw(errMsg);
+  private extractData4(res: HttpResponse<any>) {
+    console.log(res);
+    return res || {};
   }
 
-  private handleError1(error: HttpErrorResponse) {
+
+  private handleError(error: HttpErrorResponse) {
+    console.error(error);
+    // this.logger.info(error);
+    return Observable.throw(error.error || 'Server error')
+  }
+
+  private handleError1Extend(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);
@@ -183,26 +176,20 @@ export class LineService {
     // return throwError('Something bad happened; please try again later.');
   }
 
-  private handleError3(err: HttpErrorResponse) {
-    let errorMessage = '';
-    if (err.error instanceof Error) {
-      // A client-side or network error occurred.
-      errorMessage = `An error occurred: ${err.error.message}`;
+  private handleError2(error: Response | any) {
+    // In a real world app, you might use a remote logging infrastructure
+    let errMsg: string;
+    if (error instanceof Response) {
+      const body = error.json() || '';
+      const err = body.error || JSON.stringify(body);
+      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
     } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
-      errorMessage = `Server returned code: ${err.status}, error message is: ${err.message}`;
+      errMsg = error.message ? error.message : error.toString();
     }
-    console.error(errorMessage);
-    console.error(err.error);
-    return Observable.throw(errorMessage);
+    console.error(errMsg);
+    return Observable.throw(errMsg);
   }
 
-  private handleError4(error: HttpErrorResponse) {
-    console.error(error);
-    // this.logger.info(error);
-    return Observable.throw(error.error || 'Server error')
-  }
 }
 
 export class CatSuggest {

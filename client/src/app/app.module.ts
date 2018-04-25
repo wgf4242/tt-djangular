@@ -12,12 +12,13 @@ import {AuthGuard} from './_guards/auth.guard';
 import {AuthenticationService} from './_services/authentication.service';
 import {CoreModule} from "./core/core.module";
 import {SharedModule} from "./shared/shared.module";
-import { MyfilterPipe } from './pipes/myfilter.pipe';
 import {LoggerService} from "./_services/logger.service";
-import {NewTransformerDialogComponent} from "./new-transformer-dialog.component";
 
 @NgModule({
-  declarations: [AppComponent, PageNotFoundComponent],
+  declarations: [
+    AppComponent,
+    PageNotFoundComponent,
+  ],
   imports: [
     BrowserModule,
     HttpModule,
@@ -33,9 +34,6 @@ import {NewTransformerDialogComponent} from "./new-transformer-dialog.component"
     AuthenticationService,
     LoggerService,
     // ,{ provide: LOCALE_ID, useValue: "zh" }
-  ],
-  entryComponents: [
-    NewTransformerDialogComponent
   ],
   bootstrap: [AppComponent]
 })

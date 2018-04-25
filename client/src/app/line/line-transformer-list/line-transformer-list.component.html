@@ -1,0 +1,59 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  添加记录
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-line-transformer></app-line-transformer>r
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <th>ID</th>
+    <th>所属线路</th>
+    <th>平台号或井号</th>
+    <th>型号</th>
+    <th>额定容量(kVA)</th>
+    <th>二次电压</th>
+    <th>出厂日期</th>
+    <th>出厂序号</th>
+    <th>厂家</th>
+    <th>焊接</th>
+    <th>备注</th>
+  </thead>
+  <tbody>
+
+  <tr *ngFor="let object of objects?.results | paginate: { itemsPerPage: 20, currentPage: page, totalItems: objects?.count }">
+    <td>{{object.id}}</td>
+    <td>{{object.line}}</td>
+    <td>{{object.well}}</td>
+    <td>{{object.category}}</td>
+    <td>{{object.capacity}}</td>
+    <td>{{object.voltage}}</td>
+    <td>{{object.date}}</td>
+    <td>{{object.no}}</td>
+    <td>{{object.manufacturers}}</td>
+    <td>{{object.is_weld}}</td>
+    <td>{{object.comment}}</td>
+  </tr>
+  </tbody>
+</table>
+
+<pagination-controls (pageChange)="pageChanged($event)" previousLabel="上一页" nextLabel="下一页"></pagination-controls>

@@ -1,16 +1,9 @@
-todo 填写人名，
-分页list 的html，向前翻可以，后翻error
-@done 快速添加写入值
 # path on Server
-
-/home/root/sites/tt-djangular
-commit cffa06037829d58770d1db7bb0b1bb5c7751561b
-
-superuser adminWgf/wang123456
-
+cd /home/root/sites/tt-djangular
 python3 manage.py makemigrations
 python3 manage.py migrate
 
+superuser adminWgf/wang123456
 # Commit Comment
 # Update Server
 

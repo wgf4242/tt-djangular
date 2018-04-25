@@ -240,6 +240,7 @@ class Transformer(models.Model):
     manufacturers = models.CharField(max_length=180, verbose_name='厂家', null=True, blank=True)
     is_weld = models.BooleanField(default=False, verbose_name='焊接')
     comment = models.CharField(max_length=180, verbose_name='备注', null=True, blank=True)
+    timestamp = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.line.name + self.well
