@@ -137,6 +137,16 @@ export class LineService {
     return this.http.get('api/transformers/', {params: params}).map(this.extractData4).catch(this.handleError);
   }
 
+  updateTransformer(value: Transformer): Observable<Transformer> {
+    let uri = `api/transformers/${value.id}/`;
+    return this.http.patch(uri, value ).map(this.extractData4).catch(this.handleError);
+  }
+
+  deleteTransformer(id: number | string): Observable<Transformer> {
+    let uri = `api/transformers/${id}/`;
+    return this.http.delete(uri).map(this.extractData4).catch(this.handleError);
+  }
+
   getCatSuggest(): Observable<CatSuggest[]> {
     // return this.http.get<CatSuggest[]>('static/ang/assets/mock/cat.json').catch(this.handleError);
     return this.http.get<CatSuggest[]>('static/ang/assets/mock/cat.json').pipe(catchError(this.handleError1Extend));
@@ -148,11 +158,11 @@ export class LineService {
     return body || {};
   }
 
+
   private extractData4(res: HttpResponse<any>) {
     console.log(res);
     return res || {};
   }
-
 
   private handleError(error: HttpErrorResponse) {
     console.error(error);
@@ -189,7 +199,6 @@ export class LineService {
     console.error(errMsg);
     return Observable.throw(errMsg);
   }
-
 }
 
 export class CatSuggest {

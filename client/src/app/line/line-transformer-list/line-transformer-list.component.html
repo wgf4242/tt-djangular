@@ -1,24 +1,26 @@
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" (click)="edit()">
   添加记录
 </button>
+
+<div class="alert-success" *ngFor="let item of pushed_transformer">
+  <span>已添加井号： {{item.well}}</span>
+  <a (click)="edit(item.id)">[编辑]</a>
+  <a (click)="delete(item.id)">[删除]</a>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">{{label}}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <app-line-transformer></app-line-transformer>r
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <app-line-transformer [item]="item" [errorMessage]="errorMessage" (onClick)="submit($event)"></app-line-transformer>
       </div>
     </div>
   </div>
@@ -37,6 +39,7 @@
     <th>厂家</th>
     <th>焊接</th>
     <th>备注</th>
+    <th>操作</th>
   </thead>
   <tbody>
 
@@ -50,8 +53,18 @@
     <td>{{object.date}}</td>
     <td>{{object.no}}</td>
     <td>{{object.manufacturers}}</td>
-    <td>{{object.is_weld}}</td>
+    <td *ngIf="object.is_weld ; else f" >是</td>
+    <ng-template #f>
+      <td>否</td>
+    </ng-template>
     <td>{{object.comment}}</td>
+    <td>
+
+      <!--<a (click)="edit(1, object)"><mat-icon mat-list-icon>edit</mat-icon></a></td>-->
+      <!--<i class="material-icons md-18">edit</i>-->
+      <!--<a mat-line (click)="edit(1, object)">[编辑]</a></td>-->
+      <a><i class="material-icons" (click)="edit(1, object)">edit</i></a>
+    </td>
   </tr>
   </tbody>
 </table>

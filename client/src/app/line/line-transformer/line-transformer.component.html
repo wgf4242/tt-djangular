@@ -1,4 +1,3 @@
-<h3>变压器管理</h3>
 <form novalidate [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
   <div class="form-group form-inline">
     <label for="exampleInputEmail1" class="col-sm-4 col-form-label">所属线路</label>
@@ -63,7 +62,7 @@
 
   <div class="form-group">
     <div class="form-check">
-      <input formControlName="manufacturers" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+      <input formControlName="is_weld" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
       <label class="form-check-label" for="defaultCheck1">
         焊接
       </label>
@@ -78,26 +77,19 @@
   </div>
 
 
-  <button type="submit" class="btn btn-primary mb-2" [disabled]="form.invalid">提交</button>
+  <!--<button type="submit" class="btn btn-primary mb-2" [disabled]="form.invalid">提交</button>-->
 
   <div class="alert-danger">
     <p *ngIf="errorMessage">{{errorMessage | json}}</p>
   </div>
 
-  <div class="alert-success" *ngFor="let item of list">
-      <span>已添加井号： {{item.well}}</span>
-    <a >[编辑]</a>
-    <a >[删除]</a>
-  </div>
-
-  <!--<button class="fab-button" mat-fab type="button" (click)="openDialog()">-->
-    <!--<mat-icon>add</mat-icon>-->
-  <!--</button>-->
-
   <p>Form valid: {{form.valid | json}}</p>
   <p>Form value: {{form.value | json}}</p>
 
-
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">提交</button>
+  </div>
 </form>
 
 

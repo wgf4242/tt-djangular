@@ -1,6 +1,6 @@
-mat-icon {
-  align-self: flex-start;
-  margin-top: 4px;
+mat-icon.mat-icon.mat-list-icon.material-icons {
+  align-self: center;
+  margin: 0;
 }
 
 .feather {
