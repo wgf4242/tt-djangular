@@ -72,12 +72,12 @@
 
     <div class="form-group">
       <label for="">出厂日期</label>
-      <el-date-picker formControlName="date" [(ngModel)]="object.date" name="date"></el-date-picker>
+      <el-date-picker formControlName="date" [(ngModel)]="object.date" name="date" [change-on-blur]="true"></el-date-picker>
     </div>
 
     <div class="form-group">
       <label for="">处理日期</label>
-      <el-date-picker formControlName="finish_date" [(ngModel)]="object.finish_date" name="finish_date"></el-date-picker>
+      <el-date-picker formControlName="finish_date" [(ngModel)]="object.finish_date" name="finish_date" [change-on-blur]="true"></el-date-picker>
     </div>
 
 

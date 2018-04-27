@@ -42,7 +42,7 @@
     <div class="form-group">
       <label for="">日期</label>
       <!--<input required ngModel name="date" type="text" class="form-control" placeholder="2017-01-01这种格式">-->
-      <el-date-picker ngModel name="date"></el-date-picker>
+      <el-date-picker ngModel name="date" [change-on-blur]="true"></el-date-picker>
     </div>
 
     <button [disabled]="form.invalid" type="submit" class="btn btn-primary">提交</button>
