@@ -54,9 +54,6 @@ export class LineDefectComponent implements OnInit {
     this.lineService.getDefectsXLSX(this.params);
   }
 
-  c1(form: NgForm) {
-    console.log(form);
-  }
   handle(time: number): void {
     // [time] is string
     // date style follow format props

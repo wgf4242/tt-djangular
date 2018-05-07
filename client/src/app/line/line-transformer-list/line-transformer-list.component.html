@@ -26,6 +26,13 @@
   </div>
 </div>
 
+<form #form="ngForm" novalidate (ngSubmit)="search(form)">
+  <input type="text" name="search" placeholder="搜索井号" ngModel>
+  <button type="submit" class="btn btn-primary">
+    <i class="material-icons">search</i>
+  </button>
+</form>
+
 <table class="table table-striped">
   <thead>
     <th>ID</th>
@@ -45,17 +52,20 @@
 
   <tr *ngFor="let object of objects?.results | paginate: { itemsPerPage: 20, currentPage: page, totalItems: objects?.count }">
     <td>{{object.id}}</td>
-    <td>{{object.line}}</td>
+    <!--<td>{{ (lines$ | async) | myfilter: object.line}}</td>-->
+    <td>{{ (lines$ | idpipe: object.line)?.name}}</td>
+    <!--<td>{{ lines$ | myfilterid: object.line}}</td>-->
+    <!--<td>{{ (lines$ | async)?.name}}</td>-->
     <td>{{object.well}}</td>
     <td>{{object.category}}</td>
-    <td>{{object.capacity}}</td>
-    <td>{{object.voltage}}</td>
+    <td data-th="容量:">{{object.capacity}}</td>
+    <td data-th="低压:">{{object.voltage}}</td>
     <td>{{object.date}}</td>
     <td>{{object.no}}</td>
     <td>{{object.manufacturers}}</td>
-    <td *ngIf="object.is_weld ; else f" >是</td>
+    <td data-th="焊接:" *ngIf="object.is_weld ; else f" >是</td>
     <ng-template #f>
-      <td>否</td>
+      <td data-th="焊接:">否</td>
     </ng-template>
     <td>{{object.comment}}</td>
     <td>

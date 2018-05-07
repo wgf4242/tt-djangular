@@ -3,6 +3,9 @@ import {LineService} from "../../_services/line.service";
 import {Transformer} from "../../_models/line-transformers";
 import {PageObject} from "../../_models/shared";
 import {HttpParams} from "@angular/common/http";
+import {Observable} from "rxjs/Observable";
+import {Line} from "../../_models/line";
+import {NgForm} from "@angular/forms";
 // import * as $ from 'jquery';
 declare var $: any;
 
@@ -21,6 +24,8 @@ export class LineTransformerListComponent implements OnInit{
   errorMessage: string;
   pushed_transformer = [];
   item:Transformer;
+  lines$: Line[];
+  // lines$: Observable<Line[]>;
 
   constructor(private lineService:LineService) { }
 
@@ -30,6 +35,7 @@ export class LineTransformerListComponent implements OnInit{
       const url_params = this.objects.next.replace(/^.*\/\??/, '');
       this.params = new HttpParams({fromString: url_params})
     });
+    this.lineService.getLines().subscribe(lines => this.lines$ = lines);
   }
 
   pageChanged(p: any) {
@@ -91,5 +97,10 @@ export class LineTransformerListComponent implements OnInit{
         this.pushed_transformer = this.pushed_transformer.filter( i => i.id !== id)
       }
     })
+  }
+
+  search(form: NgForm) {
+    const params = new HttpParams({fromObject: form.value})
+    this.lineService.getTransformers(params).subscribe(objects => this.objects = objects);
   }
 }

@@ -26,11 +26,11 @@
   <input type="text" name="search" placeholder="搜索缺陷内容" ngModel>
   <button type="submit" class="btn btn-primary">
     <!--<mat-icon svgIcon="search"></mat-icon>-->
-    <mat-icon color="white">search</mat-icon>
+    <!--<mat-icon color="white">search</mat-icon>-->
+    <i class="material-icons white">search</i>
   </button>
   <!--<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>-->
   <button type="button" class="pull-right btn btn-primary" (click)="download()">导出为xlsx</button>
-  <!--<button type="button" (click)="c1(form)">111</button>-->
   <!--{{form.value | json}}-->
 </form>
 <div >
@@ -56,7 +56,7 @@
     <tr
       *ngFor="let object of objects.results | paginate: { itemsPerPage: 20, currentPage: page, totalItems: objects.count }"
       [ngClass]="{'finished': object.finish_date}">
-      <td>{{object.id}}</td>
+      <td data-th="ID:">{{object.id}}</td>
       <td>{{object.type}}</td>
       <td>{{object.line}}</td>
       <td>{{object.branch}}</td>
@@ -67,7 +67,8 @@
       <td>{{object.finish_date}}</td>
       <td>{{object.person}}</td>
       <td>{{object.category}}</td>
-      <td><a [routerLink]="['/line/defect/', object.id]">编辑</a></td>
+      <td><a [routerLink]="['/line/defect/', object.id]"><i class="material-icons black">edit</i></a></td>
+
     </tr>
 
     </tbody>

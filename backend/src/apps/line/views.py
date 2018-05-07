@@ -166,5 +166,9 @@ class TransformerViewSet(viewsets.ModelViewSet):
     """
     serializer_class = TransformerSerializer
     queryset = Transformer.objects.all()
+    filter_backends = (DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter)
+    ordering_fields = ('timestamp',)
+    ordering = ('-timestamp',)
+    search_fields = ('well',)
 
 

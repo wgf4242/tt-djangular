@@ -8,6 +8,7 @@ import {
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MyfilterPipe} from "../pipes/myfilter.pipe";
+import {MyIdPipe} from "../pipes/idpipe.pipe";
 
 
 @NgModule({
@@ -25,10 +26,11 @@ import {MyfilterPipe} from "../pipes/myfilter.pipe";
     MatFormFieldModule,
     MatButtonModule,
     MatRadioModule,
-    // ElChildModules.ElDateModule.forRoot(),
-    // ElChildModules.ElInputsModule.forRoot(),
   ],
-  declarations: [MyfilterPipe],
+  declarations: [
+    MyfilterPipe,
+    MyIdPipe,
+  ],
   exports:[
     CommonModule,
     FormsModule,
@@ -44,6 +46,7 @@ import {MyfilterPipe} from "../pipes/myfilter.pipe";
     MatButtonModule,
     MatRadioModule,
     MyfilterPipe,
+    MyIdPipe,
   ]
 })
 export class SharedModule { }
