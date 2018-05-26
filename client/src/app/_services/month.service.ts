@@ -1,10 +1,10 @@
+
+import {throwError as observableThrowError, Observable} from 'rxjs';
 import {Injectable, Optional} from '@angular/core';
 import {Response} from '@angular/http';
 import {HttpClient} from '@angular/common/http';
 
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
+
 import {MonthPage, Month} from 'app/_models/month';
 
 @Injectable()
@@ -59,6 +59,6 @@ export class MonthService {
       errMsg = error.message ? error.message : error.toString();
     }
     console.error(errMsg);
-    return Observable.throw(errMsg);
+    return observableThrowError(errMsg);
   }
 }

@@ -1,7 +1,10 @@
-﻿import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import 'rxjs/add/operator/map'
-import 'rxjs/add/operator/catch'
+
+import {of as observableOf, Observable} from 'rxjs';
+
+import {catchError, map} from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+
+
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {nextTick} from "q";
 
@@ -19,7 +22,7 @@ export class AuthenticationService {
   // login(username: string, password: string): Observable<any> {
   login(username: string, password: string): Observable<boolean> {
     return this.http.post('/api/authenticate/', JSON.stringify({username: username, password: password}),
-      {headers: new HttpHeaders().set("Content-Type", "application/json")}).map((response) => {
+      {headers: new HttpHeaders().set("Content-Type", "application/json")}).pipe(map((response) => {
       // login successful if there's a jwt token in the response
       console.log(response);
       let token = response["token"];
@@ -37,7 +40,7 @@ export class AuthenticationService {
         // return false to indicate failed login
         return false;
       }
-    }).catch(err =>Observable.of(false))
+    }),catchError(err =>observableOf(false)),)
   }
 
   logout(): void {

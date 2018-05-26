@@ -1,12 +1,12 @@
+
+import {throwError as observableThrowError, Observable} from 'rxjs';
+
+import {map, catchError} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {Response} from '@angular/http';
 import {HttpClient, HttpParams, HttpErrorResponse} from '@angular/common/http';
 
 
-import 'rxjs/add/observable/throw';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
 import {MonthPage, Month} from 'app/_models/month';
 import {Attend, AttendDetail, AttendSum, PageAttendSumObj, AttendPageObject} from 'app/_models/attend';
 
@@ -18,13 +18,13 @@ export class AttendService {
   }
 
   add(object: Attend): Observable<Attend> {
-    return this.http.post<Attend>(this.attendsUrl, object)
-      .catch(this.handleError);
+    return this.http.post<Attend>(this.attendsUrl, object).pipe(
+      catchError(this.handleError));
   }
 
   deleteAttend(id: number | string): Observable<Attend> {
-    return this.http.delete<Attend>(this.attendsUrl + id + '/')
-      .catch(this.handleError);
+    return this.http.delete<Attend>(this.attendsUrl + id + '/').pipe(
+      catchError(this.handleError));
   }
 
   getAttend(id: number): Observable<AttendDetail> {
@@ -51,9 +51,9 @@ export class AttendService {
 
   getAttendsByPage(month_id: number): Observable<AttendPageObject> {
     const url = month_id ? this.attendsUrl + '?month_id=' + month_id : this.attendsUrl;
-    return this.http.get(url)
-      .map(this.extractData)
-      .catch(this.handleError);
+    return this.http.get(url).pipe(
+      map(this.extractData),
+      catchError(this.handleError),);
   }
 
   getAttendsSum(id: number | string): Observable<PageAttendSumObj> {
@@ -78,7 +78,7 @@ export class AttendService {
       errMsg = error.message ? error.message : error.toString();
     }
     console.error(errMsg);
-    return Observable.throw(errMsg);
+    return observableThrowError(errMsg);
   }
 
   // private handleError(error: Response | any) {

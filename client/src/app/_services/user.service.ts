@@ -1,6 +1,6 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import 'rxjs/add/operator/map'
+
 
 import {User} from "../_models/user";
 import {AuthenticationService} from "./authentication.service";

@@ -6,7 +6,7 @@ import {MonthService} from 'app/_services/month.service';
 import {AttendService} from 'app/_services/attend.service';
 import {PageAttendSumObj} from 'app/_models/attend';
 import {PersonService} from "../../_services/person.service";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs";
 import {Person} from "../../_models/person";
 
 @Component({

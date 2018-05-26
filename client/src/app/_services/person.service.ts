@@ -1,10 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { HttpClient } from '@angular/common/http';
-
 import { Person } from 'app/_models/person';
-import { Observable } from 'rxjs/Observable';
-
+import { Observable, throwError as observableThrowError } from 'rxjs';
 
 @Injectable()
 export class PersonService {
@@ -38,6 +36,6 @@ export class PersonService {
       errMsg = error.message ? error.message : error.toString();
     }
     console.error(errMsg);
-    return Observable.throw(errMsg);
+    return observableThrowError(errMsg);
   }
 }

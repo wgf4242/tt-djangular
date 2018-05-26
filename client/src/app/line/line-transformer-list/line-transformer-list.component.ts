@@ -1,9 +1,11 @@
+
+import {switchMap} from 'rxjs/operators';
 import {Component, ElementRef, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {LineService} from "../../_services/line.service";
 import {Transformer} from "../../_models/line-transformers";
 import {PageObject} from "../../_models/shared";
 import {HttpParams} from "@angular/common/http";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs";
 import {Line} from "../../_models/line";
 import {NgForm} from "@angular/forms";
 // import * as $ from 'jquery';
@@ -61,15 +63,15 @@ export class LineTransformerListComponent implements OnInit{
   submit(value) {
     // update item
     if (value.id) {
-      this.lineService.updateTransformer(value)
-        .switchMap(item => {
+      this.lineService.updateTransformer(value).pipe(
+        switchMap(item => {
         const index = this.pushed_transformer.findIndex(i => i.id === item.id);
         if (index > -1) {
           this.pushed_transformer[index] = item;
         }
         $('#exampleModal').modal('toggle');
         return this.lineService.getTransformers();
-      }).subscribe(objects => this.objects = objects );
+      })).subscribe(objects => this.objects = objects );
         // this.lineService.updateTransformer(value).subscribe(item => {
         //   const index = this.pushed_transformer.findIndex(i => i.id === item.id);
         //   if (index > -1) {

@@ -4,9 +4,9 @@ import { Tour} from "app/_models/line-tour";
 import { Person } from "app/_models/person";
 import { PersonService } from "app/_services/person.service";
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/forkJoin';
-import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs';
+
+
 import {Line} from "../../_models/line";
 
 @Component({

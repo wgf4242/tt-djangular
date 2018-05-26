@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import {ControlValueAccessor, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {LineService} from "../../_services/line.service";
 import {Line} from "../../_models/line";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs";
 import {Transformer} from "../../_models/line-transformers";
 
 @Component({
