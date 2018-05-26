@@ -1,29 +1,28 @@
-import {NgModule, Optional, SkipSelf} from '@angular/core';
-import {MatIconRegistry} from "@angular/material";
-import {DomSanitizer} from "@angular/platform-browser";
-import {loadSvgResources} from "../utils/svg.utils";
-import {HttpClientModule} from "@angular/common/http";
-import {AppRoutingModule} from "../app-routing.module";
-import {SharedModule} from "../shared/shared.module";
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
-// import 'rxjs/add/operator/map';
-// import 'rxjs/add/observable/merge';
-// import 'rxjs/add/observable/from';
-// import 'rxjs/add/observable/combineLatest';
-// import 'rxjs/add/observable/concat';
-// import 'rxjs/add/observable/of';
-// import 'rxjs/add/operator/filter';
-// import 'rxjs/add/operator/startWith';
-// import 'rxjs/add/operator/mergeMap';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { MatIconRegistry } from '@angular/material';
+import { DomSanitizer } from '@angular/platform-browser';
+import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/observable/concat';
+import 'rxjs/add/observable/from';
+import 'rxjs/add/observable/merge';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/count';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mapTo';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/reduce';
+import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/switchMap';
-// import 'rxjs/add/operator/mapTo';
-// import 'rxjs/add/operator/count';
-// import 'rxjs/add/operator/reduce';
-// import 'rxjs/add/operator/debounceTime';
-// import 'rxjs/add/operator/distinctUntilChanged';
-//
+import { AppRoutingModule } from '../app-routing.module';
+import { SharedModule } from '../shared/shared.module';
+import { loadSvgResources } from '../utils/svg.utils';
+import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './header/header.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @NgModule({
   imports: [

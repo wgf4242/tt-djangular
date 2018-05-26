@@ -1,32 +1,17 @@
-<app-header></app-header>
+<div class="example-container">
+  <app-header (toggle)="snav.toggle()"></app-header>
 
-<div class="container-fluid">
-  <div class="row">
-    <!-- sidebar -->
-    <app-sidebar></app-sidebar>
-    <!-- Page Content -->
-    <!--<main class="col-sm-9 offset-sm-3 col-md-10 col-md-offset-2 pt-3">-->
-    <!--</main>-->
-    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-      <div class="chartjs-size-monitor"
-           style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
-        <div class="chartjs-size-monitor-expand"
-             style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-          <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
-        </div>
-        <div class="chartjs-size-monitor-shrink"
-             style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-          <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
-        </div>
-      </div>
-      <div
-        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <!--<h1 class="h2">Dashboard</h1>-->
-      </div>
+  <mat-sidenav-container class="example-sidenav-container"> [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #snav [opened]="!mobileQuery.matches" [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+    <!-- <mat-sidenav #snav mode="over"> -->
+      <app-sidebar></app-sidebar>
+      <!-- <mat-nav-list>
+        <a mat-list-item routerLink=".">nav</a>
+      </mat-nav-list> -->
+    </mat-sidenav>
+
+    <mat-sidenav-content>
       <router-outlet style="display: none;"></router-outlet>
-    </main>
-    <!-- page-content-wrapper -->
-  </div>
-  <!-- div.row -->
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>
-<!-- div.container-fluid -->

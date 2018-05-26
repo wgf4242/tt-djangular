@@ -4,7 +4,8 @@ import {FormGroup} from '@angular/forms';
 @Component({
   // moduleId: module.id,
   selector: 'app-attend-form',
-  templateUrl: 'attend-form-single.html'
+  templateUrl: 'attend-form-single.html',
+  styles: [`.row {margin: 0}`]
 })
 export class AttendSingleFormComponent implements OnInit {
   @Input() addressForm: FormGroup;

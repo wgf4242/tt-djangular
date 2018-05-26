@@ -1,15 +1,13 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-
-import {AttandenceComponent} from 'app/attendance/attendance.component';
-
-import {MonthListComponent} from 'app/attendance/month-list/month-list.component';
-import {MonthDetailComponent} from 'app/attendance/month-detail/month-detail.component';
-import {MonthSummaryComponent} from 'app/attendance/month-summary/month-summary.component';
-import {AddNormalComponent} from 'app/attendance/add-normal/add-normal.component';
-import {AuthGuard} from "../_guards/auth.guard";
-import {MonthAddComponent} from "./month-add/month-add.component";
-import {EditFormComponent} from "./add-normal/attend-form/edit-form.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AddNormalComponent } from 'app/attendance/add-normal/add-normal.component';
+import { AttandenceComponent } from 'app/attendance/attendance.component';
+import { MonthDetailComponent } from 'app/attendance/month-detail/month-detail.component';
+import { MonthListComponent } from 'app/attendance/month-list/month-list.component';
+import { MonthSummaryComponent } from 'app/attendance/month-summary/month-summary.component';
+import { AuthGuard } from '../_guards/auth.guard';
+import { EditFormComponent } from './add-normal/attend-form/edit-form.component';
+import { MonthAddComponent } from './month-add/month-add.component';
 
 const routes: Routes = [
   {
@@ -21,7 +19,7 @@ const routes: Routes = [
         path: '',
         // canActivateChild: [AuthGuard],
         children: [
-          { path: '',redirectTo: 'add', pathMatch: 'full', },
+          { path: '', redirectTo: 'add', pathMatch: 'full', },
           { path: 'months', component: MonthListComponent, data: { title: '历史工时' } },
           { path: 'months/add', component: MonthAddComponent, data: { title: '添加月份' } },
           { path: 'months/:id', component: MonthSummaryComponent, data: { title: '本月汇总' } },

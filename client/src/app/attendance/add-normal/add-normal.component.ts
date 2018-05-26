@@ -1,17 +1,17 @@
-import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MonthPage } from 'app/_models/month';
+import { Person } from 'app/_models/person';
+import { AttendService } from 'app/_services/attend.service';
+import { MonthService } from 'app/_services/month.service';
+import { PersonService } from 'app/_services/person.service';
 
-import {PersonService} from 'app/_services/person.service';
-import {MonthService} from 'app/_services/month.service';
-import {AttendService} from 'app/_services/attend.service';
 
-import {Person} from 'app/_models/person';
-import {MonthPage} from 'app/_models/month';
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-add-normal',
-  templateUrl: './add-normal.component.html'
+  templateUrl: './add-normal.component.html',
 })
 export class AddNormalComponent implements OnInit {
   isSubmit = false;
@@ -54,8 +54,9 @@ export class AddNormalComponent implements OnInit {
 
     this.monthService.getMonths().subscribe(months => {
       // If month all archived add new month , navigate here
-      if (months.results[0].archived == 1)
+      if (months.results[0].archived === 1) {
         this.router.navigate(['attendance/months/add'])
+      }
 
       this.months = months;
       const control = <FormArray>this.myForm.controls['attendFormSet'];

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { NavigationEnd, Router, ActivatedRoute } from "@angular/router";
-import { Title } from "@angular/platform-browser";
+import { Component, ChangeDetectorRef } from '@angular/core';
+import { NavigationEnd, Router, ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { MediaMatcher } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-root',
@@ -9,28 +10,38 @@ import { Title } from "@angular/platform-browser";
 })
 export class AppComponent {
   title = 'app works!';
+  mobileQuery: MediaQueryList;
+  private _mobileQueryListener: () => void;
 
-    constructor(titleService:Title, router:Router, activatedRoute:ActivatedRoute) {
-    router.events.subscribe(event => {
-      if(event instanceof NavigationEnd) {
-        var title = this.getTitle(router.routerState, router.routerState.root).join('-');
-        // console.log('title', title);
-        titleService.setTitle(title);
+  constructor(
+    titleService: Title,
+    router: Router,
+    activatedRoute: ActivatedRoute,
+    changeDetectorRef: ChangeDetectorRef,
+    media: MediaMatcher
+  ) {
+
+      this.mobileQuery = media.matchMedia('(max-width: 600px)');
+      this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+      this.mobileQuery.addListener(this._mobileQueryListener);
+
+      router.events.subscribe(event => {
+        if (event instanceof NavigationEnd) {
+          const title = this.getTitle(router.routerState, router.routerState.root).join('-');
+          titleService.setTitle(title);
+        }
+      });
+    }
+
+    getTitle(state, parent) {
+      const data = [];
+      if (parent && parent.snapshot.data && parent.snapshot.data.title) {
+        data.push(parent.snapshot.data.title);
       }
-    });
-  }
 
-  // collect that title data properties from all child routes
-  // there might be a better way but this worked for me
-  getTitle(state, parent) {
-    var data = [];
-    if(parent && parent.snapshot.data && parent.snapshot.data.title) {
-      data.push(parent.snapshot.data.title);
+      if (state && parent) {
+        data.push(... this.getTitle(state, state.firstChild(parent)));
+      }
+      return data;
     }
-
-    if(state && parent) {
-      data.push(... this.getTitle(state, state.firstChild(parent)));
-    }
-    return data;
   }
-}

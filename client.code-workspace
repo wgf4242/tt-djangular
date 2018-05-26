@@ -2,6 +2,10 @@
 	"folders": [
 		{
 			"path": "client"
+		},
+		{
+			"name": "home",
+			"path": "backend\\src\\templates"
 		}
 	],
 	"settings": {}

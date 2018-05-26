@@ -24,7 +24,7 @@ export class AttandenceHomeComponent implements OnInit {
 
   ngOnInit() {
     this.getPersons();
-    this.getLastMonth(); //获取并跳转到当前月
+    this.getLastMonth();
   }
 
   getPersons() {

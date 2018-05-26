@@ -1,37 +1,19 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {
-  MatButtonModule,
-  MatDatepickerModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatLineModule,
-  MatListModule, MatRadioModule
-} from "@angular/material";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {MyfilterPipe} from "../pipes/myfilter.pipe";
-import {MyIdPipe} from "../pipes/idpipe.pipe";
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatLineModule, MatListModule, MatRadioModule, MatToolbarModule, MatSidenavModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MyIdPipe } from '../pipes/idpipe.pipe';
+import { MyfilterPipe } from '../pipes/myfilter.pipe';
+import { LayoutModule } from '@angular/cdk/layout';
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    MatIconModule,
-    MatDialogModule,
-    MatLineModule,
-    MatListModule,
-    MatInputModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatRadioModule,
-  ],
   declarations: [
     MyfilterPipe,
     MyIdPipe,
   ],
-  exports:[
+  exports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -45,8 +27,11 @@ import {MyIdPipe} from "../pipes/idpipe.pipe";
     MatFormFieldModule,
     MatButtonModule,
     MatRadioModule,
+    MatToolbarModule,
+    MatSidenavModule,
     MyfilterPipe,
     MyIdPipe,
+    LayoutModule,
   ]
 })
 export class SharedModule { }
