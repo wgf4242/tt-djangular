@@ -1,20 +1,18 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {LineTourComponent} from 'app/line/line-tour/line-tour.component';
-import {LineFacilityComponent} from 'app/line/line-facility/line-facility.component';
-import {LineDefectComponent} from 'app/line/line-defect/line-defect.component';
-import {LineTourFormComponent} from 'app/line/line-tour/line-tour-form.component';
-import {LineDefectFormComponent} from 'app/line/line-defect/line-defect-form.component';
-import {AuthGuard} from '../_guards/auth.guard';
-import {LineFacilityFormComponent} from './line-facility/line-facility-form.component';
-import {LineProductionListComponent} from "./line-production-list/line-production-list.component";
-import {LineProductionDetailComponent} from "./line-production-detail/line-production-detail.component";
-import {LineProductionFormComponent} from "./line-production-detail/line-production-form.component";
-import {LineSummaryComponent} from "./line-summary/line-summary.component";
-import {LineInfoComponent} from "./line-info/line-info.component";
-import {LineRepairComponent} from "./line-repair/line-repair.component";
-import {LineTransformerComponent} from "./line-transformer/line-transformer.component";
-import {LineTransformerListComponent} from "./line-transformer-list/line-transformer-list.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { LineDefectFormComponent } from 'app/line/line-defect/line-defect-form.component';
+import { LineDefectComponent } from 'app/line/line-defect/line-defect.component';
+import { LineFacilityComponent } from 'app/line/line-facility/line-facility.component';
+import { LineTourFormComponent } from 'app/line/line-tour/line-tour-form.component';
+import { LineTourComponent } from 'app/line/line-tour/line-tour.component';
+import { AuthGuard } from '../_guards/auth.guard';
+import { LineFacilityFormComponent } from './line-facility/line-facility-form.component';
+import { LineInfoComponent } from './line-info/line-info.component';
+import { LineProductionFormComponent } from './line-production-detail/line-production-form.component';
+import { LineProductionListComponent } from './line-production-list/line-production-list.component';
+import { LineRepairComponent } from './line-repair/line-repair.component';
+import { LineSummaryComponent } from './line-summary/line-summary.component';
+import { LineTransformerListComponent } from './line-transformer-list/line-transformer-list.component';
 
 const routes: Routes = [
 

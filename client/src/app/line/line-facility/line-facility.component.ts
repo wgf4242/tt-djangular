@@ -1,39 +1,60 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { LineService } from 'app/_services/line.service';
-import { Facility, FacilityCategory, Line } from '../../_models/line';
-import { PageObject } from '../../_models/shared';
 import { Observable } from 'rxjs';
-
+import { Facility } from '../../_models/line';
+import { PageObject } from '../../_models/shared';
+import { ActivatedRoute, Router } from '@angular/router';
+import { map, switchMap, tap, distinctUntilChanged } from 'rxjs/operators';
+import { Jsonp } from '@angular/http';
+import { MatPaginator } from '@angular/material';
 
 @Component({
   selector: 'app-line-facility',
   templateUrl: './line-facility.component.html',
 })
 export class LineFacilityComponent implements OnInit {
-  dataSource = ELEMENT_DATA;
-  displayedColumns = ['position', 'name', 'weight'];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  dataSource$: Observable<PageObject<Facility[]>>;
+  params: HttpParams;
+  queryParams = {};
+  uri = 'line/facility';
+
+  displayedColumns = ['id', 'line', 'branch', 'position', 'category', 'description', 'comment', 'date'];
+
+  constructor(
+    private lineService: LineService,
+    private route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit(): void {
-    // throw new Error("Method not implemented.");
+    this.dataSource$ = this.route.queryParamMap.pipe(
+      map(params => {
+        if (this.router.url.toString().indexOf('?') === -1) { this.paginator.firstPage(); }
+        if (!this.params) {
+          this.params = new HttpParams();
+        }
+        Object.keys(params.keys).forEach(k_index => {
+          const key = params.keys[k_index];
+          const value = params.get(key);
+          this.params = this.params.get(key) ? this.params.set(key, value) : this.params.append(key, value);
+          this.queryParams[key] = value;
+        });
+        return this.params;
+      }),
+      distinctUntilChanged(),
+      switchMap(params => {
+        console.log(params);
+        return this.lineService.getFacilities(params);
+      }),
+    )
+  }
+
+  changes(ev: any) {
+    const page = ev.pageIndex + 1;
+    this.queryParams['page'] = page;
+    this.params = null;
+    this.router.navigate([this.uri], { queryParams: this.queryParams });
   }
 }
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, },
-  { position: 2, name: 'Helium', weight: 4.0026, },
-  { position: 3, name: 'Lithium', weight: 6.941, },
-  { position: 4, name: 'Beryllium', weight: 9.0122, },
-  { position: 5, name: 'Boron', weight: 10.811, },
-  { position: 6, name: 'Carbon', weight: 12.0107, },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, },
-  { position: 8, name: 'Oxygen', weight: 15.9994, },
-  { position: 9, name: 'Fluorine', weight: 18.9984, },
-  { position: 10, name: 'Neon', weight: 20.1797, },
-];

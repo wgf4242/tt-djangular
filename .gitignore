@@ -52,10 +52,10 @@ CLIENT/Thumbs.db
 **/tcl/
 **/pip-selfcheck.json
 **/.idea/
+**/.vscode/
 **/__pycache__/
 **/migrations/
 **/db.sqlite3
 **/_gsdata_/
 *.sublime-workspace
 **/ang/
-**/.idea
