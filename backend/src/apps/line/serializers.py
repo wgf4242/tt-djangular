@@ -117,28 +117,24 @@ class MyCustomPandasSerializer(PandasSerializer):
         return dataframe
 
 
-class RepairRecordSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = RepairRecord
-        fields = ['id', 'person', 'place', 'date', 'summary']
-        depth = 2
-
-
-class RepairRecordCategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = RepairRecordCategory
-        fields = '__all__'
-
-
-class RepairSingleRecordSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = RepairSingleRecord
-        fields = '__all__'
-
-
 class TransformerSerializer(serializers.ModelSerializer):
     manufacturers = serializers.CharField(max_length=180, label="厂家", allow_blank=True, allow_null=True)
 
     class Meta:
         model = Transformer
         fields = '__all__'
+
+
+class RecordSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Record
+        fields = '__all__'
+
+
+class LineFaultSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = LineFault
+        fields = '__all__'
+

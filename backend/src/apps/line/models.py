@@ -178,11 +178,12 @@ class Defect(models.Model):
 
 
 class Tour(models.Model):
-    line = models.ForeignKey(Line, verbose_name='线路名称')
-    description = models.CharField(max_length=180, verbose_name='巡视位置')
+    line = models.CharField(max_length=180, verbose_name='线路名称', blank=True, null=True)
+    type = models.IntegerField(verbose_name='巡视类型', blank=True, null=True)
+    description = models.CharField(max_length=180, verbose_name='巡视位置', blank=True, null=True)
     person = models.CharField(max_length=180, verbose_name='巡视人员')
     length = models.FloatField(verbose_name='公里数')
-    date = models.DateField(verbose_name='日期', help_text='使用 2017-03-03 这种格式')
+    date = models.DateTimeField(verbose_name='日期', help_text='使用 2017-03-03 这种格式')
 
     def __str__(self):
         return "{line}, {description} , {person} , {date}".format(line=self.line, description=self.description,
@@ -195,38 +196,6 @@ class LineUser(models.Model):
 
     def __str__(self):
         return self.user.username
-
-
-class RepairRecord(models.Model):
-    person = models.CharField(max_length=30, verbose_name='姓名')
-    place = models.CharField(max_length=30, verbose_name='检修位置')
-    date = models.DateField(verbose_name='日期', help_text='使用 2017-03-03 这种格式', blank=True, null=True)
-
-    class Meta:
-        ordering = ['date']
-
-    def __str__(self):
-        return "检修记录:" + self.person
-
-
-class RepairRecordCategory(models.Model):
-    """
-    检修分类
-    """
-    name = models.CharField(max_length=30, verbose_name='分类')
-
-    def __str__(self):
-        return self.name
-
-
-class RepairSingleRecord(models.Model):
-    cat = models.ForeignKey(RepairRecordCategory, on_delete=models.CASCADE)
-    record = models.ForeignKey(RepairRecord, on_delete=models.CASCADE, related_name='summary')
-    num = models.IntegerField(validators=[MaxValueValidator(100)], verbose_name='数量', blank=True, null=True)
-    date = models.DateField(verbose_name='日期', help_text='使用 2017-03-03 这种格式', blank=True, null=True)
-
-    def __str__(self):
-        return '{n}, {a}'.format(n=self.cat.name, a=self.num)
 
 
 class Transformer(models.Model):
@@ -244,3 +213,30 @@ class Transformer(models.Model):
 
     def __str__(self):
         return self.line.name + self.well
+
+
+class Record(models.Model):
+    name = models.CharField(max_length=180, verbose_name='类别', null=True, blank=True)
+    unit = models.CharField(max_length=180, verbose_name='单位', null=True, blank=True)
+    count = models.IntegerField(verbose_name='数量', blank=True, null=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+
+class LineFault(models.Model):
+    line = models.CharField(max_length=180, verbose_name='线路名称', null=True, blank=True)
+    date = models.DateTimeField(verbose_name='日期', help_text='使用 2017-03-03 这种格式', null=True, blank=True)
+    action = models.CharField(max_length=180, verbose_name='保护动作', null=True, blank=True)
+    reconnect = models.CharField(max_length=180, verbose_name='重合闸', null=True, blank=True)
+    reason = models.CharField(max_length=180, verbose_name='故障原因', null=True, blank=True)
+    downtime = models.CharField(max_length=180, verbose_name='故障时间', null=True, blank=True)
+    recover_time = models.CharField(max_length=180, verbose_name='恢复时间', null=True, blank=True)
+    phenomenon = models.CharField(max_length=180, verbose_name='接地现象', null=True, blank=True)
+    weather = models.CharField(max_length=180, verbose_name='天气', null=True, blank=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+

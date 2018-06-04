@@ -1,0 +1,27 @@
+<h1 mat-dialog-title>添加记录</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit(form, $event)" novalidate>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-select formControlName="name">
+        <mat-option>无</mat-option>
+        <mat-option *ngFor="let item of data?.suggestions" [value]="item.label" (onSelectionChange)="onSelectionChange($event)" >{{item.label}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="名称,可自定义" [value]="form.get('name').value" formControlName="name">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="数量" formControlName="count">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="单位" formControlName="unit">
+    </mat-form-field>
+
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button [disabled]="form.invalid || form.pristine" color="primary">提交</button>
+  </div>
+  <div>
+    {{form.value | json}}
+  </div>
+</form>

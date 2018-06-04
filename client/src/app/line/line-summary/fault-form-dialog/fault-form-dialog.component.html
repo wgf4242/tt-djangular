@@ -1,0 +1,50 @@
+<h1 mat-dialog-title>添加记录</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
+  <div mat-dialog-content>
+    <mat-form-field>
+      <input matInput placeholder="线路名称" formControlName="line" (change)="onLineChange()">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [matDatepicker]="myDatepicker" (focus)="myDatepicker.open()" placeholder="日期" formControlName="date">
+      <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+      <mat-datepicker #myDatepicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field *ngIf="data.type === type.Earth">
+      <input matInput placeholder="故障现象" formControlName="phenomenon">
+    </mat-form-field>
+    <mat-radio-group *ngIf="data.type === type.Trip" formControlName="action">
+      <div>保护动作</div>
+      <mat-radio-button value="速断">速断</mat-radio-button>
+      <mat-radio-button value="过流">过流</mat-radio-button>
+    </mat-radio-group>
+    <mat-radio-group *ngIf="data.type === type.Trip" formControlName="reconnect">
+      <div>重合闸</div>
+      <mat-radio-button value="成功">成功</mat-radio-button>
+      <mat-radio-button value="不成功">不成功</mat-radio-button>
+    </mat-radio-group>
+    <mat-form-field>
+      <input matInput placeholder="故障原因" formControlName="reason">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="故障时间" formControlName="downtime">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="恢复送电时间" formControlName="recover_time">
+    </mat-form-field>
+    <mat-radio-group *ngIf="data.type === type.Trip" formControlName="weather">
+      <div>天气</div>
+      <mat-radio-button value="晴">晴</mat-radio-button>
+      <mat-radio-button value="雨">雨</mat-radio-button>
+      <mat-radio-button value="大风">大风</mat-radio-button>
+    </mat-radio-group>
+    <mat-form-field *ngIf="data.type === type.Earth">
+      <input matInput placeholder="备注" formControlName="comment">
+    </mat-form-field>
+
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-raised-button [disabled]="form.invalid || form.pristine" color="primary">提交</button>
+  </div>
+  {{form.value | json}}
+</form>

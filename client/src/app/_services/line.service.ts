@@ -155,6 +155,14 @@ export class LineService {
     return this.http.get<CatSuggest[]>('static/ang/assets/mock/cat.json').pipe(catchError(this.handleError));
   }
 
+  addRecord(object: any): any {
+    return this.http.post('api/records/', object).pipe(catchError(this.handleError));
+  }
+
+  addLineFault(object: any): any {
+    return this.http.post('api/line-faults/', object).pipe(catchError(this.handleError));
+  }
+
   private extractData(res: any) {
     console.log(res);
     return res || {};

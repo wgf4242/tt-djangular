@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>添加巡视记录</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit(form, $event)" novalidate>
+  <div mat-dialog-content>
+    <div>巡视类型</div>
+    <mat-radio-group formControlName="type">
+      <mat-radio-button value="1">故障巡视</mat-radio-button>
+      <mat-radio-button value="2">常规巡视</mat-radio-button>
+    </mat-radio-group>
+    <mat-form-field>
+      <input matInput placeholder="线路名称" formControlName="line" (change)="onLineChange()">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="公里数" formControlName="length">
+    </mat-form-field>
+    <mat-radio-group formControlName="person">
+      <mat-radio-button value="1">一班</mat-radio-button>
+      <mat-radio-button value="2">二班</mat-radio-button>
+    </mat-radio-group>
+    <mat-form-field>
+      <input matInput [matDatepicker]="myDatepicker" (focus)="myDatepicker.open()" placeholder="日期" formControlName="date">
+      <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+      <mat-datepicker #myDatepicker></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button [disabled]="form.invalid || form.pristine" color="primary">提交</button>
+  </div>
+</form>

@@ -17,6 +17,9 @@ import { LineRepairComponent } from './line-repair/line-repair.component';
 import { LineSummaryComponent } from './line-summary/line-summary.component';
 import { LineTransformerListComponent } from './line-transformer-list/line-transformer-list.component';
 import { LineTransformerComponent } from './line-transformer/line-transformer.component';
+import { TourFormDialogComponent } from './line-summary/tour-form-dialog/tour-form-dialog.component';
+import { FaultFormDialogComponent } from './line-summary/fault-form-dialog/fault-form-dialog.component';
+import { RecordFormDialogComponent } from './line-summary/record-form-dialog/record-form-dialog.component';
 
 @NgModule({
   imports: [
@@ -41,7 +44,15 @@ import { LineTransformerComponent } from './line-transformer/line-transformer.co
     LineRepairComponent,
     LineTransformerComponent,
     LineTransformerListComponent,
+    TourFormDialogComponent,
+    FaultFormDialogComponent,
+    RecordFormDialogComponent,
   ],
+  entryComponents: [
+    TourFormDialogComponent,
+    FaultFormDialogComponent,
+    RecordFormDialogComponent
+  ]
 
 })
 

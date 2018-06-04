@@ -133,33 +133,6 @@ class ProductionRecordViewSet(viewsets.ModelViewSet):
         line.save()
 
 
-class RepairRecordViewSet(viewsets.ModelViewSet):
-    """
-    检修记录管理
-    """
-    serializer_class = RepairRecordSerializer
-    queryset = RepairRecord.objects.all()
-    pagination_class = None
-
-
-class RepairRecordCategoryViewSet(viewsets.ModelViewSet):
-    """
-    检修分类管理
-    """
-    serializer_class = RepairRecordCategorySerializer
-    queryset = RepairRecordCategory.objects.all()
-    pagination_class = None
-
-
-class RepairSingleRecordViewSet(viewsets.ModelViewSet):
-    """
-    检修单条记录管理
-    """
-    serializer_class = RepairSingleRecordSerializer
-    queryset = RepairSingleRecord.objects.all()
-    pagination_class = None
-
-
 class TransformerViewSet(viewsets.ModelViewSet):
     """
     变压器记录管理
@@ -171,4 +144,27 @@ class TransformerViewSet(viewsets.ModelViewSet):
     ordering = ('-timestamp',)
     search_fields = ('well',)
 
+
+class RecordViewSet(viewsets.ModelViewSet):
+    """
+    工作量记录管理
+    """
+    serializer_class = RecordSerializer
+    queryset = Record.objects.all()
+    filter_backends = (DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter)
+    ordering_fields = ('timestamp',)
+    ordering = ('-timestamp',)
+    # search_fields = ('well',)
+
+
+class LineFaultViewSet(viewsets.ModelViewSet):
+    """
+    故障记录管理
+    """
+    serializer_class = LineFaultSerializer
+    queryset = LineFault.objects.all()
+    filter_backends = (DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter)
+    ordering_fields = ('timestamp',)
+    ordering = ('timestamp',)
+    # search_fields = ('well',)
 

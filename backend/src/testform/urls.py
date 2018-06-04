@@ -35,10 +35,10 @@ router.register(r'months', apps.attendance.views.MonthViewSet, base_name="month"
 router.register(r'tours', apps.line.views.TourListViewSet, base_name="tour")
 router.register(r'facilities', apps.line.views.FacilityViewSet, base_name="facility")
 router.register(r'facilities-cat', apps.line.views.FacilityCategoryViewSet, base_name="facility-cat")
-router.register(r'repair-record', apps.line.views.RepairRecordViewSet, base_name="repair-record")
-router.register(r'repair-record-cat', apps.line.views.RepairRecordCategoryViewSet, base_name="repair-record-cat")
-router.register(r'repair-record-single', apps.line.views.RepairSingleRecordViewSet, base_name="repair-record-single")
 router.register(r'transformers', apps.line.views.TransformerViewSet, base_name="transformer")
+router.register(r'records', apps.line.views.RecordViewSet, base_name="record")
+router.register(r'records', apps.line.views.RecordViewSet, base_name="record")
+router.register(r'line-faults', apps.line.views.LineFaultViewSet, base_name="line-fault")
 
 urlpatterns = [
     url(r'^api/', include(router.urls, namespace='api')),

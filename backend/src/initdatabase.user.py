@@ -2,7 +2,7 @@ import os, sys, django
 from django.db import connection
 from django.conf import settings
 
-database_init = 'create database if not exists myform1'
+database_init = 'create database if not exists myform'
 os.environ['DJANGO_SETTINGS_MODULE'] = 'testform.settings'
 django.setup()
 
