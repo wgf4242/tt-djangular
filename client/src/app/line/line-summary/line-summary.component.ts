@@ -105,12 +105,18 @@ export class LineSummaryComponent implements OnInit {
     dialogRef.afterClosed().pipe(filter(n => n))
       .subscribe(result => {
         console.log(result);
-        this.lineService.addLineFault(result).subscribe();
-        if (type === this.type.Earth) {
-          this.arr_earth.push('添加成功')
-        } else {
-          this.arr_trip.push('添加成功')
-        }
+        this.lineService.addLineFault(result).subscribe(
+          _ => {
+            if (type === this.type.Earth) {
+              this.arr_earth.push('添加成功')
+            } else {
+              this.arr_trip.push('添加成功')
+            }
+          },
+          err => {}
+          // TODO: not done;
+        )
+
       });
   }
 
