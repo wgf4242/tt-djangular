@@ -1,13 +1,12 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-
-import {Month} from 'app/_models/month';
-import {MonthService} from 'app/_services/month.service';
-import {AttendService} from 'app/_services/attend.service';
-import {PageAttendSumObj} from 'app/_models/attend';
-import {PersonService} from "../../_services/person.service";
-import {Observable} from "rxjs";
-import {Person} from "../../_models/person";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PageAttendSumObj } from 'app/_models/attend';
+import { Month } from 'app/_models/month';
+import { AttendService } from 'app/_services/attend.service';
+import { MonthService } from 'app/_services/month.service';
+import { Observable } from 'rxjs';
+import { Person } from '../../_models/person';
+import { PersonService } from '../../_services/person.service';
 
 @Component({
   templateUrl: './month-summary.component.html'
@@ -18,23 +17,22 @@ export class MonthSummaryComponent implements OnInit {
   isEdit = false;
   isSubmit = false;
   params = {};
-  perseon$ : Observable<Person[]>;
+  perseon$: Observable<Person[]>;
   id: number;
 
   constructor(private route: ActivatedRoute,
-              private router: Router,
-              private monthService: MonthService,
-              private attendService: AttendService,
-              private personService: PersonService,
-              // private attenceHome: AttandenceHomeComponent
+    private router: Router,
+    private monthService: MonthService,
+    private attendService: AttendService,
+    private personService: PersonService,
+    // private attenceHome: AttandenceHomeComponent
   ) {
   }
 
   ngOnInit(): void {
-    let id: number;
     this.route.params.subscribe(
       params => {
-        this.id = params["id"];
+        this.id = params['id'];
         this.monthService.getMonth(this.id).subscribe(month => (this.month = month, console.log(month)));
         this.attendService.getAttendsSum(this.id).subscribe(page => this.page = page);
         this.perseon$ = this.personService.getPersons();

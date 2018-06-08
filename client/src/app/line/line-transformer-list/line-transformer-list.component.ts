@@ -1,13 +1,13 @@
 
 import {switchMap} from 'rxjs/operators';
 import {Component, ElementRef, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import {LineService} from "../../_services/line.service";
-import {Transformer} from "../../_models/line-transformers";
-import {PageObject} from "../../_models/shared";
-import {HttpParams} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {Line} from "../../_models/line";
-import {NgForm} from "@angular/forms";
+import {LineService} from '../../_services/line.service';
+import {Transformer} from '../../_models/line-transformers';
+import {PageObject} from '../../_models/shared';
+import {HttpParams} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Line} from '../../_models/line';
+import {NgForm} from '@angular/forms';
 // import * as $ from 'jquery';
 declare var $: any;
 
@@ -16,7 +16,7 @@ declare var $: any;
   templateUrl: './line-transformer-list.component.html',
   styleUrls: ['./line-transformer-list.component.css']
 })
-export class LineTransformerListComponent implements OnInit{
+export class LineTransformerListComponent implements OnInit {
   // @ViewChild('exampleModal') exampleModal:ElementRef;
   label = '添加记录';
 
@@ -25,11 +25,11 @@ export class LineTransformerListComponent implements OnInit{
   params: HttpParams;
   errorMessage: string;
   pushed_transformer = [];
-  item:Transformer;
+  item: Transformer;
   lines$: Line[];
   // lines$: Observable<Line[]>;
 
-  constructor(private lineService:LineService) { }
+  constructor(private lineService: LineService) { }
 
   ngOnInit() {
     this.lineService.getTransformers().subscribe(objects => {
@@ -50,8 +50,8 @@ export class LineTransformerListComponent implements OnInit{
     if (item) {
       this.item = item;
       this.label = '编辑记录';
-    } else if(id) {
-      this.item = this.pushed_transformer.find(item => item.id === id);
+    } else if (id) {
+      this.item = this.pushed_transformer.find(i => i.id === id);
       this.label = '编辑记录';
     } else {
       this.item = null;
@@ -95,7 +95,7 @@ export class LineTransformerListComponent implements OnInit{
 
   delete(id: number | string) {
     this.lineService.deleteTransformer(id).subscribe(item => {
-      if (this.pushed_transformer.findIndex(i => i.id === id) > -1){
+      if (this.pushed_transformer.findIndex(i => i.id === id) > -1) {
         this.pushed_transformer = this.pushed_transformer.filter( i => i.id !== id)
       }
     })

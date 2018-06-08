@@ -2,7 +2,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatLineModule, MatListModule, MatPaginatorModule, MatRadioModule, MatSidenavModule, MatToolbarModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule } from '@angular/material';
+import { MatButtonModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatLineModule, MatListModule, MatPaginatorModule, MatRadioModule, MatSidenavModule, MatToolbarModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatAutocompleteModule } from '@angular/material';
 import { MatTableModule } from '@angular/material/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MyIdPipe } from '../pipes/idpipe.pipe';
@@ -18,6 +18,7 @@ import { MyfilterPipe } from '../pipes/myfilter.pipe';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    MatAutocompleteModule,
     MatButtonModule,
     MatDialogModule,
     MatDatepickerModule,

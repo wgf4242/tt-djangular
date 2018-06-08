@@ -6,7 +6,7 @@ import { Tour } from 'app/_models/line-tour';
 import * as FileSaver from 'file-saver';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Branch, Defect, DefectsCategory, DefectsType, Facility, FacilityCategory, Line, ProductionRecord } from '../_models/line';
+import { Branch, Defect, DefectsCategory, DefectsType, Facility, FacilityCategory, Line, ProductionRecord, Fault } from '../_models/line';
 import { Transformer } from '../_models/line-transformers';
 import { PageObject } from '../_models/shared';
 import { LoggerService } from './logger.service';
@@ -17,7 +17,7 @@ export class LineService {
   constructor(
     private http: HttpClient,
     private logger: LoggerService
-  ) {}
+  ) { }
 
 
   addTour(tour): Observable<Tour> {
@@ -26,7 +26,7 @@ export class LineService {
   }
 
   getTours(params?: HttpParams): Observable<Tour[]> {
-    return this.http.get<Tour[]>(this.tourUrl, {params: params})
+    return this.http.get<Tour[]>(this.tourUrl, { params: params })
   }
 
   getTour(id: number): Observable<Tour> {
@@ -45,7 +45,7 @@ export class LineService {
   deleteTour(id: number): Observable<Tour> {
     return this.http.delete<Tour>(this.tourUrl + id).pipe(
       map(this.extractData),
-      catchError(this.handleError),);
+      catchError(this.handleError), );
   }
 
   getLines(): Observable<Line[]> {
@@ -57,7 +57,7 @@ export class LineService {
   }
 
   getDefects(params?: HttpParams): Observable<PageObject<Defect>> {
-    return this.http.get<PageObject<Defect>>('api/defects/', {params: params}).pipe(catchError(this.handleError));
+    return this.http.get<PageObject<Defect>>('api/defects/', { params: params }).pipe(catchError(this.handleError));
   }
 
   addDefect(defect: Defect): Observable<Defect> {
@@ -72,9 +72,9 @@ export class LineService {
   }
 
   getDefectsXLSX(params?: HttpParams) {
-    return this.http.get('api/defects.xlsx/', {params: params, responseType: 'blob'}).pipe(catchError(this.handleError)).subscribe(
+    return this.http.get('api/defects.xlsx/', { params: params, responseType: 'blob' }).pipe(catchError(this.handleError)).subscribe(
       data => {
-        const blob = new Blob([data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+        const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
         FileSaver.saveAs(blob, 'export.xlsx');
       }
     );
@@ -86,7 +86,7 @@ export class LineService {
   }
 
   getFacilities(params?: HttpParams): Observable<PageObject<Facility[]>> {
-    return this.http.get<PageObject<Facility[]>>('api/facilities/', {params: params});
+    return this.http.get<PageObject<Facility[]>>('api/facilities/', { params: params });
   }
 
   getFacilitiesCategories(): Observable<FacilityCategory[]> {
@@ -111,7 +111,7 @@ export class LineService {
   }
 
   getProductionRecords(params?: HttpParams): Observable<PageObject<ProductionRecord[]>> {
-    return this.http.get<PageObject<ProductionRecord[]>>('api/production-records/', {params: params}).pipe(catchError(this.handleError));
+    return this.http.get<PageObject<ProductionRecord[]>>('api/production-records/', { params: params }).pipe(catchError(this.handleError));
   }
 
   addProductionRecord(obj: ProductionRecord): Observable<ProductionRecord> {
@@ -128,7 +128,7 @@ export class LineService {
   }
 
   getTransformers(params?: HttpParams): Observable<PageObject<Transformer[]>> {
-    return this.http.get<PageObject<Transformer[]>>('api/transformers/', {params: params}).pipe(
+    return this.http.get<PageObject<Transformer[]>>('api/transformers/', { params: params }).pipe(
       map(this.extractData),
       catchError(this.handleError)
     );
@@ -137,7 +137,7 @@ export class LineService {
   updateTransformer(value: Transformer): Observable<Transformer> {
     const uri = `api/transformers/${value.id}/`;
     // return this.http.patch<Transformer>(uri, value ).pipe(catchError(this.handleError));
-    return this.http.patch<Transformer>(uri, value ).pipe(
+    return this.http.patch<Transformer>(uri, value).pipe(
       map(this.extractData),
       catchError(this.handleError)
     );
@@ -159,9 +159,20 @@ export class LineService {
     return this.http.post('api/records/', object).pipe(catchError(this.handleError));
   }
 
+
+  getRecords(params?: HttpParams): Observable<any> {
+    return this.http.get('api/records/', { params: params }).pipe(catchError(this.handleError));
+  }
+
+
   addLineFault(object: any): any {
     return this.http.post('api/line-faults/', object).pipe(catchError(this.handleError));
   }
+
+  getLineFaults(params?: HttpParams): Observable<Fault[]> {
+    return this.http.get<Fault[]>('api/line-faults/', { params: params }).pipe(catchError(this.handleError));
+  }
+
 
   private extractData(res: any) {
     console.log(res);

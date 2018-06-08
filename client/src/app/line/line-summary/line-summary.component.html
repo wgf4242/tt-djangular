@@ -29,7 +29,7 @@
       </tbody>
 
     </table>
-    <button mat-raised-button color="primary" (click)="openTourFormDialog()">添加</button>
+    <button mat-raised-button color="primary" (click)="openTourFormDialog()">添加巡视</button>
     <p *ngFor="let item of arr_tour">{{item}}</p>
 
     <div>新设备投运情况：</div>
@@ -45,22 +45,71 @@
   <div>
     临时工作：
     <button mat-raised-button color="primary" (click)="openRecordFormDialog()">添加</button>
-    <p *ngFor="let item of arr_temp">{{item}}</p>
+    <p>{{temp_work}}</p>
   </div>
 
 
   <div>
-    1、 10kV线路跳闸故障 5 次：
+    1、 10kV线路跳闸故障 {{arr_trip.length}} 次：
     <button mat-raised-button color="primary" (click)="openFaultFormDialog(type.Trip)">添加</button>
-    <p>日期 线路名称 保护 重合闸 故障原因 跳闸时间 恢复送电时间 天气</p>
+
   </div>
-  <p *ngFor="let item of arr_trip">{{item}}</p>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>日期</th>
+        <th>线路名称</th>
+        <th>保护</th>
+        <th>重合闸</th>
+        <th>故障原因</th>
+        <th>跳闸时间</th>
+        <th>恢复送电时间</th>
+        <th>天气</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of arr_trip; let i=index;">
+        <td>{{i+1}}</td>
+        <td>{{item.line}}</td>
+        <td>{{item.date | date: 'yyyy-MM-dd'}}</td>
+        <td>{{item.action}}</td>
+        <td>{{item.reconnect}}</td>
+        <td>{{item.reason}}</td>
+        <td>{{item.downtime}}</td>
+        <td>{{item.recover_time}}</td>
+        <td>{{item.weather}}</td>
+      </tr>
+    </tbody>
+  </table>
 
   <div>
-    2、10kV线路接地故障 2 次：
+    2、10kV线路接地故障 {{arr_earth.length}} 次：
     <button mat-raised-button color="primary" (click)="openFaultFormDialog(type.Earth)">添加</button>
-    <p>日期 线路名称 接地时间 接地现象 接地原因 处理完成时间 备注</p>
   </div>
-  <p *ngFor="let item of arr_earth">{{item}}</p>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>日期</th>
+        <th>线路名称</th>
+        <th>接地时间</th>
+        <th>接地现象</th>
+        <th>接地原因</th>
+        <th>处理完成时间</th>
+        <th>备注</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of arr_earth; let i=index;">
+        <td>{{i+1}}</td>
+        <td>{{item.line}}</td>
+        <td>{{item.date | date: 'yyyy-MM-dd'}}</td>
+        <td>{{item.reason}}</td>
+        <td>{{item.downtime}}</td>
+        <td>{{item.recover_time}}</td>
+        <td>{{item.phenomenon}}</td>
+        <td>{{item.comment}}</td>
+      </tr>
+    </tbody>
+  </table>
 
 </div>

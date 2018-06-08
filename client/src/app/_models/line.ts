@@ -74,3 +74,17 @@ export class ProductionRecord {
   well: number;
   comment: string;
 }
+
+export class Fault {
+  id?: number;
+  line?: string;
+  date?: string;
+  action?: string;
+  reconnect?: string;
+  reason?: string;
+  downtime?: string;
+  recover_time?: string;
+  phenomenon?: string;
+  weather?: string;
+  comment?: string;
+}

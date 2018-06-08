@@ -2,15 +2,14 @@ import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { TourFormDialogComponent } from 'app/line/line-summary/tour-form-dialog/tour-form-dialog.component';
-import { filter } from 'rxjs/operators';
-import { Line, ProductionRecord } from '../../_models/line';
+import { Observable, from } from 'rxjs';
+import { distinctUntilChanged, filter, map, tap, mergeMap, mergeAll } from 'rxjs/operators';
+import { Fault, Line, ProductionRecord } from '../../_models/line';
 import { Tour } from '../../_models/line-tour';
 import { PageObject } from '../../_models/shared';
 import { LineService } from '../../_services/line.service';
 import { FaultFormDialogComponent, FaultType } from './fault-form-dialog/fault-form-dialog.component';
 import { RecordFormDialogComponent } from './record-form-dialog/record-form-dialog.component';
-
-
 
 @Component({
   selector: 'app-line-summary',
@@ -18,20 +17,21 @@ import { RecordFormDialogComponent } from './record-form-dialog/record-form-dial
   styleUrls: ['./line-summary.component.css']
 })
 export class LineSummaryComponent implements OnInit {
-  suggestions = [
-    { label: '更换跌落保险', unit: '个' },
-    { label: '更换变压器', unit: '台' },
-    { label: '拆除鸟窝', unit: '处' },
-    { label: '更换避雷器', unit: '支' },
-    { label: '装设驱鸟器', unit: '个' },
-    { label: '正立瓶', unit: '个' },
-    { label: '更换设备线夹', unit: '个' },
-    { label: '修补接地极', unit: '处' },
-    { label: '调整弛度', unit: '相' },
-    { label: '更换刀闸', unit: '片' },
-    { label: '变压器补油', unit: '台' },
-    { label: '更换绝缘子', unit: '支' },
-  ]
+  suggestions = [];
+  // suggestions = [
+  //   { label: '更换跌落保险', unit: '个' },
+  //   { label: '更换变压器', unit: '台' },
+  //   { label: '拆除鸟窝', unit: '处' },
+  //   { label: '更换避雷器', unit: '支' },
+  //   { label: '装设驱鸟器', unit: '个' },
+  //   { label: '正立瓶', unit: '个' },
+  //   { label: '更换设备线夹', unit: '个' },
+  //   { label: '修补接地极', unit: '处' },
+  //   { label: '调整弛度', unit: '相' },
+  //   { label: '更换刀闸', unit: '片' },
+  //   { label: '变压器补油', unit: '台' },
+  //   { label: '更换绝缘子', unit: '支' },
+  // ]
 
   private tours: Tour[];
   lines: Line[];
@@ -39,9 +39,11 @@ export class LineSummaryComponent implements OnInit {
   tours_sum: number;
   tours_fault_sum: number;
   production_records: PageObject<ProductionRecord[]>;
+
   page: number;
   type = FaultType;
 
+  temp_work: string;
   arr_tour = [];
   arr_temp = [];
   arr_trip = [];
@@ -79,7 +81,28 @@ export class LineSummaryComponent implements OnInit {
     })
 
     // get ProductionRecords
-    this.lineService.getProductionRecords(params).subscribe(production_records => (this.production_records = production_records, console.log(this.production_records)));
+    this.lineService.getProductionRecords(params).subscribe(
+      production_records => {
+        this.production_records = production_records;
+        // console.log(this.production_records)
+      });
+
+    this.lineService.getRecords(params).pipe(
+      tap(v => this.temp_work  = v.map(i => `${i.name}${i.sum}${i.unit}`).join(',')),
+      tap(v => this.suggestions = v.map(i => {return {label: i.name, unit: i.unit}})),
+      // tap(v => console.log(v.map(i => {return {label: i.name, unit: i.unit}})
+      // tap(v => this.suggestions  = v.map(i => {label: i.name, unit: i.unit})),
+      distinctUntilChanged()
+    ).subscribe();
+
+    this.lineService.getLineFaults(params).pipe(
+      tap(val => console.log(val)),
+      tap(arr => {
+        this.arr_earth = arr.filter(v => !!v.phenomenon);
+        this.arr_trip = arr.filter(v => !v.phenomenon);
+      }),
+      tap(val => console.log(val)),
+    ).subscribe();
   }
 
 
@@ -104,7 +127,7 @@ export class LineSummaryComponent implements OnInit {
 
     dialogRef.afterClosed().pipe(filter(n => n))
       .subscribe(result => {
-        console.log(result);
+        console.log('openFaultFormDialog', result);
         this.lineService.addLineFault(result).subscribe(
           _ => {
             if (type === this.type.Earth) {
@@ -113,7 +136,7 @@ export class LineSummaryComponent implements OnInit {
               this.arr_trip.push('添加成功')
             }
           },
-          err => {}
+          err => { }
           // TODO: not done;
         )
 
@@ -132,6 +155,5 @@ export class LineSummaryComponent implements OnInit {
         this.lineService.addRecord(result).subscribe();
       });
   }
-
 
 }

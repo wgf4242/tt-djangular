@@ -21,25 +21,25 @@ export class FaultFormDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
   ) {
-    let trip_init1 = '速断';
-    let trip_init2 = '成功';
-    let trip_init_weather = '晴';
+    let trip_action = '速断';
+    let trip_reconnect = '成功';
+    let trip_weather = '晴';
     if (data.type !== this.type.Trip) {
-      trip_init1 = '';
-      trip_init2 = '';
-      trip_init_weather = '';
+      trip_action = '';
+      trip_reconnect = '';
+      trip_weather = '';
     }
 
     this.form = this.fb.group({
       line: ['', Validators.required],
       date: ['', ],
-      action: [trip_init1],
-      reconnect: [trip_init2],
+      action: [trip_action],
+      reconnect: [trip_reconnect],
       reason: [''],
       downtime: [''],
       recover_time: [''],
       phenomenon: [''],
-      weather: [trip_init_weather],
+      weather: [trip_weather],
       comment: [''],
     })
   }

@@ -126,6 +126,7 @@ class TransformerSerializer(serializers.ModelSerializer):
 
 
 class RecordSerializer(serializers.ModelSerializer):
+    sum = serializers.IntegerField(label='数量', read_only=True)
 
     class Meta:
         model = Record

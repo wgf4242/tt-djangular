@@ -1,9 +1,9 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {ControlValueAccessor, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {LineService} from "../../_services/line.service";
-import {Line} from "../../_models/line";
-import {Observable} from "rxjs";
-import {Transformer} from "../../_models/line-transformers";
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { Line } from '../../_models/line';
+import { Transformer } from '../../_models/line-transformers';
+import { LineService } from '../../_services/line.service';
 
 @Component({
   selector: 'app-line-transformer',
@@ -48,13 +48,13 @@ export class LineTransformerComponent implements OnInit, OnChanges {
       // })
       this.form.patchValue(this.item);
       console.log(this.form.value);
-    } else if(this.form) {
+    } else if (this.form) {
       this.form.reset();
-      this.form.patchValue({line: 1, is_weld: false});
+      this.form.patchValue({ line: 1, is_weld: false });
     }
   }
 
-  onSubmit({value, valid}, ev: Event) {
+  onSubmit({ value, valid }, ev: Event) {
     // console.log(value);
     if (valid) {
       // this.lineService.addTransformer(value).subscribe(value2 => {console.log(value2);this.list.push(`已添加井号： ${value2.well}`);this.errorMessage = null;},err => {console.log(err);this.errorMessage = err;});

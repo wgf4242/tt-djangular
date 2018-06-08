@@ -16,6 +16,7 @@ django.setup()
 from apps.attendance.models import Attend
 from apps.line.models import Record
 # date__annotate = Attend.objects.values('person').annotate(sums=Sum('workhour')).order_by()
-date__annotate = Record.objects.values('name').annotate(sums=Sum('count')).order_by()
+date__annotate = Record.objects.values('name', 'unit',).annotate(sums=Sum('count')).order_by()
+# date__annotate = Record.objects.values('name').annotate(sums=Sum('count')).order_by()
 for index, item in enumerate(date__annotate):
     print(index, item)

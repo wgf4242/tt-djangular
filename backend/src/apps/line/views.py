@@ -150,7 +150,8 @@ class RecordViewSet(viewsets.ModelViewSet):
     工作量记录管理
     """
     serializer_class = RecordSerializer
-    queryset = Record.objects.all()
+    pagination_class = None
+    queryset = Record.objects.values('name', 'unit',).annotate(sum=Sum('count')).order_by()
     filter_backends = (DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter)
     ordering_fields = ('timestamp',)
     ordering = ('-timestamp',)
@@ -163,6 +164,7 @@ class LineFaultViewSet(viewsets.ModelViewSet):
     """
     serializer_class = LineFaultSerializer
     queryset = LineFault.objects.all()
+    pagination_class = None
     filter_backends = (DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter)
     ordering_fields = ('timestamp',)
     ordering = ('timestamp',)

@@ -1,10 +1,10 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {CatSuggest, LineService} from 'app/_services/line.service';
-import {Branch} from 'app/_models/line';
-import {FormBuilder, FormGroup, NgForm, Validators} from '@angular/forms';
-import {ActivatedRoute, Params, Router} from '@angular/router';
-import {Defect, DefectsCategory, DefectsType, Line} from '../../_models/line';
-import {format} from 'date-fns';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { CatSuggest, LineService } from 'app/_services/line.service';
+import { Branch } from 'app/_models/line';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Defect, DefectsCategory, DefectsType, Line } from '../../_models/line';
+import { format } from 'date-fns';
 
 enum Status { Edit, Add, Delete };
 
@@ -14,17 +14,17 @@ enum Status { Edit, Add, Delete };
 })
 export class LineDefectFormComponent implements OnInit {
   categorie_suggestions = [
-    {'name': '刀闸', 'select': ['刀闸片烧', '机构开焊']},
-    {'name': '鸟窝', 'select': ['有鸟窝']},
-    {'name': '杆塔', 'select': ['横线路歪', '顺线路歪', '严重']},
-    {'name': '导线', 'select': ['有断股']},
-    {'name': '拉线', 'select': ['废拉线', '拉线松动']},
-    {'name': '绝缘子', 'select': ['中相', '边相', '螺丝松', '缺开口销']},
-    {'name': '防雷与接地装置', 'select': ['无接地极', '缺接地线']},
-    {'name': '横担金具及变台', 'select': ['有铜铝线夹']},
-    {'name': '配电变压器', 'select': []},
-    {'name': '柱上开关', 'select': []},
-    {'name': '线路防护', 'select': []}
+    { 'name': '刀闸', 'select': ['刀闸片烧', '机构开焊'] },
+    { 'name': '鸟窝', 'select': ['有鸟窝'] },
+    { 'name': '杆塔', 'select': ['横线路歪', '顺线路歪', '严重'] },
+    { 'name': '导线', 'select': ['有断股'] },
+    { 'name': '拉线', 'select': ['废拉线', '拉线松动'] },
+    { 'name': '绝缘子', 'select': ['中相', '边相', '螺丝松', '缺开口销'] },
+    { 'name': '防雷与接地装置', 'select': ['无接地极', '缺接地线'] },
+    { 'name': '横担金具及变台', 'select': ['有铜铝线夹'] },
+    { 'name': '配电变压器', 'select': [] },
+    { 'name': '柱上开关', 'select': [] },
+    { 'name': '线路防护', 'select': [] }
   ]
 
   object: Defect = new Defect();
@@ -43,12 +43,12 @@ export class LineDefectFormComponent implements OnInit {
   types: DefectsType;
 
   submited_list: Defect[] = [];
-  datePickerConfig = {'format': 'YYYY-MM-DD' , 'firstDayOfWeek':'mo', 'locale':'zh-cn' };
+  datePickerConfig = { 'format': 'YYYY-MM-DD', 'firstDayOfWeek': 'mo', 'locale': 'zh-cn' };
 
   constructor(private lineService: LineService,
-              private router: Router,
-              private route: ActivatedRoute,
-              private fb: FormBuilder) {
+    private router: Router,
+    private route: ActivatedRoute,
+    private fb: FormBuilder) {
     this.createForm();
   }
 
@@ -73,8 +73,8 @@ export class LineDefectFormComponent implements OnInit {
         this.object.date = format(new Date(), 'YYYY-MM-DD');
         this.object.line = 1;
         this.object.category = 1;
-        this.lineService.getLines().subscribe(lines => {this.lines = lines;this.getTheBranch(1)});
-        console.log( format(new Date(), 'YYYY-MM-DD'));
+        this.lineService.getLines().subscribe(lines => { this.lines = lines; this.getTheBranch(1) });
+        console.log(format(new Date(), 'YYYY-MM-DD'));
       }
     });
   }
@@ -137,15 +137,15 @@ export class LineDefectFormComponent implements OnInit {
   }
 
   getTheBranch(lineid: number) {
-    const branchIdArray = this.lines && this.lines.filter(line => line.id == lineid)[0].branch;
+    const branchIdArray = this.lines && this.lines.filter(line => line.id === lineid)[0].branch;
     const branchArray = this.allBranches.filter(branch => branchIdArray.includes(branch.id))
     // console.log(branchArray);
     this.lineBranches = branchArray;
   }
 
   onChangeCat($event) {
-    const name = this.categories.find(cat => cat.id == this.object.category).name;
-    this.cat_suggest = this.categorie_suggestions.find(c => c.name == name);
+    const name = this.categories.find(cat => cat.id === this.object.category).name;
+    this.cat_suggest = this.categorie_suggestions.find(c => c.name === name);
   }
 
   addDescription($event) {

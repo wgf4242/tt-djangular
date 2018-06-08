@@ -4,12 +4,17 @@
     <mat-form-field>
       <mat-select formControlName="name">
         <mat-option>无</mat-option>
-        <mat-option *ngFor="let item of data?.suggestions" [value]="item.label" (onSelectionChange)="onSelectionChange($event)" >{{item.label}}</mat-option>
+        <mat-option *ngFor="let item of data?.suggestions" [value]="item.label" (onSelectionChange)="onSelectionChange($event)">{{item.label}}</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="名称,可自定义" [value]="form.get('name').value" formControlName="name">
-    </mat-form-field>
+
+    <input matInput placeholder="名称,可自定义" aria-label="名称,可自定义" [matAutocomplete]="auto" formControlName="name">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredStates | async" [value]="option.label" (onSelectionChange)="onSelectionChange($event)">
+        <span>{{ option.label }}</span>
+      </mat-option>
+    </mat-autocomplete>
+
     <mat-form-field>
       <input matInput placeholder="数量" formControlName="count">
     </mat-form-field>

@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {NgForm} from "@angular/forms";
-import {MonthService} from "../../_services/month.service";
-import {Router} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MonthService } from '../../_services/month.service';
 
 @Component({
   selector: 'app-month-add',
@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
 export class MonthAddComponent implements OnInit {
   errorMessage: any;
 
-  constructor(private monthService:MonthService, private router: Router) {
+  constructor(private monthService: MonthService, private router: Router) {
   }
 
   ngOnInit() {
@@ -19,7 +19,7 @@ export class MonthAddComponent implements OnInit {
   onSubmit(form: NgForm) {
     if (form.valid) {
       this.monthService.addMonth(form.value).subscribe(
-        month => (console.log(month), this.router.navigate(["attendance/add"]))
+        month => (console.log(month), this.router.navigate(['attendance/add']))
       );
     }
   }

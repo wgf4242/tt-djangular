@@ -1,13 +1,10 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {LoginComponent} from './login.component';
-import {AuthenticationService} from "../_services/authentication.service";
-import {HttpClientModule} from "@angular/common/http";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {BrowserModule} from "@angular/platform-browser";
-import {SharedModule} from "../shared/shared.module";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AuthenticationService } from '../_services/authentication.service';
+import { SharedModule } from '../shared/shared.module';
+import { LoginComponent } from './login.component';
 
-const loginRoutes: Routes = [{path: 'login', component: LoginComponent}];
+const loginRoutes: Routes = [{ path: 'login', component: LoginComponent }];
 
 @NgModule({
   // declarations:[LoginTempComponent],

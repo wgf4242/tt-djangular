@@ -13,8 +13,6 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import sys
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # sys.path.insert(0, BASE_DIR)
 # sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
@@ -29,7 +27,7 @@ SECRET_KEY = 'fkhu=co^d+kx$z(y=^rtpzkvi_3l+_cfol_!6d*@c(sul=4(c2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['47.93.99.61', 'localhost', '127.0.0.1', 'wgf4242.top', 'pdywd.com', '192.168.110.167', '111.40.89.195']
+ALLOWED_HOSTS = ['47.93.99.61', 'localhost', '127.0.0.1', 'wgf4242.top', 'www.wgf4242.top', 'pdywd.com', '192.168.110.167', '111.40.89.195']
 
 
 # Application definition
