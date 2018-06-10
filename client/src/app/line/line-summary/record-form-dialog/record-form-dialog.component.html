@@ -1,17 +1,13 @@
 <h1 mat-dialog-title>添加记录</h1>
 <form [formGroup]="form" (ngSubmit)="onSubmit(form, $event)" novalidate>
   <div mat-dialog-content>
-    <mat-form-field>
-      <mat-select formControlName="name">
-        <mat-option>无</mat-option>
-        <mat-option *ngFor="let item of data?.suggestions" [value]="item.label" (onSelectionChange)="onSelectionChange($event)">{{item.label}}</mat-option>
-      </mat-select>
-    </mat-form-field>
 
-    <input matInput placeholder="名称,可自定义" aria-label="名称,可自定义" [matAutocomplete]="auto" formControlName="name">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="名称,可自定义" aria-label="名称,可自定义" [value]="form.get('name').value" [matAutocomplete]="auto" formControlName="name">
+    </mat-form-field>
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option *ngFor="let option of filteredStates | async" [value]="option.label" (onSelectionChange)="onSelectionChange($event)">
-        <span>{{ option.label }}</span>
+        <span>{{ option.label }}({{option.unit}})</span>
       </mat-option>
     </mat-autocomplete>
 

@@ -165,7 +165,7 @@ export class LineService {
   }
 
 
-  addLineFault(object: any): any {
+  addLineFault(object: any): Observable<any> {
     return this.http.post('api/line-faults/', object).pipe(catchError(this.handleError));
   }
 

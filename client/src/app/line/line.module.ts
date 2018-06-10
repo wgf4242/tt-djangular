@@ -14,12 +14,12 @@ import { LineProductionDetailComponent } from './line-production-detail/line-pro
 import { LineProductionFormComponent } from './line-production-detail/line-production-form.component';
 import { LineProductionListComponent } from './line-production-list/line-production-list.component';
 import { LineRepairComponent } from './line-repair/line-repair.component';
-import { LineSummaryComponent } from './line-summary/line-summary.component';
+import { FaultFormDialogComponent } from './line-summary/fault-form-dialog/fault-form-dialog.component';
+import { LineSummaryComponent, SnackBarTipComponent } from './line-summary/line-summary.component';
+import { RecordFormDialogComponent } from './line-summary/record-form-dialog/record-form-dialog.component';
+import { TourFormDialogComponent } from './line-summary/tour-form-dialog/tour-form-dialog.component';
 import { LineTransformerListComponent } from './line-transformer-list/line-transformer-list.component';
 import { LineTransformerComponent } from './line-transformer/line-transformer.component';
-import { TourFormDialogComponent } from './line-summary/tour-form-dialog/tour-form-dialog.component';
-import { FaultFormDialogComponent } from './line-summary/fault-form-dialog/fault-form-dialog.component';
-import { RecordFormDialogComponent } from './line-summary/record-form-dialog/record-form-dialog.component';
 
 @NgModule({
   imports: [
@@ -47,11 +47,13 @@ import { RecordFormDialogComponent } from './line-summary/record-form-dialog/rec
     TourFormDialogComponent,
     FaultFormDialogComponent,
     RecordFormDialogComponent,
+    SnackBarTipComponent,
   ],
   entryComponents: [
     TourFormDialogComponent,
     FaultFormDialogComponent,
-    RecordFormDialogComponent
+    RecordFormDialogComponent,
+    SnackBarTipComponent,
   ]
 
 })

@@ -151,11 +151,22 @@ class RecordViewSet(viewsets.ModelViewSet):
     """
     serializer_class = RecordSerializer
     pagination_class = None
-    queryset = Record.objects.values('name', 'unit',).annotate(sum=Sum('count')).order_by()
+    queryset = Record.objects.values('name', 'unit', ).annotate(sum=Sum('count')).order_by()
     filter_backends = (DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter)
     ordering_fields = ('timestamp',)
     ordering = ('-timestamp',)
     # search_fields = ('well',)
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class LineFaultViewSet(viewsets.ModelViewSet):
@@ -168,5 +179,4 @@ class LineFaultViewSet(viewsets.ModelViewSet):
     filter_backends = (DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter)
     ordering_fields = ('timestamp',)
     ordering = ('timestamp',)
-    # search_fields = ('well',)
 

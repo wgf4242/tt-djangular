@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Observable } from 'rxjs';
-import { map, startWith, tap } from 'rxjs/operators';
+import { map, startWith, tap, debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-record-form-dialog',
@@ -26,13 +26,15 @@ export class RecordFormDialogComponent {
       .pipe(
         startWith(''),
         tap(v => console.log(v)),
+        debounceTime(300),
         map(state => state ? this.filterStates(state) : this.data.suggestions.slice())
       );
   }
 
   filterStates(label: string) {
-    return this.data.suggestions.filter(state =>
-      state.label.toLowerCase().indexOf(label.toLowerCase()) === 0);
+    return this.data.suggestions.filter(data =>
+      data.label.toLowerCase().indexOf(label.toLowerCase()) > -1);
+      // data.label.toLowerCase().indexOf(label.toLowerCase()) === 0);
   }
 
   onSubmit({ value, valid }, ev: Event) {
@@ -46,8 +48,8 @@ export class RecordFormDialogComponent {
     if (!ev.isUserInput) {
       return;
     }
-    const v = ev.source.value;
-    const unit = this.data.suggestions.filter(i => i.label === v)[0].unit
+    const nameValue = ev.source.value;
+    const unit = this.data.suggestions.filter(i => i.label === nameValue)[0].unit
     this.form.get('unit').setValue(unit);
     console.log(ev);
   }

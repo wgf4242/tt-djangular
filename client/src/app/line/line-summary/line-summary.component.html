@@ -57,6 +57,7 @@
   <table class="table">
     <thead>
       <tr>
+        <th>序号</th>
         <th>日期</th>
         <th>线路名称</th>
         <th>保护</th>
@@ -70,8 +71,8 @@
     <tbody>
       <tr *ngFor="let item of arr_trip; let i=index;">
         <td>{{i+1}}</td>
-        <td>{{item.line}}</td>
         <td>{{item.date | date: 'yyyy-MM-dd'}}</td>
+        <td>{{item.line}}</td>
         <td>{{item.action}}</td>
         <td>{{item.reconnect}}</td>
         <td>{{item.reason}}</td>
@@ -89,11 +90,12 @@
   <table class="table">
     <thead>
       <tr>
+        <th>序号</th>
         <th>日期</th>
         <th>线路名称</th>
-        <th>接地时间</th>
         <th>接地现象</th>
         <th>接地原因</th>
+        <th>接地时间</th>
         <th>处理完成时间</th>
         <th>备注</th>
       </tr>
@@ -101,15 +103,14 @@
     <tbody>
       <tr *ngFor="let item of arr_earth; let i=index;">
         <td>{{i+1}}</td>
-        <td>{{item.line}}</td>
         <td>{{item.date | date: 'yyyy-MM-dd'}}</td>
+        <td>{{item.line}}</td>
+        <td>{{item.phenomenon}}</td>
         <td>{{item.reason}}</td>
         <td>{{item.downtime}}</td>
         <td>{{item.recover_time}}</td>
-        <td>{{item.phenomenon}}</td>
         <td>{{item.comment}}</td>
       </tr>
     </tbody>
   </table>
-
 </div>

@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { TourFormDialogComponent } from 'app/line/line-summary/tour-form-dialog/tour-form-dialog.component';
 import { Observable, from } from 'rxjs';
 import { distinctUntilChanged, filter, map, tap, mergeMap, mergeAll } from 'rxjs/operators';
@@ -50,7 +50,8 @@ export class LineSummaryComponent implements OnInit {
   arr_earth = [];
 
   constructor(private lineService: LineService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public snackBar: MatSnackBar,
   ) {
   }
 
@@ -88,10 +89,8 @@ export class LineSummaryComponent implements OnInit {
       });
 
     this.lineService.getRecords(params).pipe(
-      tap(v => this.temp_work  = v.map(i => `${i.name}${i.sum}${i.unit}`).join(',')),
-      tap(v => this.suggestions = v.map(i => {return {label: i.name, unit: i.unit}})),
-      // tap(v => console.log(v.map(i => {return {label: i.name, unit: i.unit}})
-      // tap(v => this.suggestions  = v.map(i => {label: i.name, unit: i.unit})),
+      tap(v => this.temp_work = v.map(i => `${i.name}${i.sum}${i.unit}`).join(',')),
+      tap(v => this.suggestions = v.map(i => { return { label: i.name, unit: i.unit } })),
       distinctUntilChanged()
     ).subscribe();
 
@@ -109,14 +108,17 @@ export class LineSummaryComponent implements OnInit {
   openTourFormDialog() {
     const dialogRef = this.dialog.open(TourFormDialogComponent, {
       width: '250px',
-      // data: { name: this.name, animal: this.animal }
     });
 
     dialogRef.afterClosed().pipe(filter(n => n))
       .subscribe((result: Tour) => {
         console.log('The dialog was closed', result);
-        this.lineService.addTour(result).subscribe(_ => this.arr_tour.push('添加成功'));
-      });
+        this.lineService.addTour(result).subscribe(_ => this.arr_tour.push('添加成功'),
+          err => { },
+          () => { this.openSnackBar() }
+        );
+      },
+    );
   }
 
   openFaultFormDialog(type: FaultType) {
@@ -136,10 +138,10 @@ export class LineSummaryComponent implements OnInit {
               this.arr_trip.push('添加成功')
             }
           },
-          err => { }
+          err => { },
+          () => { this.openSnackBar() }
           // TODO: not done;
         )
-
       });
   }
 
@@ -152,8 +154,26 @@ export class LineSummaryComponent implements OnInit {
     dialogRef.afterClosed().pipe(filter(n => n))
       .subscribe(result => {
         console.log('The dialog was closed');
-        this.lineService.addRecord(result).subscribe();
+        this.lineService.addRecord(result).subscribe(_ => { }, _ => { }, success => this.openSnackBar());
       });
   }
 
+  openSnackBar() {
+    this.snackBar.openFromComponent(SnackBarTipComponent, {
+      duration: 500,
+    });
+  }
+}
+
+
+@Component({
+  template: `
+    <span class="example-pizza-party">
+      {{text}}
+    </span>
+    `,
+  styles: [`.example-pizza-party { color: hotpink; }`],
+})
+export class SnackBarTipComponent {
+  @Input() text = '添加成功';
 }
