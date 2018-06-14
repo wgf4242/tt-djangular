@@ -18,20 +18,6 @@ import { RecordFormDialogComponent } from './record-form-dialog/record-form-dial
 })
 export class LineSummaryComponent implements OnInit {
   suggestions = [];
-  // suggestions = [
-  //   { label: '更换跌落保险', unit: '个' },
-  //   { label: '更换变压器', unit: '台' },
-  //   { label: '拆除鸟窝', unit: '处' },
-  //   { label: '更换避雷器', unit: '支' },
-  //   { label: '装设驱鸟器', unit: '个' },
-  //   { label: '正立瓶', unit: '个' },
-  //   { label: '更换设备线夹', unit: '个' },
-  //   { label: '修补接地极', unit: '处' },
-  //   { label: '调整弛度', unit: '相' },
-  //   { label: '更换刀闸', unit: '片' },
-  //   { label: '变压器补油', unit: '台' },
-  //   { label: '更换绝缘子', unit: '支' },
-  // ]
 
   private tours: Tour[];
   lines: Line[];
