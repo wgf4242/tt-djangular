@@ -12,16 +12,22 @@ export class TourFormDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<TourFormDialogComponent>,
-    @Inject(MAT_DIALOG_DATA)public data: any,
-    private  fb: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private fb: FormBuilder,
   ) {
+    const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+    const firstDate = new Date().setHours(0, 0, 0, 0);
+    const secondDate = new Date(2018, 6 - 1, 11); // 5 is monthIndex, index start from  0
+    const diffDays = Math.round(Math.abs((firstDate - secondDate.getTime()) / (oneDay)))
+    const m = diffDays % 14 > 7 ? '1' : '2';
+    console.log(diffDays, m);
 
     this.form = this.fb.group({
       type: ['1', Validators.required],
       line: ['', Validators.required],
       length: ['', Validators.compose([Validators.required, Validators.pattern(/[0-9\.]+/)])],
-      person: ['1', Validators.required],
-      date: ['', Validators.required]
+      person: [m, Validators.required],
+      date: [new Date(), Validators.required]
     })
   }
 
@@ -29,7 +35,7 @@ export class TourFormDialogComponent {
     this.dialogRef.close();
   }
 
-  onSubmit({value, valid}, ev: Event) {
+  onSubmit({ value, valid }, ev: Event) {
     if (!valid) {
       return;
     }

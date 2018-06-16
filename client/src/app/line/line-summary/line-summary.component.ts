@@ -10,6 +10,7 @@ import { PageObject } from '../../_models/shared';
 import { LineService } from '../../_services/line.service';
 import { FaultFormDialogComponent, FaultType } from './fault-form-dialog/fault-form-dialog.component';
 import { RecordFormDialogComponent } from './record-form-dialog/record-form-dialog.component';
+import { ProductionFormDialogComponent } from './production-form-dialog/production-form-dialog.component';
 
 @Component({
   selector: 'app-line-summary',
@@ -141,6 +142,18 @@ export class LineSummaryComponent implements OnInit {
       .subscribe(result => {
         console.log('The dialog was closed');
         this.lineService.addRecord(result).subscribe(_ => { }, _ => { }, success => this.openSnackBar());
+      });
+  }
+  openProductionFormDialog() {
+    const dialogRef = this.dialog.open(ProductionFormDialogComponent, {
+      width: '250px',
+      data: { suggestions: this.suggestions }
+    });
+
+    dialogRef.afterClosed().pipe(filter(n => n))
+      .subscribe(result => {
+        console.log('The dialog was closed', result);
+        // this.lineService.addRecord(result).subscribe(_ => { }, _ => { }, success => this.openSnackBar());
       });
   }
 

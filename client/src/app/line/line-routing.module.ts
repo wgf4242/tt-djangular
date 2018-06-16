@@ -3,8 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { LineDefectFormComponent } from 'app/line/line-defect/line-defect-form.component';
 import { LineDefectComponent } from 'app/line/line-defect/line-defect.component';
 import { LineFacilityComponent } from 'app/line/line-facility/line-facility.component';
-import { LineTourFormComponent } from 'app/line/line-tour/line-tour-form.component';
-import { LineTourComponent } from 'app/line/line-tour/line-tour.component';
 import { AuthGuard } from '../_guards/auth.guard';
 import { LineFacilityFormComponent } from './line-facility/line-facility-form.component';
 import { LineInfoComponent } from './line-info/line-info.component';
@@ -16,9 +14,6 @@ import { LineTransformerListComponent } from './line-transformer-list/line-trans
 
 const routes: Routes = [
 
-  {path: 'line/tour', component: LineTourComponent, data: {title: '线路巡视'}, canActivate: [AuthGuard]},
-  {path: 'line/tour/add', component: LineTourFormComponent, data: {title: '线路巡视-添加记录'}, canActivate: [AuthGuard]},
-  {path: 'line/tour/:id/edit', component: LineTourFormComponent, data: {title: '线路巡视-编辑'}, canActivate: [AuthGuard]},
   {path: 'line/facility', component: LineFacilityComponent, data: {title: '设备管理'}, canActivate: [AuthGuard]},
   {path: 'line/facility/add', component: LineFacilityFormComponent, data: {title: '设备管理添加'}, canActivate: [AuthGuard]},
   {path: 'line/defect', component: LineDefectComponent, data: {title: '缺陷管理'}, canActivate: [AuthGuard]},

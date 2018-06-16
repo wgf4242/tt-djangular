@@ -117,20 +117,20 @@ class ProductionRecordViewSet(viewsets.ModelViewSet):
         if self.action == 'list':
             return ProductionRecordListSerializer
         return super().get_serializer_class()
-
-    def perform_create(self, serializer):
-        instance = serializer.save()
-        line = instance.line
-        line.transformer += instance.transformer or 0
-        line.single_disconnector += instance.single_disconnector or 0
-        line.breaker += instance.breaker or 0
-        line.disconnector += instance.disconnector or 0
-        line.grounding_device += instance.grounding_device or 0
-        line.arrester += instance.arrester or 0
-        line.pole += instance.pole or 0
-        line.length += instance.length or 0
-        line.well += instance.well or 0
-        line.save()
+    #
+    # def perform_create(self, serializer):
+    #     instance = serializer.save()
+    #     line = instance.line
+    #     line.transformer += instance.transformer or 0
+    #     line.single_disconnector += instance.single_disconnector or 0
+    #     line.breaker += instance.breaker or 0
+    #     line.disconnector += instance.disconnector or 0
+    #     line.grounding_device += instance.grounding_device or 0
+    #     line.arrester += instance.arrester or 0
+    #     line.pole += instance.pole or 0
+    #     line.length += instance.length or 0
+    #     line.well += instance.well or 0
+    #     line.save()
 
 
 class TransformerViewSet(viewsets.ModelViewSet):

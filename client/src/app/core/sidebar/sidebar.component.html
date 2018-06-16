@@ -1,20 +1,20 @@
 <mat-nav-list>
-  <mat-list-item routerLink='/attendance' routerLinkActive="active">
+  <a mat-list-item routerLink='/attendance' routerLinkActive="active">
     <mat-icon matListIcon>access_time</mat-icon>
     <span matLine>工时管理</span>
-  </mat-list-item>
-  <mat-list-item routerLink='/line/defect' routerLinkActive="active">
+  </a>
+  <a mat-list-item routerLink='/line/defect' routerLinkActive="active">
     <mat-icon matListIcon>home</mat-icon>
     <span matLine>缺陷管理</span>
-  </mat-list-item>
-  <mat-list-item routerLink='/line/summary' routerLinkActive="active">
+  </a>
+  <a mat-list-item routerLink='/line/summary' routerLinkActive="active">
     <mat-icon matListIcon>insert_chart_outlined</mat-icon>
     <span matLine>月报统计</span>
-  </mat-list-item>
+  </a>
   <mat-divider></mat-divider>
   <h3 matSubheader>其他管理</h3>
-  <mat-list-item *ngFor="let item of navItems" [routerLink]="item.link" routerLinkActive="active">
+  <a mat-list-item *ngFor="let item of navItems" [routerLink]="item.link" routerLinkActive="active">
     <mat-icon matListIcon>{{item.icon}}</mat-icon>
     <span matLine>{{item.span}}</span>
-  </mat-list-item>
+  </a>
 </mat-nav-list>

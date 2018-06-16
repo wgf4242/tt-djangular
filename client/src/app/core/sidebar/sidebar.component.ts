@@ -8,7 +8,6 @@ import { Component, OnInit } from '@angular/core';
 export class SidebarComponent implements OnInit {
 
   navItems = [
-    { span: '巡视检修记录',   icon: 'home',         link: '/line/tour' },
     { span: '设备管理',       icon: 'devices',      link: '/line/facility' },
     { span: '投产验收',       icon: 'home',         link: '/line/production' },
     { span: '线路信息',       icon: 'settings',     link: '/line/info' },

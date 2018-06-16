@@ -4,8 +4,6 @@ import { LineDefectComponent } from 'app/line/line-defect/line-defect.component'
 import { LineFacilityFormComponent } from 'app/line/line-facility/line-facility-form.component';
 import { LineFacilityComponent } from 'app/line/line-facility/line-facility.component';
 import { LineRoutingModule } from 'app/line/line-routing.module';
-import { LineTourFormComponent } from 'app/line/line-tour/line-tour-form.component';
-import { LineTourComponent } from 'app/line/line-tour/line-tour.component';
 import { ElChildModules } from 'element-angular';
 import { NgxPaginationModule } from 'ngx-pagination/dist/ngx-pagination';
 import { SharedModule } from '../shared/shared.module';
@@ -16,6 +14,7 @@ import { LineProductionListComponent } from './line-production-list/line-product
 import { LineRepairComponent } from './line-repair/line-repair.component';
 import { FaultFormDialogComponent } from './line-summary/fault-form-dialog/fault-form-dialog.component';
 import { LineSummaryComponent, SnackBarTipComponent } from './line-summary/line-summary.component';
+import { ProductionFormDialogComponent } from './line-summary/production-form-dialog/production-form-dialog.component';
 import { RecordFormDialogComponent } from './line-summary/record-form-dialog/record-form-dialog.component';
 import { TourFormDialogComponent } from './line-summary/tour-form-dialog/tour-form-dialog.component';
 import { LineTransformerListComponent } from './line-transformer-list/line-transformer-list.component';
@@ -30,8 +29,6 @@ import { LineTransformerComponent } from './line-transformer/line-transformer.co
     ElChildModules.ElInputsModule.forRoot(),
   ],
   declarations: [
-    LineTourComponent,
-    LineTourFormComponent,
     LineFacilityComponent,
     LineFacilityFormComponent,
     LineDefectComponent,
@@ -47,12 +44,14 @@ import { LineTransformerComponent } from './line-transformer/line-transformer.co
     TourFormDialogComponent,
     FaultFormDialogComponent,
     RecordFormDialogComponent,
+    ProductionFormDialogComponent,
     SnackBarTipComponent,
   ],
   entryComponents: [
     TourFormDialogComponent,
     FaultFormDialogComponent,
     RecordFormDialogComponent,
+    ProductionFormDialogComponent,
     SnackBarTipComponent,
   ]
 
