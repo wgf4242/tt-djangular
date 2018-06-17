@@ -9,9 +9,7 @@ import { NgxPaginationModule } from 'ngx-pagination/dist/ngx-pagination';
 import { SharedModule } from '../shared/shared.module';
 import { LineInfoComponent } from './line-info/line-info.component';
 import { LineProductionDetailComponent } from './line-production-detail/line-production-detail.component';
-import { LineProductionFormComponent } from './line-production-detail/line-production-form.component';
 import { LineProductionListComponent } from './line-production-list/line-production-list.component';
-import { LineRepairComponent } from './line-repair/line-repair.component';
 import { FaultFormDialogComponent } from './line-summary/fault-form-dialog/fault-form-dialog.component';
 import { LineSummaryComponent, SnackBarTipComponent } from './line-summary/line-summary.component';
 import { ProductionFormDialogComponent } from './line-summary/production-form-dialog/production-form-dialog.component';
@@ -35,10 +33,8 @@ import { LineTransformerComponent } from './line-transformer/line-transformer.co
     LineDefectFormComponent,
     LineProductionListComponent,
     LineProductionDetailComponent,
-    LineProductionFormComponent,
     LineSummaryComponent,
     LineInfoComponent,
-    LineRepairComponent,
     LineTransformerComponent,
     LineTransformerListComponent,
     TourFormDialogComponent,

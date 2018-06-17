@@ -38,7 +38,7 @@ export class LineFacilityFormComponent implements OnInit {
   }
 
   getTheBranch(lineid: number) {
-    const branchIdArray = this.lines && this.lines.filter(line => line.id == lineid)[0].branch;
+    const branchIdArray = this.lines && this.lines.filter(line => line.id === lineid)[0].branch;
     const branchArray = this.branches.filter(branch => branchIdArray.includes(branch.id))
     // console.log(branchArray);
     return branchArray;

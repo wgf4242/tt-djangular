@@ -2,14 +2,21 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit(form, $event)" novalidate>
   <div mat-dialog-content>
 
+
+    <mat-form-field>
+      <mat-select placeholder="线路名称" formControlName="line">
+        <mat-option *ngFor="let line of data.lines" [value]="line.id">
+          {{ line.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
     <mat-form-field>
       <input matInput [matDatepicker]="myDatepicker" (focus)="myDatepicker.open()" placeholder="投产时间" formControlName="production_date">
       <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
       <mat-datepicker #myDatepicker></mat-datepicker>
     </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="线路名称" formControlName="line">
-    </mat-form-field>
+
     <mat-form-field>
       <input matInput placeholder="分支名称" formControlName="branch">
     </mat-form-field>
@@ -17,25 +24,27 @@
       <input matInput placeholder="位置" formControlName="position">
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder='变压器' formControlName="transformer">
+      <input matInput type="number" placeholder='变压器' formControlName="transformer">
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder='单刀闸' formControlName="single_disconnector">
+      <input matInput type="number" placeholder='单刀闸' formControlName="single_disconnector">
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder='开关' formControlName="breaker">
+      <input matInput type="number" placeholder='开关' formControlName="breaker">
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder='电杆' formControlName="pole">
+      <input matInput type="number" placeholder='电杆' formControlName="pole">
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder='长度(公里)' formControlName="length">
+      <input matInput type="number" placeholder='长度(公里)' formControlName="length">
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder='油井' formControlName="well">
+      <input matInput type="number" placeholder='油井' formControlName="well">
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder='备注' formControlName="comment">
+      <mat-label>备注:如变压器容量</mat-label>
+      <input matInput placeholder="例30kVA, 50kVA" formControlName="comment">
+      <mat-hint>有几个填几个</mat-hint>
     </mat-form-field>
 
   </div>

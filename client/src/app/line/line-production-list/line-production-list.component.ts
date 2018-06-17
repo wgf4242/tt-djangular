@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {LineService} from '../../_services/line.service';
-import {Facility, ProductionRecord} from "../../_models/line";
-import {HttpParams} from "@angular/common/http";
-import {PageObject} from "../../_models/shared";
+import { HttpParams } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { Facility } from '../../_models/line';
+import { ProductionRecord } from '../../_models/production';
+import { PageObject } from '../../_models/shared';
+import { LineService } from '../../_services/line.service';
 
 @Component({
   selector: 'app-line-info-list',

@@ -1,5 +1,5 @@
-from rest_framework import serializers
 from apps.line.models import *
+from rest_framework import serializers
 from rest_pandas import PandasSerializer
 
 
@@ -10,6 +10,9 @@ class TourSerializer(serializers.ModelSerializer):
 
 
 class LineSerializer(serializers.ModelSerializer):
+    # branch = serializers.ManyToManyField(read_only=True)
+    # branch = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+
     class Meta:
         model = Line
         fields = '__all__'
@@ -52,7 +55,6 @@ class DefectListSerializer(serializers.ModelSerializer):
 
 class FacilitySerializerList(serializers.ModelSerializer):
     line = serializers.CharField(source='line.name')
-    branch = serializers.CharField(source='branch.name')
     category = serializers.CharField(source='category.name')
 
     class Meta:
@@ -96,7 +98,6 @@ class ProductionRecordSerializer(serializers.ModelSerializer):
 
 class ProductionRecordListSerializer(serializers.ModelSerializer):
     line = LineNameSerializer()
-    branch = BranchNameSerializer()
 
     class Meta:
         model = ProductionRecord

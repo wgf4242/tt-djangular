@@ -1,8 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Observable } from 'rxjs';
-import { map, startWith, tap, debounceTime } from 'rxjs/operators';
 
 @Component({
   templateUrl: './production-form-dialog.component.html',
@@ -16,20 +15,22 @@ export class ProductionFormDialogComponent {
     private fb: FormBuilder,
   ) {
     this.form = this.fb.group({
-      production_date: ['', Validators.required],
-      line: ['', Validators.required],
-      branch: ['', Validators.required],
-      position: ['', Validators.required],
-      transformer: ['', ],
-      single_disconnector: ['', ],
-      breaker: ['', ],
-      disconnector: ['', ],
-      grounding_device: ['', ],
-      arrester: ['', ],
-      pole: ['', ],
-      length: ['', ],
-      well: ['', ],
-      comment: ['', ],
+      // production_date: '2018-6-17',
+      production_date: [new Date(), Validators.required],
+      // production_date: ['', Validators.required],
+      line: [null, Validators.required],
+      branch: [null, Validators.required],
+      position: [null, Validators.required],
+      transformer: [null, ],
+      single_disconnector: [null, ],
+      breaker: [null, ],
+      disconnector: [null, ],
+      grounding_device: [null, ],
+      arrester: [null, ],
+      pole: [null, ],
+      length: [null, ],
+      well: [null, ],
+      comment: [null, ],
     })
   }
 
@@ -37,22 +38,7 @@ export class ProductionFormDialogComponent {
     if (!valid) {
       return;
     }
-    value = this.checkForm(value);
     this.dialogRef.close(value);
-  }
-
-  checkForm(dict: any) {
-    for (const key in dict) {
-      if (dict.hasOwnProperty(key)) {
-        const v = dict[key];
-        dict[key] = !!v ? v : 0;
-      }
-    }
-    console.log(dict);
-    dict.disconnector = dict.transformer + dict.single_disconnector + dict.breaker * 2;
-    dict.grounding_device = dict.transformer + dict.single_disconnector + dict.breaker;
-    dict.arrester = (dict.transformer + dict.single_disconnector + dict.breaker) * 3;
-    return dict;
   }
 
   onSelectionChange(ev: any) {

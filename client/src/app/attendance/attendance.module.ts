@@ -25,8 +25,8 @@ import {MonthDateComponent} from 'app/attendance/month-summary/month-date/month-
 import {AngularMultiSelectModule} from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
 import {AttendSingleFormComponent} from 'app/attendance/add-normal/attend-form/attend-form-single';
 import {MonthAddComponent} from './month-add/month-add.component';
-import {EditFormComponent} from "./add-normal/attend-form/edit-form.component";
-import {SharedModule} from "../shared/shared.module";
+import {EditFormComponent} from './add-normal/attend-form/edit-form.component';
+import {SharedModule} from '../shared/shared.module';
 // import {EditFormComponent} from "./add-normal/attend-form/edit-form.component";
 
 @NgModule({

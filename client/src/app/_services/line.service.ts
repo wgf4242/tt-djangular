@@ -1,23 +1,22 @@
-
-import { HttpClient, HttpErrorResponse, HttpParams, HttpResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Tour } from 'app/_models/line-tour';
+import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Tour} from 'app/_models/line-tour';
 import * as FileSaver from 'file-saver';
-import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { Branch, Defect, DefectsCategory, DefectsType, Facility, FacilityCategory, Line, ProductionRecord, Fault } from '../_models/line';
-import { Transformer } from '../_models/line-transformers';
-import { PageObject } from '../_models/shared';
-import { LoggerService } from './logger.service';
+import {Observable, throwError} from 'rxjs';
+import {catchError, map, switchMap} from 'rxjs/operators';
+import {toNumber} from '../utils/string.utils';
+import {Branch, Defect, DefectsCategory, DefectsType, Facility, FacilityCategory, Fault, Line} from '../_models/line';
+import {Transformer} from '../_models/line-transformers';
+import {ProductionRecord} from '../_models/production';
+import {PageObject} from '../_models/shared';
+import {LoggerService} from './logger.service';
 
 @Injectable()
 export class LineService {
   private tourUrl = 'api/tours/';  // URL to web api
-  constructor(
-    private http: HttpClient,
-    private logger: LoggerService
-  ) { }
+  constructor(private http: HttpClient,
+              private logger: LoggerService) {
+  }
 
 
   addTour(tour): Observable<Tour> {
@@ -26,26 +25,26 @@ export class LineService {
   }
 
   getTours(params?: HttpParams): Observable<Tour[]> {
-    return this.http.get<Tour[]>(this.tourUrl, { params: params })
+    return this.http.get<Tour[]>(this.tourUrl, {params: params})
   }
 
   getTour(id: number): Observable<Tour> {
     return this.http.get<Tour>(this.tourUrl + id).pipe(
       map(this.extractData),
-      catchError(this.handleError), );
+      catchError(this.handleError),);
   }
 
   putTour(id: number, tour: Tour): Observable<Tour> {
     return this.http.put<Tour>(this.tourUrl + id, tour).pipe(
       map(this.extractData),
-      catchError(this.handleError), );
+      catchError(this.handleError),);
   }
 
 
   deleteTour(id: number): Observable<Tour> {
     return this.http.delete<Tour>(this.tourUrl + id).pipe(
       map(this.extractData),
-      catchError(this.handleError), );
+      catchError(this.handleError),);
   }
 
   getLines(): Observable<Line[]> {
@@ -57,12 +56,13 @@ export class LineService {
   }
 
   getDefects(params?: HttpParams): Observable<PageObject<Defect>> {
-    return this.http.get<PageObject<Defect>>('api/defects/', { params: params }).pipe(catchError(this.handleError));
+    return this.http.get<PageObject<Defect>>('api/defects/', {params: params}).pipe(catchError(this.handleError));
   }
 
   addDefect(defect: Defect): Observable<Defect> {
     return this.http.post<Defect>(`api/defects/`, defect).pipe(catchError(this.handleError));
   }
+
   getDefect(id: number): Observable<Defect> {
     return this.http.get<Defect>(`api/defects/${id}/`).pipe(catchError(this.handleError));
   }
@@ -72,9 +72,12 @@ export class LineService {
   }
 
   getDefectsXLSX(params?: HttpParams) {
-    return this.http.get('api/defects.xlsx/', { params: params, responseType: 'blob' }).pipe(catchError(this.handleError)).subscribe(
+    return this.http.get('api/defects.xlsx/', {
+      params: params,
+      responseType: 'blob'
+    }).pipe(catchError(this.handleError)).subscribe(
       data => {
-        const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const blob = new Blob([data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
         FileSaver.saveAs(blob, 'export.xlsx');
       }
     );
@@ -86,7 +89,7 @@ export class LineService {
   }
 
   getFacilities(params?: HttpParams): Observable<PageObject<Facility[]>> {
-    return this.http.get<PageObject<Facility[]>>('api/facilities/', { params: params });
+    return this.http.get<PageObject<Facility[]>>('api/facilities/', {params: params});
   }
 
   getFacilitiesCategories(): Observable<FacilityCategory[]> {
@@ -111,7 +114,7 @@ export class LineService {
   }
 
   getProductionRecords(params?: HttpParams): Observable<PageObject<ProductionRecord[]>> {
-    return this.http.get<PageObject<ProductionRecord[]>>('api/production-records/', { params: params }).pipe(catchError(this.handleError));
+    return this.http.get<PageObject<ProductionRecord[]>>('api/production-records/', {params: params}).pipe(catchError(this.handleError));
   }
 
   addProductionRecord(obj: ProductionRecord): Observable<ProductionRecord> {
@@ -128,7 +131,7 @@ export class LineService {
   }
 
   getTransformers(params?: HttpParams): Observable<PageObject<Transformer[]>> {
-    return this.http.get<PageObject<Transformer[]>>('api/transformers/', { params: params }).pipe(
+    return this.http.get<PageObject<Transformer[]>>('api/transformers/', {params: params}).pipe(
       map(this.extractData),
       catchError(this.handleError)
     );
@@ -161,7 +164,7 @@ export class LineService {
 
 
   getRecords(params?: HttpParams): Observable<any> {
-    return this.http.get('api/records/', { params: params }).pipe(catchError(this.handleError));
+    return this.http.get('api/records/', {params: params}).pipe(catchError(this.handleError));
   }
 
 
@@ -170,9 +173,53 @@ export class LineService {
   }
 
   getLineFaults(params?: HttpParams): Observable<Fault[]> {
-    return this.http.get<Fault[]>('api/line-faults/', { params: params }).pipe(catchError(this.handleError));
+    return this.http.get<Fault[]>('api/line-faults/', {params: params}).pipe(catchError(this.handleError));
   }
 
+  getLineInfo(id: number | string): any {
+    const uri = `api/lines/${id}/`;
+    return this.http.get(uri).pipe(catchError(this.handleError));
+  }
+
+  updateLineInfo(object: any): Observable<Line> {
+    const uri = `api/lines/${object.id}/`;
+    return this.http.patch<Line>(uri, object).pipe(catchError(this.handleError));
+  }
+
+  getUpdateFieldsByProduction(object: ProductionRecord): any {
+    let addMap = {id: object.line};
+    const line_id = object.line;
+
+    return this.getLineInfo(line_id).pipe(
+      switchMap(lineObject => {
+        console.log('line is ', lineObject);
+        addMap = this.getUpdateMap(addMap, object, lineObject);
+        return this.updateLineInfo(addMap);
+      })
+    );
+  }
+
+
+  private getUpdateMap(addMap: any, object: ProductionRecord, lineObject) {
+    const total = toNumber(object['transformer']) + toNumber(object['single_disconnector'])
+      + toNumber([object['breaker']]) * 2;
+    if (total > 0) {
+      addMap['disconnector'] = total;
+      addMap['grounding_device'] = total;
+      addMap['arrester'] = total * 3;
+    }
+
+    const arr = ['transformer', 'single_disconnector', 'breaker', 'pole', 'length', 'disconnector', 'grounding_device', 'arrester', 'well'];
+    for (const key of arr) {
+      if (object[key] || addMap[key]) {
+        addMap[key] = toNumber(object[key]) + toNumber(lineObject[key]) + toNumber(addMap[key]);
+        // addMap[key] = object[key] + lineObject[key] + addMap[key];
+      }
+    }
+
+    console.log('map is ', addMap);
+    return {...addMap};
+  }
 
   private extractData(res: any) {
     console.log(res);

@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { Month } from 'app/_models/month';
 
 @Component({
-  selector: 'attendance-home',
+  selector: 'app-attendance-home',
   templateUrl: './attendance-home.component.html',
 })
 export class AttandenceHomeComponent implements OnInit {

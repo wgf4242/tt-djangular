@@ -5,7 +5,7 @@ import {PersonService} from 'app/_services/person.service';
 import {Person} from 'app/_models/person';
 import {Month} from 'app/_models/month';
 import {Attend} from 'app/_models/attend';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   templateUrl: './month-detail.component.html'
@@ -28,9 +28,9 @@ export class MonthDetailComponent implements OnInit {
     // const monthId = this.route.snapshot.params['id'];
     console.log(this.route.params);
     this.route.params.subscribe(value =>
-      this.attendService.getAttendsByParams(value).subscribe(attends => this.attends =attends )
+      this.attendService.getAttendsByParams(value).subscribe(attends => this.attends = attends )
     );
-    if (monthId) {this.monthService.getMonth(monthId).subscribe(month => this.month = month);}
+    if (monthId) {this.monthService.getMonth(monthId).subscribe(month => this.month = month); }
     // if (monthId) {
     //   this.monthService.getMonth(monthId).subscribe(month => this.month = month);
     //   this.attendService.getAttends(monthId).subscribe(attends => (this.attends = attends, console.log(attends)))

@@ -2,6 +2,7 @@
 cd /home/root/sites/tt-djangular
 python3 manage.py makemigrations
 python3 manage.py migrate
+如果有sql语句就执行sql.
 
 superuser adminWgf/wang123456
 # Commit Comment

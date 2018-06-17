@@ -20,7 +20,7 @@ export class PersonService {
   // }
 
   private extractData(res: Response) {
-    let body = res.json();
+    const body = res.json();
     console.log(body);
     return body || {};
   }

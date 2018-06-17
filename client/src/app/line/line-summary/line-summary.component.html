@@ -37,9 +37,13 @@
     <div>新设备投运情况：
       <button mat-raised-button color="primary" (click)="openProductionFormDialog()">添加</button>
     </div>
-    <p *ngFor="let production_record of production_records?.results | paginate: { itemsPerPage: 20, currentPage: page, totalItems: production_records?.count }">
-      {{production_record.production_date}}, {{production_record.line.name}} {{production_record.branch.name}} {{production_record.position}}#杆,新增变压器{{production_record.transformer}}台，电杆{{production_record.pole}}基，{{production_record.length}}公里，{{production_record.comment}}。
-    </p>
+    <div *ngFor="let production_record of production_records?.results | paginate: { itemsPerPage: 20, currentPage: page, totalItems: production_records?.count }">
+      {{production_record.production_date| date: 'yyyy-MM-dd'}}, {{production_record.line.name}} {{production_record.branch.name}} {{production_record.position}}#杆,
+      <span *ngIf="production_record.transformer">新增变压器{{production_record.transformer}}台,</span>
+      <span *ngIf="production_record.comment">{{production_record.comment}}，</span>
+      <span *ngIf="production_record.pole">电杆{{production_record.pole}}基,</span>
+      <span *ngIf="production_record.length">{{production_record.length}}公里。</span>
+    </div>
 
   </div>
   <div>

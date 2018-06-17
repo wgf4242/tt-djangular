@@ -1,7 +1,7 @@
 export class Line {
   id: number;
   name: string;
-  branch: number[];
+  branch?: number[];
   production_date: number;
   transformer: number;
   single_disconnector: number;
@@ -55,24 +55,6 @@ export class Facility {
 export class FacilityCategory {
   id: number;
   name: string;
-}
-
-export class ProductionRecord {
-  id: number;
-  production_date: number;
-  line: Line;
-  branch: Branch;
-  position: string;
-  transformer: number;
-  single_disconnector: number;
-  breaker: number;
-  disconnector: number;
-  grounding_device: number;
-  arrester: number;
-  pole: number;
-  length: number;
-  well: number;
-  comment: string;
 }
 
 export class Fault {

@@ -53,7 +53,7 @@ export class AttendService {
     const url = month_id ? this.attendsUrl + '?month_id=' + month_id : this.attendsUrl;
     return this.http.get(url).pipe(
       map(this.extractData),
-      catchError(this.handleError),);
+      catchError(this.handleError));
   }
 
   getAttendsSum(id: number | string): Observable<PageAttendSumObj> {
@@ -62,7 +62,7 @@ export class AttendService {
   }
 
   private extractData(res: Response) {
-    let body = res.json();
+    const body = res.json();
     console.log(body);
     return body || {};
   }

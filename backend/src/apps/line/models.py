@@ -32,7 +32,7 @@ class Branch(models.Model):
 
 class Line(models.Model):
     name = models.CharField(max_length=180, verbose_name='线路名称')
-    branch = models.ManyToManyField(Branch)
+    branch = models.ManyToManyField(Branch, null=True, blank=True)
 
     no = models.IntegerField(validators=[MaxValueValidator(100)], verbose_name='编号', blank=True, null=True)
     production_date = models.IntegerField(verbose_name='投产时间', null=True, blank=True)
@@ -55,9 +55,9 @@ class ProductionRecord(models.Model):
     """
     投产验收记录
     """
-    production_date = models.DateField(verbose_name='投产时间', null=True, blank=True)
+    production_date = models.DateTimeField(verbose_name='投产时间', null=True, blank=True)
     line = models.ForeignKey(Line, verbose_name="线路名称")
-    branch = models.ForeignKey(Branch, verbose_name="分支名称")
+    branch = models.CharField(max_length=180, null=True, blank=True, verbose_name="分支名称")
     position = models.CharField(max_length=180, null=True, blank=True, verbose_name="位置")
     transformer = models.IntegerField(verbose_name='变压器', null=True, blank=True, default=0)
     single_disconnector = models.IntegerField(verbose_name='单刀闸', null=True, blank=True, default=0)
@@ -66,7 +66,6 @@ class ProductionRecord(models.Model):
     grounding_device = models.IntegerField(verbose_name='接地装置', null=True, blank=True, default=0)
     arrester = models.IntegerField(verbose_name='避雷器', null=True, blank=True, default=0)
     pole = models.IntegerField(verbose_name='电杆', null=True, blank=True, default=0)
-    # pole = models.IntegerField(verbose_name='电杆', null=True, blank=True)
     length = models.FloatField(verbose_name='公里', null=True, blank=True)
     well = models.IntegerField(verbose_name='油井', null=True, blank=True)
     comment = models.CharField(max_length=180, verbose_name='备注', null=True, blank=True, default="变压器容量 kVA")
@@ -88,7 +87,7 @@ class FacilityCategory(models.Model):
 
 class Facility(models.Model):
     line = models.ForeignKey(Line, verbose_name='线路名称')
-    branch = models.ForeignKey(Branch, verbose_name='分支名称')
+    branch = models.CharField(max_length=180, null=True, blank=True, verbose_name="分支名称")
     position = models.IntegerField(verbose_name='杆号',
                                    validators=[
                                        MaxValueValidator(300, message='没有大于300基杆的分支')
@@ -97,45 +96,6 @@ class Facility(models.Model):
     description = models.CharField(max_length=180, verbose_name='详情')
     comment = models.CharField(max_length=180, verbose_name='备注', blank=True, null=True)
     date = models.DateField(verbose_name='日期', help_text='使用 2017-03-03 这种格式')
-
-
-# 指导卡录入
-
-class WorkCard(models.Model):
-    line = models.ForeignKey(Line, verbose_name='线路名称')
-    branch = models.ForeignKey(Branch, verbose_name='分支名称')
-    person = models.CharField(max_length=180, verbose_name='工作人员')
-    description = models.CharField(max_length=180, verbose_name='详情', blank=True, null=True)
-    comment = models.CharField(max_length=180, verbose_name='备注', blank=True, null=True)
-    date = models.DateField(verbose_name='日期', help_text='使用 2017-03-03 这种格式填写')
-
-    def __str__(self):
-        date = self.date.strftime('%Y-%m-%d')
-        return date + '.' + self.person
-    # return self.person + self.date.strftime("%Y 年%m 月")
-
-
-# 指导卡工作量类型
-
-class WorkSummaryCategory(models.Model):
-    name = models.CharField(max_length=180, verbose_name='类型')
-    no = models.IntegerField(verbose_name='编号', blank=True, null=True)
-
-    def __str__(self):
-        return self.name
-
-
-# 指导卡工作量汇总
-class WorkStatistics(models.Model):
-    line = models.ForeignKey(Line, verbose_name='线路名称')
-    branch = models.ForeignKey(Branch, verbose_name='分支名称')
-    cat = models.ForeignKey(WorkSummaryCategory, verbose_name='类型')
-    amount = models.IntegerField(verbose_name='数量', blank=True, null=True)
-    person = models.CharField(max_length=180, verbose_name='工作人员')
-    date = models.DateField(verbose_name='日期', help_text='使用 2017-03-03 这种格式')
-    comment = models.CharField(max_length=180, verbose_name='备注', blank=True, null=True)
-
-    objects = WorkStatisticsManager()
 
 
 class DefectCategory(models.Model):
@@ -216,6 +176,9 @@ class Transformer(models.Model):
 
 
 class Record(models.Model):
+    """
+    工作量记录
+    """
     name = models.CharField(max_length=180, verbose_name='类别', null=True, blank=True)
     unit = models.CharField(max_length=180, verbose_name='单位', null=True, blank=True)
     count = models.IntegerField(verbose_name='数量', blank=True, null=True)

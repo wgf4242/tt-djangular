@@ -1,16 +1,16 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { Component, Input, OnInit, Inject } from '@angular/core';
+import { MatDialog, MatSnackBar, MAT_SNACK_BAR_DATA } from '@angular/material';
 import { TourFormDialogComponent } from 'app/line/line-summary/tour-form-dialog/tour-form-dialog.component';
-import { Observable, from } from 'rxjs';
-import { distinctUntilChanged, filter, map, tap, mergeMap, mergeAll } from 'rxjs/operators';
-import { Fault, Line, ProductionRecord } from '../../_models/line';
+import { distinctUntilChanged, filter, tap, switchMap, withLatestFrom, map, take } from 'rxjs/operators';
+import { Line } from '../../_models/line';
 import { Tour } from '../../_models/line-tour';
 import { PageObject } from '../../_models/shared';
 import { LineService } from '../../_services/line.service';
 import { FaultFormDialogComponent, FaultType } from './fault-form-dialog/fault-form-dialog.component';
-import { RecordFormDialogComponent } from './record-form-dialog/record-form-dialog.component';
 import { ProductionFormDialogComponent } from './production-form-dialog/production-form-dialog.component';
+import { RecordFormDialogComponent } from './record-form-dialog/record-form-dialog.component';
+import { ProductionRecord } from '../../_models/production';
 
 @Component({
   selector: 'app-line-summary',
@@ -147,19 +147,24 @@ export class LineSummaryComponent implements OnInit {
   openProductionFormDialog() {
     const dialogRef = this.dialog.open(ProductionFormDialogComponent, {
       width: '250px',
-      data: { suggestions: this.suggestions }
+      data: { lines: this.lines }
     });
 
-    dialogRef.afterClosed().pipe(filter(n => n))
-      .subscribe(result => {
-        console.log('The dialog was closed', result);
-        // this.lineService.addRecord(result).subscribe(_ => { }, _ => { }, success => this.openSnackBar());
-      });
+    dialogRef.afterClosed().pipe(
+      filter(n => n),
+      tap(v => console.log(v) ),
+      switchMap(result => this.lineService.addProductionRecord(result)),
+      switchMap(productRecord => this.lineService.getUpdateFieldsByProduction(productRecord))
+    ).subscribe(
+      _ => this.openSnackBar(),
+      err => { this.openSnackBar('添加失败') },
+    );
   }
 
-  openSnackBar() {
+  openSnackBar(data: string = '添加成功') {
     this.snackBar.openFromComponent(SnackBarTipComponent, {
       duration: 500,
+      data: data
     });
   }
 }
@@ -168,11 +173,12 @@ export class LineSummaryComponent implements OnInit {
 @Component({
   template: `
     <span class="example-pizza-party">
-      {{text}}
+      {{data}}
     </span>
     `,
   styles: [`.example-pizza-party { color: hotpink; }`],
 })
 export class SnackBarTipComponent {
-  @Input() text = '添加成功';
+  constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) {
+  }
 }

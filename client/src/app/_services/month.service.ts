@@ -1,6 +1,6 @@
 
 import {throwError as observableThrowError, Observable} from 'rxjs';
-import {Injectable, Optional} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Response} from '@angular/http';
 import {HttpClient} from '@angular/common/http';
 
@@ -13,13 +13,6 @@ export class MonthService {
 
   constructor(private http: HttpClient) {
   }
-
-  // getMonths(@Optional() params: string = ''): Observable<MonthPage> {
-  //   return this.http
-  //     .get(this.monthsUrl + params)
-  //     .map(this.extractData)
-  //     .catch(this.handleError);
-  // }
 
   getMonth(id: number): Observable<Month> {
     return this.http.get<Month>(this.monthsUrl + id + '/');
@@ -40,25 +33,5 @@ export class MonthService {
 
   addMonth(month: any): Observable<Month> {
     return this.http.post<Month>(this.monthsUrl, month);
-  }
-
-  private extractData(res: Response) {
-    let body = res.json();
-    console.log(body);
-    return body || {};
-  }
-
-  private handleError(error: Response | any) {
-    // In a real world app, you might use a remote logging infrastructure
-    let errMsg: string;
-    if (error instanceof Response) {
-      const body = error.json() || '';
-      const err = body.error || JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-    } else {
-      errMsg = error.message ? error.message : error.toString();
-    }
-    console.error(errMsg);
-    return observableThrowError(errMsg);
   }
 }
