@@ -159,6 +159,9 @@ class LineUser(models.Model):
 
 
 class Transformer(models.Model):
+    """
+    变压器记录
+    """
     line = models.ForeignKey(Line, verbose_name="所属线路", related_name='trans')
     well = models.CharField(max_length=180, verbose_name='包含井号/平台号', null=True, blank=True)
     category = models.CharField(max_length=180, verbose_name='型号', null=True, blank=True)
@@ -189,6 +192,9 @@ class Record(models.Model):
 
 
 class LineFault(models.Model):
+    """
+    接地跳闸故障记录
+    """
     line = models.CharField(max_length=180, verbose_name='线路名称', null=True, blank=True)
     date = models.DateTimeField(verbose_name='日期', help_text='使用 2017-03-03 这种格式', null=True, blank=True)
     action = models.CharField(max_length=180, verbose_name='保护动作', null=True, blank=True)
