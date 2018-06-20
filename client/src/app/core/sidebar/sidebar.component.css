@@ -62,3 +62,13 @@ mat-icon.mat-icon.mat-list-icon.material-icons {
   font-size: .75rem;
   text-transform: uppercase;
 }
+
+.mat-subheader {
+  cursor: pointer;
+}
+
+.mat-subheader>mat-icon {
+  cursor: pointer;
+  right: 5px;
+  position: absolute;
+}

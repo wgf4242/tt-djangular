@@ -31,20 +31,20 @@ export class LineService {
   getTour(id: number): Observable<Tour> {
     return this.http.get<Tour>(this.tourUrl + id).pipe(
       map(this.extractData),
-      catchError(this.handleError),);
+      catchError(this.handleError));
   }
 
   putTour(id: number, tour: Tour): Observable<Tour> {
     return this.http.put<Tour>(this.tourUrl + id, tour).pipe(
       map(this.extractData),
-      catchError(this.handleError),);
+      catchError(this.handleError));
   }
 
 
   deleteTour(id: number): Observable<Tour> {
     return this.http.delete<Tour>(this.tourUrl + id).pipe(
       map(this.extractData),
-      catchError(this.handleError),);
+      catchError(this.handleError));
   }
 
   getLines(): Observable<Line[]> {

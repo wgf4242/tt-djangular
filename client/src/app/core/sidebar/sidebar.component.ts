@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { trigger, state, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css']
+  styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent {
+  show = false;
+  state = 'inactive';
 
   navItems = [
     { span: '设备管理',       icon: 'devices',      link: '/line/facility' },
@@ -15,4 +18,8 @@ export class SidebarComponent {
     { span: '跳闸统计',       icon: 'bar_chart',    link: '' },
   ]
   constructor() { }
+
+  onClick() {
+    this.show = !this.show;
+  }
 }
