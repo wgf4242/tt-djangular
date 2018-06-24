@@ -12,17 +12,15 @@
     <span matLine>月报统计</span>
   </a>
   <mat-divider></mat-divider>
-  <h3 matSubheader (click)="onClick()"  [@flyInOut]="'in'">其他管理
+  <h3 matSubheader (click)="onClick()">其他管理
     <mat-icon *ngIf="show; else content">keyboard_arrow_down</mat-icon>
     <ng-template #content>
       <mat-icon>keyboard_arrow_up</mat-icon>
     </ng-template>
   </h3>
-  <ng-container *ngIf="show">
-    <a mat-list-item *ngFor="let item of navItems" [routerLink]="item.link" routerLinkActive="active">
+    <a mat-list-item *ngFor="let item of navItems" [routerLink]="item.link" routerLinkActive="active" [@heroState]="state">
       <mat-icon matListIcon>{{item.icon}}</mat-icon>
       <span matLine>{{item.span}}</span>
     </a>
     <mat-divider></mat-divider>
-  </ng-container>
 </mat-nav-list>
