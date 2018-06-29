@@ -71,7 +71,13 @@ class ProductionRecord(models.Model):
     comment = models.CharField(max_length=180, verbose_name='备注', null=True, blank=True, default="变压器容量 kVA")
 
     def __str__(self):
-        return self.name
+        # return self.comment
+        # return self.production_date.strftime('%yyyy-%m-%d'), self.line, self.branch, self.position
+        return ','.join((self.production_date.strftime('%Y-%m-%d'), self.line.name, self.branch, self.position))
+
+    class Meta:
+        verbose_name = '投产信息管理'
+        verbose_name_plural = verbose_name
 
 
 # 线路加装投产记录，电容器等
@@ -206,6 +212,9 @@ class LineFault(models.Model):
     weather = models.CharField(max_length=180, verbose_name='天气', null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.name
+    class Meta:
+        verbose_name = '接地跳闸故障记录'
+        verbose_name_plural = verbose_name
 
+    def __str__(self):
+        return ','.join((self.date.strftime('%Y-%m-%d'), self.line, self.action, self.reconnect, self.reason, self.phenomenon, self.weather,))

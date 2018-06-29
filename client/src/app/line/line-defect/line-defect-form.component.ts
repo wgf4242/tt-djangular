@@ -1,10 +1,12 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { CatSuggest, LineService } from 'app/_services/line.service';
-import { Branch } from 'app/_models/line';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Defect, DefectsCategory, DefectsType, Line } from '../../_models/line';
+import { Branch } from 'app/_models/line';
+import { CatSuggest, LineService } from 'app/_services/line.service';
 import { format } from 'date-fns';
+import { Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+import { Defect, DefectsCategory, DefectsType, Line } from '../../_models/line';
 
 enum Status { Edit, Add, Delete };
 
@@ -13,24 +15,12 @@ enum Status { Edit, Add, Delete };
   templateUrl: './line-defect-form.component.html',
 })
 export class LineDefectFormComponent implements OnInit {
-  categorie_suggestions = [
-    { 'name': '刀闸', 'select': ['刀闸片烧', '机构开焊'] },
-    { 'name': '鸟窝', 'select': ['有鸟窝'] },
-    { 'name': '杆塔', 'select': ['横线路歪', '顺线路歪', '严重'] },
-    { 'name': '导线', 'select': ['有断股'] },
-    { 'name': '拉线', 'select': ['废拉线', '拉线松动'] },
-    { 'name': '绝缘子', 'select': ['中相', '边相', '螺丝松', '缺开口销'] },
-    { 'name': '防雷与接地装置', 'select': ['无接地极', '缺接地线'] },
-    { 'name': '横担金具及变台', 'select': ['有铜铝线夹'] },
-    { 'name': '配电变压器', 'select': [] },
-    { 'name': '柱上开关', 'select': [] },
-    { 'name': '线路防护', 'select': [] }
-  ]
-
+  categorie_suggestions: CatSuggest[];
+  cat_suggest: String[];
   object: Defect = new Defect();
-  lines: Line[];
-  lineBranches: Branch[];
-  allBranches: Branch[];
+  lines: Observable<Line[]>;
+  lineBranches: Observable<Branch[]>;
+  allBranches: Observable<Branch[]>;
   form: FormGroup;
 
   Status = Status;
@@ -39,10 +29,9 @@ export class LineDefectFormComponent implements OnInit {
 
   finish_date: string;
   categories: DefectsCategory[];
-  cat_suggest: CatSuggest;
   types: DefectsType;
 
-  submited_list: Defect[] = [];
+  submitted_list: Defect[] = [];
   datePickerConfig = { 'format': 'YYYY-MM-DD', 'firstDayOfWeek': 'mo', 'locale': 'zh-cn' };
 
   constructor(private lineService: LineService,
@@ -53,9 +42,12 @@ export class LineDefectFormComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.lineService.getBranches().subscribe(branches => this.allBranches = branches);
-    this.lineService.getCategories().subscribe(categories => this.categories = categories);
+    this.lineService.getCatSuggest().subscribe(v => this.categorie_suggestions = v);
+    this.lineService.getCategories().subscribe(v => {
+      console.log(v);
+      this.categories = v;
+    });
+    this.allBranches = this.lineService.getBranches();
     this.lineService.getDefectType().subscribe(types => {
       this.types = types;
       if (!this.object.type) { this.object.type = types[0].id }
@@ -73,7 +65,7 @@ export class LineDefectFormComponent implements OnInit {
         this.object.date = format(new Date(), 'YYYY-MM-DD');
         this.object.line = 1;
         this.object.category = 1;
-        this.lineService.getLines().subscribe(lines => { this.lines = lines; this.getTheBranch(1) });
+        this.lines = this.lineService.getLines();
         console.log(format(new Date(), 'YYYY-MM-DD'));
       }
     });
@@ -95,15 +87,7 @@ export class LineDefectFormComponent implements OnInit {
   }
 
   private getDefectAndFill() {
-    this.lineService.getDefect(this.defectId).subscribe(object => {
-      this.object = object;
-      // this.lineBranches = this.getTheBranch(object.line);
-      // TODO this is bad
-      this.lineService.getLines().subscribe(lines => {
-        this.lines = lines;
-        this.getTheBranch(object.line);
-      });
-    });
+    return null;
   }
 
   onSubmit() {
@@ -125,27 +109,34 @@ export class LineDefectFormComponent implements OnInit {
     // only work in Add mode
     this.lineService.addDefect(this.object).subscribe(object => {
       this.object = object;
-      this.submited_list.push(object);
-      console.log(this.submited_list);
+      this.submitted_list.push(object);
+      console.log(this.submitted_list);
     });
   }
 
   onChange($event) {
-    const value = $event.target.value;
-    console.log('This is line change,', value);
-    this.getTheBranch(value);
+    const lineId = $event.target.value;
+    console.log('This is line change,', lineId);
+    // this.getCurrentBranches(value);
+    this.lineBranches = this.getCurrentBranches(lineId);
   }
 
-  getTheBranch(lineid: number) {
-    const branchIdArray = this.lines && this.lines.filter(line => line.id === lineid)[0].branch;
-    const branchArray = this.allBranches.filter(branch => branchIdArray.includes(branch.id))
-    // console.log(branchArray);
-    this.lineBranches = branchArray;
+  getCurrentBranches(lineid: string) {
+    const id = Number(lineid);
+    return this.lines.pipe(
+      switchMap(lines => lines.filter(e => e.id === id)),
+      map(lines => lines.branch),
+      switchMap(currentBranches => {
+        return this.allBranches.pipe(
+          map(branches => branches.filter(branch => currentBranches.indexOf(branch.id) >= 0))
+        );
+      })
+    );
   }
 
   onChangeCat($event) {
-    const name = this.categories.find(cat => cat.id === this.object.category).name;
-    this.cat_suggest = this.categorie_suggestions.find(c => c.name === name);
+    const name = this.categories.find(cat => String(cat.id) === String(this.object.category)).name;
+    this.cat_suggest = this.categorie_suggestions.find(c => c.name === name).select;
   }
 
   addDescription($event) {

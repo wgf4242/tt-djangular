@@ -1,4 +1,4 @@
-from apps.line.filters import TourFilter, ProductionRecordFilter, DefectFilter
+from apps.line.filters import TourFilter, ProductionRecordFilter, DefectFilter, RecordFilter, LineFaultFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework import generics, viewsets
@@ -117,20 +117,6 @@ class ProductionRecordViewSet(viewsets.ModelViewSet):
         if self.action == 'list':
             return ProductionRecordListSerializer
         return super().get_serializer_class()
-    #
-    # def perform_create(self, serializer):
-    #     instance = serializer.save()
-    #     line = instance.line
-    #     line.transformer += instance.transformer or 0
-    #     line.single_disconnector += instance.single_disconnector or 0
-    #     line.breaker += instance.breaker or 0
-    #     line.disconnector += instance.disconnector or 0
-    #     line.grounding_device += instance.grounding_device or 0
-    #     line.arrester += instance.arrester or 0
-    #     line.pole += instance.pole or 0
-    #     line.length += instance.length or 0
-    #     line.well += instance.well or 0
-    #     line.save()
 
 
 class TransformerViewSet(viewsets.ModelViewSet):
@@ -151,14 +137,15 @@ class RecordViewSet(viewsets.ModelViewSet):
     """
     serializer_class = RecordSerializer
     pagination_class = None
-    queryset = Record.objects.values('name', 'unit', ).annotate(sum=Sum('count')).order_by()
+    queryset = Record.objects.all()
     filter_backends = (DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter)
+    filter_class = RecordFilter
     ordering_fields = ('timestamp',)
     ordering = ('-timestamp',)
-    # search_fields = ('well',)
 
     def list(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
+        queryset = self.filter_queryset(self.get_queryset())
+        queryset = queryset.values('name', 'unit', ).annotate(sum=Sum('count')).order_by()
 
         page = self.paginate_queryset(queryset)
         if page is not None:
@@ -177,6 +164,7 @@ class LineFaultViewSet(viewsets.ModelViewSet):
     queryset = LineFault.objects.all()
     pagination_class = None
     filter_backends = (DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter)
+    filter_class = LineFaultFilter
     ordering_fields = ('timestamp',)
     ordering = ('timestamp',)
 

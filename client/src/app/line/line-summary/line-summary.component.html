@@ -1,5 +1,24 @@
 <div>
 
+  <form [formGroup]="form" class="example-form">
+    <span>从</span>
+    <mat-form-field>
+      <input matInput class="center" [matDatepicker]="myDatepicker" (focus)="myDatepicker.open()" formControlName="start_date" [value]="form.value.start_date">
+      <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+      <mat-datepicker #myDatepicker></mat-datepicker>
+    </mat-form-field>
+    <span>到</span>
+
+    <mat-form-field>
+      <input matInput class="center" [matDatepicker]="myDatepickerTo" (focus)="myDatepickerTo.open()" formControlName="end_date" [value]="form.value.end_date">
+      <mat-datepicker-toggle matSuffix [for]="myDatepickerTo"></mat-datepicker-toggle>
+      <mat-datepicker #myDatepickerTo></mat-datepicker>
+    </mat-form-field>
+    <button mat-icon-button color="primary" (click)="test()">
+      <mat-icon>search</mat-icon>
+    </button>
+  </form>
+
   <p>2、巡线工作</p>
 
   <div class="table">
@@ -38,7 +57,7 @@
       <button mat-raised-button color="primary" (click)="openProductionFormDialog()">添加</button>
     </div>
     <div *ngFor="let production_record of production_records?.results | paginate: { itemsPerPage: 20, currentPage: page, totalItems: production_records?.count }">
-      {{production_record.production_date| date: 'yyyy-MM-dd'}}, {{production_record.line.name}} {{production_record.branch.name}} {{production_record.position}}#杆,
+      {{production_record.production_date| date: 'yyyy-MM-dd'}}, {{production_record.line.name}} {{production_record.branch.name}} {{production_record.position}},
       <span *ngIf="production_record.transformer">新增变压器{{production_record.transformer}}台,</span>
       <span *ngIf="production_record.comment">{{production_record.comment}}，</span>
       <span *ngIf="production_record.pole">电杆{{production_record.pole}}基,</span>

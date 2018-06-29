@@ -1,5 +1,5 @@
 import django_filters
-from .models import Tour, ProductionRecord, Defect
+from .models import Tour, ProductionRecord, Defect, Record, LineFault
 
 
 class TourFilter(django_filters.rest_framework.FilterSet):
@@ -20,6 +20,25 @@ class ProductionRecordFilter(django_filters.rest_framework.FilterSet):
     class Meta:
         model = ProductionRecord
         fields = ['date_range']
+
+
+class RecordFilter(django_filters.rest_framework.FilterSet):
+    start_date = django_filters.filters.DateTimeFilter(name='timestamp', lookup_expr='gt')
+    end_date = django_filters.filters.DateTimeFilter(name='timestamp', lookup_expr='lt')
+    date_range = django_filters.filters.DateRangeFilter(name='timestamp')
+
+    class Meta:
+        model = Record
+        fields = ['start_date', 'end_date']
+
+
+class LineFaultFilter(django_filters.rest_framework.FilterSet):
+    start_date = django_filters.filters.DateTimeFilter(name='date', lookup_expr='gt')
+    end_date = django_filters.filters.DateTimeFilter(name='date', lookup_expr='lt')
+
+    class Meta:
+        model = LineFault
+        fields = ['start_date', 'end_date']
 
 
 class DefectFilter(django_filters.rest_framework.FilterSet):

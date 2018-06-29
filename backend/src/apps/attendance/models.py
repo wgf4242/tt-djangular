@@ -1,3 +1,5 @@
+from tabnanny import verbose
+
 from django.db import models
 from django.db.models import Sum
 from django.core.validators import MaxValueValidator
@@ -61,6 +63,8 @@ class MonthInfo(models.Model):
 
     class Meta:
         ordering = ['-timestamps']
+        verbose_name = '月信息管理'
+        verbose_name_plural = verbose_name
 
     def __str__(self):
         return self.monthname
@@ -85,6 +89,8 @@ class Attend(models.Model):
     # 引起聚合错误，person会重复
     class Meta:
         ordering = ['date']
+        verbose_name = '出勤管理'
+        verbose_name_plural = verbose_name
 
     def __str__(self):
         return "{date} , {person}, {month}".format(date=self.date, person=self.person, month=self.month)

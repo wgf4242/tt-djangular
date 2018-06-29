@@ -1,23 +1,27 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, Input, OnInit, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatSnackBar, MAT_SNACK_BAR_DATA } from '@angular/material';
 import { TourFormDialogComponent } from 'app/line/line-summary/tour-form-dialog/tour-form-dialog.component';
-import { distinctUntilChanged, filter, tap, switchMap, withLatestFrom, map, take } from 'rxjs/operators';
+import { distinctUntilChanged, filter, switchMap, tap } from 'rxjs/operators';
 import { Line } from '../../_models/line';
 import { Tour } from '../../_models/line-tour';
+import { ProductionRecord } from '../../_models/production';
 import { PageObject } from '../../_models/shared';
 import { LineService } from '../../_services/line.service';
 import { FaultFormDialogComponent, FaultType } from './fault-form-dialog/fault-form-dialog.component';
 import { ProductionFormDialogComponent } from './production-form-dialog/production-form-dialog.component';
 import { RecordFormDialogComponent } from './record-form-dialog/record-form-dialog.component';
-import { ProductionRecord } from '../../_models/production';
 
 @Component({
   selector: 'app-line-summary',
   templateUrl: './line-summary.component.html',
-  styleUrls: ['./line-summary.component.css']
+  styleUrls: ['./line-summary.component.css'],
+
 })
 export class LineSummaryComponent implements OnInit {
+  form: FormGroup;
+
   suggestions = [];
 
   private tours: Tour[];
@@ -36,22 +40,41 @@ export class LineSummaryComponent implements OnInit {
   arr_trip = [];
   arr_earth = [];
 
-  constructor(private lineService: LineService,
+  constructor(
+    private fb: FormBuilder,
+    private lineService: LineService,
     private dialog: MatDialog,
     public snackBar: MatSnackBar,
   ) {
+    this.form = this.fb.group({
+      start_date: ['', Validators.required],
+      end_date: ['', Validators.required]
+    });
+    this.updateDateValueField('start_date');
+    this.updateDateValueField('end_date');
+  }
+
+  private updateDateValueField(fStartDate: string) {
+    this.form.controls[fStartDate].valueChanges.subscribe(v => {
+      if (typeof v === 'string') {
+        return v;
+      }
+      console.log(v);
+      const date = v.format('YYYY-MM-DD');
+      this.form.get(fStartDate).setValue(date);
+    });
   }
 
   ngOnInit() {
     const date = new Date();
-    const start_date = new Date(date.getFullYear(), date.getMonth(), 2).toISOString().substring(0, 10);
-    const end_date = new Date(date.getFullYear(), date.getMonth() + 1, 0).toISOString().substring(0, 10);
-    // filter current month param
+    if (!this.form.valid) {
+      const start_date = new Date(date.getFullYear(), date.getMonth(), 2).toISOString().substring(0, 10);
+      const end_date = new Date(date.getFullYear(), date.getMonth() + 1, 0).toISOString().substring(0, 10);
+      this.form.get('start_date').setValue(start_date);
+      this.form.get('end_date').setValue(end_date);
+    }// filter current month param
     const params = new HttpParams({
-      fromObject: {
-        start_date: start_date,
-        end_date: end_date,
-      }
+      fromObject: this.form.value
     });
 
     // get tours and sum array length
@@ -82,12 +105,10 @@ export class LineSummaryComponent implements OnInit {
     ).subscribe();
 
     this.lineService.getLineFaults(params).pipe(
-      tap(val => console.log(val)),
       tap(arr => {
         this.arr_earth = arr.filter(v => !!v.phenomenon);
         this.arr_trip = arr.filter(v => !v.phenomenon);
       }),
-      tap(val => console.log(val)),
     ).subscribe();
   }
 
@@ -152,7 +173,7 @@ export class LineSummaryComponent implements OnInit {
 
     dialogRef.afterClosed().pipe(
       filter(n => n),
-      tap(v => console.log(v) ),
+      tap(v => console.log(v)),
       switchMap(result => this.lineService.addProductionRecord(result)),
       switchMap(productRecord => this.lineService.getUpdateFieldsByProduction(productRecord))
     ).subscribe(
@@ -166,6 +187,10 @@ export class LineSummaryComponent implements OnInit {
       duration: 500,
       data: data
     });
+  }
+
+  test() {
+    this.ngOnInit();
   }
 }
 

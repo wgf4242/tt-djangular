@@ -5,6 +5,7 @@ python3 manage.py migrate
 如果有sql语句就执行sql.
 
 superuser adminWgf/wang123456
+superuser admin/hello123
 # Commit Comment
 # Update Server
 

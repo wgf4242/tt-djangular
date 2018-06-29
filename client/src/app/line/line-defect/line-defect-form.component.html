@@ -4,8 +4,8 @@
 <div *ngIf="status==Status.Edit">
   <h3>编辑记录</h3>
 </div>
-<div class="alert alert-success" *ngIf="submited_list.length > 0">
-  <p *ngFor="let item of submited_list">
+<div class="alert alert-success" *ngIf="submitted_list.length > 0">
+  <p *ngFor="let item of submitted_list">
     {{item.date}}{{item.line}}{{item.branch}}{{item.position}}#杆{{item.description}}
   </p>
 </div>
@@ -22,14 +22,14 @@
     <div class="form-group">
       <label for="">线路名称</label>
       <select formControlName="line" class="custom-select" (change)="onChange($event)" [(ngModel)]="object.line" name="line">
-        <option *ngFor="let line of lines" [value]="line?.id">{{line?.name}}</option>
+        <option *ngFor="let line of lines | async as list" [value]="line?.id">{{line?.name}}</option>
       </select>
     </div>
 
     <div class="form-group">
       <label for="">分支名称</label>
       <select formControlName="branch" class="custom-select" *ngIf="object.line" [(ngModel)]="object.branch" name="branch">
-        <option *ngFor="let branch of lineBranches" [value]="branch.id">{{branch.name}}</option>
+        <option *ngFor="let branch of lineBranches | async as list" [value]="branch.id">{{branch.name}}</option>
       </select>
     </div>
 
@@ -63,7 +63,7 @@
       <input formControlName="description" type="text" class="form-control" [(ngModel)]="object.description" name="description">
     </div>
     <div class="form-group">
-      <button class="btn btn-primary" *ngFor="let item of cat_suggest?.select" type="button" (click)="addDescription($event)">{{item}}</button>
+      <button class="btn btn-primary" *ngFor="let item of cat_suggest" type="button" (click)="addDescription($event)">{{item}}</button>
     </div>
     <div class="form-group">
       <label for="">备注</label>
