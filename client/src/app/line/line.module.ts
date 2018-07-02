@@ -17,6 +17,7 @@ import { RecordFormDialogComponent } from './line-summary/record-form-dialog/rec
 import { TourFormDialogComponent } from './line-summary/tour-form-dialog/tour-form-dialog.component';
 import { LineTransformerListComponent } from './line-transformer-list/line-transformer-list.component';
 import { LineTransformerComponent } from './line-transformer/line-transformer.component';
+import { LineDefectDialogComponent } from './line-defect/line-defect-dialog/line-defect-dialog.component';
 
 @NgModule({
   imports: [
@@ -42,6 +43,7 @@ import { LineTransformerComponent } from './line-transformer/line-transformer.co
     RecordFormDialogComponent,
     ProductionFormDialogComponent,
     SnackBarTipComponent,
+    LineDefectDialogComponent,
   ],
   entryComponents: [
     TourFormDialogComponent,

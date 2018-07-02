@@ -3,8 +3,8 @@ from .models import Tour, ProductionRecord, Defect, Record, LineFault
 
 
 class TourFilter(django_filters.rest_framework.FilterSet):
-    start_date = django_filters.filters.DateFilter(name='date', lookup_expr='gt')
-    end_date = django_filters.filters.DateFilter(name='date', lookup_expr='lt')
+    start_date = django_filters.filters.DateFilter(name='date', lookup_expr='gte')
+    end_date = django_filters.filters.DateFilter(name='date', lookup_expr='lte')
     date_range = django_filters.filters.DateRangeFilter(name='date')
 
     class Meta:
@@ -13,8 +13,8 @@ class TourFilter(django_filters.rest_framework.FilterSet):
 
 
 class ProductionRecordFilter(django_filters.rest_framework.FilterSet):
-    start_date = django_filters.filters.DateFilter(name='production_date', lookup_expr='gt')
-    end_date = django_filters.filters.DateFilter(name='production_date', lookup_expr='lt')
+    start_date = django_filters.filters.DateFilter(name='production_date', lookup_expr='gte')
+    end_date = django_filters.filters.DateFilter(name='production_date', lookup_expr='lte')
     date_range = django_filters.filters.DateRangeFilter(name='production_date')
 
     class Meta:
@@ -23,9 +23,8 @@ class ProductionRecordFilter(django_filters.rest_framework.FilterSet):
 
 
 class RecordFilter(django_filters.rest_framework.FilterSet):
-    start_date = django_filters.filters.DateTimeFilter(name='timestamp', lookup_expr='gt')
-    end_date = django_filters.filters.DateTimeFilter(name='timestamp', lookup_expr='lt')
-    date_range = django_filters.filters.DateRangeFilter(name='timestamp')
+    start_date = django_filters.filters.DateTimeFilter(name='timestamp', lookup_expr='gte')
+    end_date = django_filters.filters.DateTimeFilter(name='timestamp', lookup_expr='lte')
 
     class Meta:
         model = Record
@@ -33,8 +32,8 @@ class RecordFilter(django_filters.rest_framework.FilterSet):
 
 
 class LineFaultFilter(django_filters.rest_framework.FilterSet):
-    start_date = django_filters.filters.DateTimeFilter(name='date', lookup_expr='gt')
-    end_date = django_filters.filters.DateTimeFilter(name='date', lookup_expr='lt')
+    start_date = django_filters.filters.DateTimeFilter(name='date', lookup_expr='gte')
+    end_date = django_filters.filters.DateTimeFilter(name='date', lookup_expr='lte')
 
     class Meta:
         model = LineFault
