@@ -210,6 +210,7 @@ class LineFault(models.Model):
     recover_time = models.CharField(max_length=180, verbose_name='恢复时间', null=True, blank=True)
     phenomenon = models.CharField(max_length=180, verbose_name='接地现象', null=True, blank=True)
     weather = models.CharField(max_length=180, verbose_name='天气', null=True, blank=True)
+    comment = models.CharField(max_length=180, verbose_name='备注', null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:

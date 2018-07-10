@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import * as moment from 'moment';
 
 export enum FaultType {
   Trip,
@@ -56,6 +57,10 @@ export class FaultFormDialogComponent implements OnInit {
     if (!valid) {
       return;
     }
+    value.date = (<moment.Moment>value.date).format().substring(0, 19);
     this.dialogRef.close(value);
+  }
+
+  orgValueChange(value) {
   }
 }
