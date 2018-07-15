@@ -57,7 +57,11 @@ export class FaultFormDialogComponent implements OnInit {
     if (!valid) {
       return;
     }
-    value.date = (<moment.Moment>value.date).format().substring(0, 19);
+    if (moment.isMoment(value.date)) {
+      value.date = (<moment.Moment>value.date).format().substring(0, 19);
+    } else {
+      value.date = moment(value.date).format().substring(0, 19);
+    }
     this.dialogRef.close(value);
   }
 
