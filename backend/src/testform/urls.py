@@ -23,6 +23,8 @@ from django.views.generic import TemplateView
 from rest_framework.documentation import include_docs_urls
 from rest_framework.routers import DefaultRouter
 from rest_framework_jwt.views import obtain_jwt_token
+from werobot import robot
+from werobot.contrib.django import make_view
 
 router = DefaultRouter()
 router.register(r'lines', apps.line.views.LineList, base_name="line")
@@ -43,8 +45,9 @@ router.register(r'line-faults', apps.line.views.LineFaultViewSet, base_name="lin
 urlpatterns = [
     url(r'^api/', include(router.urls, namespace='api')),
     url(r'^docs/', include_docs_urls(title="头台管理系统")),
-
     url(r'^admin/', admin.site.urls),
+    url(r'^robot/',make_view(robot)),
+
     url(r'^api/persons/?$', apps.attendance.views.PersonList.as_view(), name='person-list'),
     url(r'^api/attends/sum/(?P<month_id>[0-9]+)/?$', apps.attendance.views.AttendSumList.as_view(), name='attend-sum'),
     url(r'^api/branches/?$', apps.line.views.BranchList.as_view()),

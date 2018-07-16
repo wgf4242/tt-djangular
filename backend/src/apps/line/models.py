@@ -144,6 +144,9 @@ class Defect(models.Model):
 
 
 class Tour(models.Model):
+    """
+    线路巡视管理
+    """
     line = models.CharField(max_length=180, verbose_name='线路名称', blank=True, null=True)
     type = models.IntegerField(verbose_name='巡视类型', blank=True, null=True)
     description = models.CharField(max_length=180, verbose_name='巡视位置', blank=True, null=True)
@@ -154,6 +157,9 @@ class Tour(models.Model):
     def __str__(self):
         return "{line}, {description} , {person} , {date}".format(line=self.line, description=self.description,
                                                                   person=self.person, date=self.date)
+    class Meta:
+        verbose_name = '巡视记录'
+        verbose_name_plural = verbose_name
 
 
 class LineUser(models.Model):
@@ -218,4 +224,4 @@ class LineFault(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return ','.join((self.date.strftime('%Y-%m-%d'), self.line, self.action, self.reconnect, self.reason, self.phenomenon, self.weather,))
+        return ','.join([self.date.strftime('%Y-%m-%d'), self.line,])
