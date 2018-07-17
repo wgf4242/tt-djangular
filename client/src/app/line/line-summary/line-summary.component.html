@@ -1,0 +1,43 @@
+<div>
+
+  <p>2、巡线工作</p>
+
+  <div class="table">
+    <table class="table table-bordered text-center">
+      <thead>
+      <tr>
+        <td rowspan="2">统计/项目</td>
+        <td colspan="2">线路巡视（条/公里）</td>
+        <td>线路检修（条/公里）</td>
+        <td rowspan="2">管辖线路</td>
+      </tr>
+      <tr>
+        <td>正常巡视</td>
+        <td>故障巡视</td>
+        <td>本月完成（条/公里）</td>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr>
+        <td>10kV</td>
+        <td>{{tours_sum}}</td>
+        <td></td>
+        <td></td>
+        <td>{{lines_sum}}</td>
+      </tr>
+      </tbody>
+
+    </table>
+    <div>新设备投运情况：</div>
+    <p *ngFor="let production_record of production_records?.results | paginate: { itemsPerPage: 20, currentPage: page, totalItems: production_records?.count }">
+      {{production_record.production_date}},
+      {{production_record.line.name}}
+      {{production_record.branch.name}}
+      {{production_record.position}}#杆,新增变压器{{production_record.transformer}}台，电杆{{production_record.pole}}基，{{production_record.length}}公里，{{production_record.comment}}。
+    </p>
+
+  </div>
+
+
+</div>

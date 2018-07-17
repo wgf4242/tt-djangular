@@ -1,0 +1,9 @@
+<h3>历史工时</h3>
+
+
+<ul>
+  <a *ngFor="let month of months?.results" [routerLink]="['/attendance/months', month.id]">
+    <li>{{month.monthname}}</li>
+  </a>
+</ul>
+

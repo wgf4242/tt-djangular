@@ -1,0 +1,37 @@
+<table class="table table-striped" #table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>投产日期</th>
+    <th>线路名称</th>
+    <th>变压器</th>
+    <td>单刀闸</td>
+    <td>开关</td>
+    <td>刀闸</td>
+    <td>接地装置</td>
+    <td>避雷器</td>
+    <td>电杆</td>
+    <td>公里</td>
+    <td>油井</td>
+    <td>备注</td>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr *ngFor="let line of lines">
+    <td>{{line.id}}</td>
+    <td>{{line.production_date}}</td>
+    <td>{{line.name}}</td>
+    <td>{{line.transformer}}</td>
+    <td>{{line.single_disconnector}}</td>
+    <td>{{line.breaker}}</td>
+    <td>{{line.disconnector}}</td>
+    <td>{{line.grounding_device}}</td>
+    <td>{{line.arrester}}</td>
+    <td>{{line.pole}}</td>
+    <td>{{line.length}}</td>
+    <td>{{line.well}}</td>
+    <td>{{line.comment}}</td>
+  </tr>
+  </tbody>
+</table>

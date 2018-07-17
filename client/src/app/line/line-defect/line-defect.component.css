@@ -1,0 +1,38 @@
+.finished {
+  color: red;
+}
+
+.black {
+  color: black;
+}
+
+.white {
+  color: white;
+}
+
+@media only screen and (max-width: 40em) {
+  thead, td:nth-child(n+8),td:nth-child(2) {
+    display: none;
+  }
+  td:nth-child(3), td:nth-child(4), td:nth-child(5), td:nth-child(7) {
+    flex: 1 1 auto;
+  }
+
+  tr {
+    display: flex;
+    margin-bottom: 5px;
+    border-bottom: 2px solid black;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  td:nth-child(12) {
+    display: inline;
+    order: -1;
+  }
+
+  td[data-th]:before  {
+    content: attr(data-th);
+  }
+}

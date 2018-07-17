@@ -5,6 +5,7 @@
        {
            "type": "chrome",
            "request": "launch",
+        //    "runtimeExecutable": "D:\\Program Files\\small\\MyChrome_v3.7_x64\\Chrome\\chrome.exe",
            "name": "Launch Chrome",
            "url": "http://localhost:8000",
            "webRoot": "${workspaceRoot}/client/src"

@@ -1,36 +1,40 @@
-import { BrowserModule, Title } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import {BrowserModule, Title} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppComponent } from './app.component';
-import { AttandenceComponent } from './attendance/attendance.component';
-import { AppRoutingModule } from "app/app-routing.module";
-import { LineTourComponent } from './line/line-tour/line-tour.component';
-import { LineFacilityComponent } from './line/line-facility/line-facility.component';
-import { LineDefectComponent } from './line/line-defect/line-defect.component';
-import { PersonService } from "app/attendance/person.service";
-import { MonthListComponent } from "app/attendance/month-list.component";
-import { MonthDetailComponent } from "app/attendance/month-detail.component";
+import {AppComponent} from './app.component';
 
+import {AttendanceModule} from 'app/attendance/attendance.module';
+import {PageNotFoundComponent} from 'app/not-found.component';
+import {LineModule} from 'app/line/line.module';
+import {LoginModule} from 'app/user/login.module';
+import {HttpModule} from '@angular/http';
+import {AuthGuard} from './_guards/auth.guard';
+import {AuthenticationService} from './_services/authentication.service';
+import {CoreModule} from "./core/core.module";
+import {SharedModule} from "./shared/shared.module";
+import {LoggerService} from "./_services/logger.service";
 
 @NgModule({
   declarations: [
     AppComponent,
-    AttandenceComponent,
-    MonthListComponent,
-    MonthDetailComponent,
-    LineTourComponent,
-    LineFacilityComponent,
-    LineDefectComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
-    FormsModule,
     HttpModule,
-    AppRoutingModule
+    AttendanceModule,
+    LoginModule,
+    LineModule,
+    SharedModule,
+    CoreModule,
   ],
-  providers: [Title, PersonService],
+  providers: [
+    Title,
+    AuthGuard,
+    AuthenticationService,
+    LoggerService,
+    // ,{ provide: LOCALE_ID, useValue: "zh" }
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

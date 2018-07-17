@@ -13,7 +13,11 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import sys
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# sys.path.insert(0, BASE_DIR)
+# sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,7 +29,7 @@ SECRET_KEY = 'fkhu=co^d+kx$z(y=^rtpzkvi_3l+_cfol_!6d*@c(sul=4(c2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['47.93.99.61', 'localhost', '127.0.0.1', 'wgf4242.top']
 
 
 # Application definition
@@ -38,11 +42,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_pandas',
+    'django_filters',
     'apps.attendance',
     'apps.line',
+
+    # 'attendance.apps.AttendanceConfig',
+    # 'line.apps.LineConfig',
+    # 'line.LineConfig',
 ]
 
 MIDDLEWARE = [
+    'django.middleware.gzip.GZipMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -78,11 +89,13 @@ WSGI_APPLICATION = 'testform.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'myform',
+        'USER': 'root',
+        'PASSWORD': 'WGF1234',
+        'HOST': '127.0.0.1',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -106,15 +119,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
+# LANGUAGE_CODE = 'en-us'
+# TIME_ZONE = 'UTC'
+# USE_I18N = True
+# USE_L10N = True
+# USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
@@ -122,13 +131,41 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
+    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static/ang'),
 ]
 
 LANGUAGE_CODE = "zh-hans"
 
+USE_L10N = False
+DATE_INPUT_FORMATS = (
+    '%d.%m.%Y', '%d.%m.%Y', '%d.%m.%y',  # '25.10.2006', '25.10.2006', '25.10.06'
+    '%d-%m-%Y', '%d/%m/%Y', '%d/%m/%y',  # '25-10-2006', '25/10/2006', '25/10/06'
+    '%d %b %Y',  # '25 Oct 2006',
+    '%d %B %Y',  # '25 October 2006',
+    '%Y-%m-%d', '%Y-%m-%d %H:%M:%S',
+)
+DATE_FORMAT = ('Y-m-d', 'Y/m/d')
+
 
 REST_FRAMEWORK = {
-    'PAGE_SIZE': 10,
-
+    'PAGE_SIZE': 20,
+    # 'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework.renderers.JSONRenderer',
+        'rest_pandas.renderers.PandasExcelRenderer',
+    ),
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+    'USE_TZ': 'True',
+    'DATE_INPUT_FORMATS': [
+        'iso-8601', '%Y-%m-%d', '%Y/%m/%d',
+    ],
 }
+
+STATIC_ROOT = os.path.join(BASE_DIR, "staticsites/")

@@ -1,0 +1,27 @@
+<div [formGroup]="addressForm">
+  <div class="row">
+    <div class="form-group col-xs-2">
+      <label [hidden]="index > 0">姓名</label>
+      <div><label>{{person}}</label></div>
+    </div>
+    <div class="form-group col-xs-2">
+      <label [hidden]="index > 0">出勤天数</label>
+      <input type="number" class="form-control" formControlName="attend">
+    </div>
+    <div class="form-group col-xs-2">
+      <label [hidden]="index > 0">出工工时</label>
+      <input type="number" class="form-control" formControlName="workhour">
+    </div>
+
+    <div class="form-group col-xs-2">
+      <label [hidden]="index > 0">上杆工时</label>
+      <input type="number" class="form-control" formControlName="climbhour">
+    </div>
+
+    <div class="form-group col-xs-2">
+      <label [hidden]="index > 0">备注</label>
+      <input type="text" class="form-control" formControlName="comment">
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,96 @@
+<form novalidate [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
+  <div class="form-group form-inline">
+    <label for="exampleInputEmail1" class="col-sm-4 col-form-label">所属线路</label>
+    <div class="col-sm-6">
+      <select formControlName="line">
+        <option value="" *ngFor="let line of lines | async" [value]="line.id">{{line.name}}</option>
+      </select>
+      <!--<input formControlName="line" type="text" class="form-control" id="" aria-describedby="emailHelp" placeholder="请输入线路">-->
+    </div>
+  </div>
+  <div class="form-group form-inline">
+    <label for="exampleInputEmail1" class="col-sm-4 col-form-label">平台号或井号</label>
+    <div class="col-sm-6">
+      <input formControlName="well" type="text" class="form-control" id="" aria-describedby="emailHelp" placeholder="请输入包含井号">
+    </div>
+  </div>
+
+  <div class="form-group form-inline">
+    <label for="exampleInputEmail1" class="col-sm-4 col-form-label">型号</label>
+    <div class="col-sm-6">
+      <input formControlName="category" type="text" class="form-control" id="" aria-describedby="emailHelp" placeholder="请输入型号">
+    </div>
+  </div>
+
+  <div class="form-group form-inline">
+    <label for="exampleInputEmail1" class="col-sm-4 col-form-label">额定容量(kVA)</label>
+    <div class="col-sm-6">
+      <input formControlName="capacity" type="text" class="form-control" id="" aria-describedby="emailHelp" placeholder="请输入额定容量">
+    </div>
+  </div>
+
+  <div class="form-group form-inline">
+    <label for="exampleInputEmail1" class="col-sm-4 col-form-label">二次电压</label>
+    <div class="col-sm-6">
+      <input formControlName="voltage" type="text" class="form-control" id="" aria-describedby="emailHelp" placeholder="请输入二次电压">
+    </div>
+  </div>
+
+  <div class="form-group form-inline">
+    <label for="exampleInputEmail1" class="col-sm-4 col-form-label">出厂日期</label>
+    <div class="col-sm-6">
+      <!--<input formControlName="date" name="date">-->
+      <el-date-picker formControlName="date" name="date" [change-on-blur]="true"></el-date-picker>
+    </div>
+
+
+  </div>
+
+  <div class="form-group form-inline">
+    <label for="exampleInputEmail1" class="col-sm-4 col-form-label">出厂序号</label>
+    <div class="col-sm-6">
+      <input formControlName="no" type="text" class="form-control" id="" aria-describedby="emailHelp" placeholder="请输入出厂序号">
+    </div>
+  </div>
+
+  <div class="form-group form-inline">
+    <label for="exampleInputEmail1" class="col-sm-4 col-form-label">厂家</label>
+    <div class="col-sm-6">
+      <input formControlName="manufacturers" type="text" class="form-control" id="" aria-describedby="emailHelp" placeholder="请输入厂家">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="form-check">
+      <input formControlName="is_weld" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+      <label class="form-check-label" for="defaultCheck1">
+        焊接
+      </label>
+    </div>
+  </div>
+
+  <div class="form-group form-inline">
+    <label for="exampleInputEmail1" class="col-sm-4 col-form-label">备注</label>
+    <div class="col-sm-6">
+      <input formControlName="comment" type="text" class="form-control" id="" aria-describedby="emailHelp" placeholder="备注">
+    </div>
+  </div>
+
+
+  <!--<button type="submit" class="btn btn-primary mb-2" [disabled]="form.invalid">提交</button>-->
+
+  <div class="alert-danger">
+    <p *ngIf="errorMessage">{{errorMessage | json}}</p>
+  </div>
+
+  <p>Form valid: {{form.valid | json}}</p>
+  <p>Form value: {{form.value | json}}</p>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">提交</button>
+  </div>
+</form>
+
+
+

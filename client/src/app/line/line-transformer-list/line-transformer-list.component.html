@@ -1,0 +1,82 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" (click)="edit()">
+  添加记录
+</button>
+
+<div class="alert-success" *ngFor="let item of pushed_transformer">
+  <span>已添加井号： {{item.well}}</span>
+  <a (click)="edit(item.id)">[编辑]</a>
+  <a (click)="delete(item.id)">[删除]</a>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{label}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-line-transformer [item]="item" [errorMessage]="errorMessage" (onClick)="submit($event)"></app-line-transformer>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form #form="ngForm" novalidate (ngSubmit)="search(form)">
+  <input type="text" name="search" placeholder="搜索井号" ngModel>
+  <button type="submit" class="btn btn-primary">
+    <i class="material-icons">search</i>
+  </button>
+</form>
+
+<table class="table table-striped">
+  <thead>
+    <th>ID</th>
+    <th>所属线路</th>
+    <th>平台号或井号</th>
+    <th>型号</th>
+    <th>额定容量(kVA)</th>
+    <th>二次电压(低压)</th>
+    <th>出厂日期</th>
+    <th>出厂序号</th>
+    <th>厂家</th>
+    <th>焊接</th>
+    <th>备注</th>
+    <th>操作</th>
+  </thead>
+  <tbody>
+
+  <tr *ngFor="let object of objects?.results | paginate: { itemsPerPage: 20, currentPage: page, totalItems: objects?.count }">
+    <td>{{object.id}}</td>
+    <!--<td>{{ (lines$ | async) | myfilter: object.line}}</td>-->
+    <td>{{ (lines$ | idpipe: object.line)?.name}}</td>
+    <!--<td>{{ lines$ | myfilterid: object.line}}</td>-->
+    <!--<td>{{ (lines$ | async)?.name}}</td>-->
+    <td>{{object.well}}</td>
+    <td>{{object.category}}</td>
+    <td data-th="容量:">{{object.capacity}}</td>
+    <td data-th="低压:">{{object.voltage}}</td>
+    <td>{{object.date}}</td>
+    <td>{{object.no}}</td>
+    <td>{{object.manufacturers}}</td>
+    <td data-th="焊接:" *ngIf="object.is_weld ; else f" >是</td>
+    <ng-template #f>
+      <td data-th="焊接:">否</td>
+    </ng-template>
+    <td>{{object.comment}}</td>
+    <td>
+
+      <!--<a (click)="edit(1, object)"><mat-icon mat-list-icon>edit</mat-icon></a></td>-->
+      <!--<i class="material-icons md-18">edit</i>-->
+      <!--<a mat-line (click)="edit(1, object)">[编辑]</a></td>-->
+      <a><i class="material-icons" (click)="edit(1, object)">edit</i></a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<pagination-controls (pageChange)="pageChanged($event)" previousLabel="上一页" nextLabel="下一页"></pagination-controls>
