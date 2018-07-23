@@ -10,13 +10,17 @@
     <span>到</span>
 
     <mat-form-field>
-      <input matInput class="center" [matDatepicker]="myDatepickerTo" (focus)="myDatepickerTo.open()" formControlName="end_date" [value]="form.value.end_date">
+      <input matInput class="center" [matDatepicker]="myDatepickerTo" (focus)="myDatepickerTo.open()" formControlName="end_date" [value]="form.value.start_date">
       <mat-datepicker-toggle matSuffix [for]="myDatepickerTo"></mat-datepicker-toggle>
       <mat-datepicker #myDatepickerTo></mat-datepicker>
     </mat-form-field>
-    <button mat-icon-button color="primary" (click)="test()">
+    <button mat-icon-button color="primary" (click)="reload()">
       <mat-icon>search</mat-icon>
     </button>
+
+
+    <!-- <app-line-form [items]='lines' formControlName="line"></app-line-form> -->
+    <!-- <button (click)="test()">1</button> -->
   </form>
 
   <p>2、巡线工作</p>
@@ -40,8 +44,8 @@
       <tbody>
         <tr>
           <td>10kV</td>
-          <td>{{tours_fault_sum}}</td>
-          <td>{{tours_sum}}</td>
+          <td>{{tours_fault_count}}/{{tours_fault_sum}}</td>
+          <td>{{tours_count}}/{{tours_sum}}</td>
           <td></td>
           <td>{{lines_sum}}</td>
         </tr>

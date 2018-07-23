@@ -2,8 +2,12 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
   <div mat-dialog-content>
     <mat-form-field>
-      <input matInput placeholder="线路名称" formControlName="line" (change)="onLineChange()">
+      <input matInput placeholder="线路名称" [matAutocomplete]="auto" formControlName="line">
     </mat-form-field>
+    <mat-autocomplete #auto="matAutocomplete" #myauto>
+      <mat-option *ngFor="let option of filteredStates | async" [value]="option">{{option}}</mat-option>
+    </mat-autocomplete>
+
     <mat-form-field>
       <!--<input matInput [matDatepicker]="myDatepicker" formControlName="date" (focus)="myDatepicker.open()" placeholder="日期">-->
       <input matInput [matDatepicker]="myDatepicker" formControlName="date" (focus)="myDatepicker.open()" placeholder="日期" (dateChange)="orgValueChange(ref.value)" #ref>

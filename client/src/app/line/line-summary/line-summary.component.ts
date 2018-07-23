@@ -27,8 +27,12 @@ export class LineSummaryComponent implements OnInit {
   private tours: Tour[];
   lines: Line[];
   lines_sum: number;
+
   tours_sum: number;
+  tours_count: number;
   tours_fault_sum: number;
+  tours_fault_count: number;
+
   production_records: PageObject<ProductionRecord[]>;
 
   page: number;
@@ -48,7 +52,8 @@ export class LineSummaryComponent implements OnInit {
   ) {
     this.form = this.fb.group({
       start_date: ['', Validators.required],
-      end_date: ['', Validators.required]
+      end_date: ['', Validators.required],
+      line: ['1']
     });
     this.updateDateValueField('start_date');
     this.updateDateValueField('end_date');
@@ -81,8 +86,10 @@ export class LineSummaryComponent implements OnInit {
     this.lineService.getTours(params).subscribe((tours: Tour[]) => {
       // this.tours = tours.filter(v => v.type === 1);
       this.tours_fault_sum = parseFloat(tours.filter(v => v.type === 1).reduce((sum, tour) => sum + tour.length, 0).toFixed(2));
+      this.tours_fault_count = Array.from(new Set(tours.filter(v => v.type === 1).map(e => e.line))).length;
       // this.tours_fault_sum = parseFloat(this.tours.reduce((sum, tour) => sum + tour.length, 0).toFixed(2));
       this.tours_sum = parseFloat(tours.filter(v => v.type === 2).reduce((sum, tour) => sum + tour.length, 0).toFixed(2));
+      this.tours_count = Array.from(new Set(tours.filter(v => v.type === 2).map(e => e.line))).length;
     });
 
     // get lines and sum array length
@@ -132,7 +139,7 @@ export class LineSummaryComponent implements OnInit {
   openFaultFormDialog(type: FaultType) {
     const dialogRef = this.dialog.open(FaultFormDialogComponent, {
       width: '250px',
-      data: { type: type }
+      data: { type: type, lines: this.lines.map(e => e.name) }
     });
 
     dialogRef.afterClosed().pipe(filter(n => n))
@@ -189,8 +196,12 @@ export class LineSummaryComponent implements OnInit {
     });
   }
 
-  test() {
+  reload() {
     this.ngOnInit();
+  }
+
+  test() {
+    console.log(this.form.controls['line']);
   }
 }
 

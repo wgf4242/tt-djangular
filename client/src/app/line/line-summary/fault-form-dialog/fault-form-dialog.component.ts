@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
+import { startWith, tap, debounceTime, map } from 'rxjs/operators';
 
 export enum FaultType {
   Trip,
@@ -16,6 +17,7 @@ export enum FaultType {
 export class FaultFormDialogComponent implements OnInit {
   form: FormGroup;
   type = FaultType;
+  filteredStates: any;
 
   constructor(
     public dialogRef: MatDialogRef<FaultFormDialogComponent>,
@@ -46,10 +48,13 @@ export class FaultFormDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-  }
-
-  onLineChange() {
-
+    this.filteredStates = this.form.get('line').valueChanges
+    .pipe(
+      startWith(''),
+      tap(v => console.log(v)),
+      debounceTime(300),
+      map(state => state ? this.filterStates(state) : this.data.lines.slice())
+    );
   }
 
   onSubmit({value, valid}, ev: Event) {
@@ -66,5 +71,10 @@ export class FaultFormDialogComponent implements OnInit {
   }
 
   orgValueChange(value) {
+  }
+
+  filterStates(label: string) {
+    return this.data.lines.filter(data =>
+      data.indexOf(label) > -1);
   }
 }

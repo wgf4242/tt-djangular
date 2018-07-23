@@ -4,17 +4,25 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule, MatButtonModule, MatDatepickerModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatLineModule, MatListModule, MatNativeDateModule, MatPaginatorModule, MatRadioModule, MatSelectModule, MatSidenavModule, MatSnackBarModule, MatToolbarModule } from '@angular/material';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, NativeDateModule, NativeDateAdapter } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, NativeDateModule } from '@angular/material/core';
 import { MatTableModule } from '@angular/material/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MyIdPipe } from '../pipes/idpipe.pipe';
 import { MyfilterPipe } from '../pipes/myfilter.pipe';
+import { LineFormComponent } from './line-form/line-form.component';
 
 
 @NgModule({
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+  ],
   declarations: [
     MyfilterPipe,
     MyIdPipe,
+    LineFormComponent,
   ],
   exports: [
     CommonModule,
@@ -42,6 +50,7 @@ import { MyfilterPipe } from '../pipes/myfilter.pipe';
     MyfilterPipe,
     MyIdPipe,
     LayoutModule,
+    LineFormComponent,
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'zh-CN'},

@@ -1,0 +1,8 @@
+<mat-form-field>
+  <mat-select placeholder="线路名称" [(value)]="_value" (selectionChange)="onChange($event)">
+    <mat-option *ngFor="let item of items" [value]="item.id">
+      {{item.name}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+{{outValue}}
