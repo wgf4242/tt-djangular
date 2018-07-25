@@ -11,11 +11,13 @@ import { LoggerService } from './_services/logger.service';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
+import { AttendDialogComponent } from './attendance/add-normal/attend-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PageNotFoundComponent,
+    AttendDialogComponent,
   ],
   imports: [
     BrowserModule,

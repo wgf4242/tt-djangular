@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>{{data?.title}}</h1>
+<form [formGroup]="form" novalidate (ngSubmit)="onSubmit(form, $event)">
+  <mat-form-field>
+    <input matInput placeholder="{{data?.object?.person}}" disabled>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="出勤天数" type="number" formControlName="attend">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="出工工时" type="number" formControlName="workhour">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="上杆工时" type="number" formControlName="climbhour">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="备注" formControlName="comment">
+  </mat-form-field>
+
+  <div mat-dialog-actions>
+    <button mat-raised-button [disabled]="form.invalid || form.pristine" color="primary">提交</button>
+  </div>
+</form>

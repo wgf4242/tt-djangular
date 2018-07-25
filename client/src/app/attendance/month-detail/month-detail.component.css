@@ -1,0 +1,7 @@
+mat-icon-button {
+  margin-left: 8px;
+}
+
+.hover:hover {
+  background-color: red;
+}

@@ -79,8 +79,6 @@ class Attend(models.Model):
                                    default=0)
     climbhour = models.IntegerField(validators=[MaxValueValidator(999)], verbose_name='上杆', null=True, blank=True,
                                     default=0)
-    otherhour = models.IntegerField(validators=[MaxValueValidator(999)], verbose_name='变检工时', null=True, blank=True,
-                                    default=0)
     month = models.ForeignKey(MonthInfo, on_delete=models.CASCADE, verbose_name='月份')
     comment = models.CharField(max_length=500, verbose_name='备注', null=True, blank=True)
 

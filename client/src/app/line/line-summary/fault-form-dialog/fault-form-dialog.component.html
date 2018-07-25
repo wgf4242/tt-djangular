@@ -2,7 +2,7 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
   <div mat-dialog-content>
     <mat-form-field>
-      <input matInput placeholder="线路名称" [matAutocomplete]="auto" formControlName="line">
+      <input matInput placeholder="线路名称" [matAutocomplete]="auto" formControlName="line" (keydown.enter)="chooseFirstOption($event)">
     </mat-form-field>
     <mat-autocomplete #auto="matAutocomplete" #myauto>
       <mat-option *ngFor="let option of filteredStates | async" [value]="option">{{option}}</mat-option>

@@ -7,19 +7,19 @@ export class Attend {
   workhour: number;
   climbhour: number;
   comment: string;
-  person: number;
+  person: any;
   month: number;
 }
 
 export class AttendDetail {
-  id: number;
-  date: string;
-  attend: number;
-  workhour: number;
-  climbhour: number;
-  comment: string;
-  person: Person;
-  month: Month;
+  id?: number;
+  date?: string;
+  attend?: number;
+  workhour?: number;
+  climbhour?: number;
+  comment?: string;
+  person?: Person;
+  month?: Month;
 }
 
 export class AttendSum {

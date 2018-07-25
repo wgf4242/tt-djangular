@@ -1,7 +1,9 @@
+import { SnackBarTipComponent } from './snack-bar-tip.component';
+
 import { HttpParams } from '@angular/common/http';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatSnackBar, MAT_SNACK_BAR_DATA } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { TourFormDialogComponent } from 'app/line/line-summary/tour-form-dialog/tour-form-dialog.component';
 import { distinctUntilChanged, filter, switchMap, tap } from 'rxjs/operators';
 import { Line } from '../../_models/line';
@@ -206,15 +208,3 @@ export class LineSummaryComponent implements OnInit {
 }
 
 
-@Component({
-  template: `
-    <span class="example-pizza-party">
-      {{data}}
-    </span>
-    `,
-  styles: [`.example-pizza-party { color: hotpink; }`],
-})
-export class SnackBarTipComponent {
-  constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) {
-  }
-}

@@ -32,7 +32,7 @@ export class AttendService {
   }
 
   updateAttend(attend: AttendDetail): Observable<AttendDetail> {
-    return this.http.put<AttendDetail>(this.attendsUrl + attend.id + '/', attend);
+    return this.http.patch<AttendDetail>(this.attendsUrl + attend.id + '/', {...attend});
   }
 
   getAttends(month_id: number): Observable<Attend[]> {

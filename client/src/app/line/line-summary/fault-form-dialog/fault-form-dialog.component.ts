@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatAutocomplete } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { startWith, tap, debounceTime, map } from 'rxjs/operators';
@@ -15,6 +15,8 @@ export enum FaultType {
   styles: []
 })
 export class FaultFormDialogComponent implements OnInit {
+  @ViewChild(MatAutocomplete) matAutocomplete: MatAutocomplete;
+
   form: FormGroup;
   type = FaultType;
   filteredStates: any;
@@ -77,4 +79,10 @@ export class FaultFormDialogComponent implements OnInit {
     return this.data.lines.filter(data =>
       data.indexOf(label) > -1);
   }
+
+  chooseFirstOption(ev: Event): void {
+    ev.preventDefault();
+    this.matAutocomplete.options.first.select();
+  }
+
 }

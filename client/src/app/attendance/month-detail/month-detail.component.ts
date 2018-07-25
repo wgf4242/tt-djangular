@@ -1,53 +1,81 @@
-import {Component, OnInit} from '@angular/core';
-import {MonthService} from 'app/_services/month.service';
-import {AttendService} from 'app/_services/attend.service';
-import {PersonService} from 'app/_services/person.service';
-import {Person} from 'app/_models/person';
-import {Month} from 'app/_models/month';
-import {Attend} from 'app/_models/attend';
-import {ActivatedRoute} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatSnackBar } from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
+import { Attend } from 'app/_models/attend';
+import { Month } from 'app/_models/month';
+import { Person } from 'app/_models/person';
+import { AttendService } from 'app/_services/attend.service';
+import { MonthService } from 'app/_services/month.service';
+import { PersonService } from 'app/_services/person.service';
+import { filter, map, switchMap } from 'rxjs/operators';
+import { SnackBarTipComponent } from '../../line/line-summary/snack-bar-tip.component';
+import { AttendDialogComponent } from '../add-normal/attend-dialog.component';
 
 @Component({
-  templateUrl: './month-detail.component.html'
+  templateUrl: './month-detail.component.html',
+  styleUrls: ['./month-detail.component.css']
 })
 export class MonthDetailComponent implements OnInit {
 
-  persons: Person[];
   month: Month;
   attends: Attend[];
   p: number;
 
   constructor(private attendService: AttendService,
-              private personService: PersonService,
-              private monthService: MonthService,
-              private route: ActivatedRoute) {
+    private personService: PersonService,
+    private monthService: MonthService,
+    private route: ActivatedRoute,
+    private dialog: MatDialog,
+    public snackBar: MatSnackBar,
+  ) {
   }
 
   ngOnInit() {
     const monthId = this.route.snapshot.params['month'];
-    // const monthId = this.route.snapshot.params['id'];
-    console.log(this.route.params);
-    this.route.params.subscribe(value =>
-      this.attendService.getAttendsByParams(value).subscribe(attends => this.attends = attends )
+
+    this.route.params.subscribe(params =>
+      this.attendService.getAttendsByParams(params).pipe(
+        switchMap(attends => {
+          this.attends = attends;
+          return this.personService.getPersons();
+        }),
+        map(persons => {
+          this.attends = this.attends.map(e => {
+            e.person = this.filterPerson(e.person, persons);
+            return e;
+          });
+        })
+      ).subscribe(_ => { })
     );
-    if (monthId) {this.monthService.getMonth(monthId).subscribe(month => this.month = month); }
-    // if (monthId) {
-    //   this.monthService.getMonth(monthId).subscribe(month => this.month = month);
-    //   this.attendService.getAttends(monthId).subscribe(attends => (this.attends = attends, console.log(attends)))
-    // } else {
-    //
-    //   this.monthService.getMonths().subscribe(months => {
-    //     this.month = months.results[0];
-    //     this.attendService.getAttends(this.month.id).subscribe(attends => (this.attends = attends, console.log(attends)))
-    //   });
-    // }
-    this.personService.getPersons().subscribe(persons => this.persons = persons);
+    if (monthId) { this.monthService.getMonth(monthId).subscribe(month => this.month = month); }
   }
 
+  openAttendDialogComponent(value) {
+    const dialogRef = this.dialog.open(AttendDialogComponent, {
+      width: '250px',
+      data: { object: value, title: '编辑记录' }
+    });
 
-  filterPerson(personId: number) {
-    const lname = this.persons && this.persons.filter(line => line.id === personId)[0].name;
-    return lname;
+    dialogRef.afterClosed().pipe(filter(n => n))
+      .subscribe(object => {
+        this.attendService.updateAttend(object).subscribe(
+          _ => { },
+          err => { },
+          () => { this.openSnackBar() }
+        )
+      });
+  }
+
+  openSnackBar(data: string = '添加成功') {
+    this.snackBar.openFromComponent(SnackBarTipComponent, {
+      duration: 500,
+      data: data
+    });
+  }
+
+  filterPerson(personId: number | string, persons: Array<Person>) {
+    const arr = persons.filter(person => person.id === personId);
+    return arr.length === 0 ? '离职人员' : arr[0].name;
   }
 
   delete(id: number) {
@@ -55,5 +83,4 @@ export class MonthDetailComponent implements OnInit {
       this.attends = this.attends.filter(obj => obj.id !== id)
     })
   }
-
 }

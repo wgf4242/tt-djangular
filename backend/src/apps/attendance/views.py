@@ -2,6 +2,7 @@ from apps.attendance.filters import AttendFilter
 from apps.attendance.serializers import *
 from django_filters.rest_framework import DjangoFilterBackend, filters
 from rest_framework import generics, viewsets
+from rest_framework.pagination import PageNumberPagination
 
 
 class PersonList(generics.ListCreateAPIView):
