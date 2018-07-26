@@ -14,7 +14,6 @@ import { PersonService } from 'app/_services/person.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SharedModule } from '../shared/shared.module';
 import { AddNormalComponent } from './add-normal/add-normal.component';
-import { EditFormComponent } from './add-normal/attend-form/edit-form.component';
 import { AttendDetailComponent } from './attend-detail/attend-detail.component';
 import { MonthAddComponent } from './month-add/month-add.component';
 import { MonthCommentComponent } from './month-comment/month-comment.component';
@@ -40,8 +39,6 @@ import { AttendDialogComponent } from 'app/attendance/add-normal/attend-dialog.c
     MonthCommentComponent,
     AttendDetailComponent,
     MonthAddComponent,
-    // EditFormComponent
-    EditFormComponent
   ],
   entryComponents: [
     AttendDialogComponent

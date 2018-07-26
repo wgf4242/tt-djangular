@@ -59,7 +59,7 @@ export class MonthDetailComponent implements OnInit {
     dialogRef.afterClosed().pipe(filter(n => n))
       .subscribe(object => {
         this.attendService.updateAttend(object).subscribe(
-          _ => { },
+          _ => this.updateArray(object),
           err => { },
           () => { this.openSnackBar() }
         )
@@ -71,6 +71,13 @@ export class MonthDetailComponent implements OnInit {
       duration: 500,
       data: data
     });
+  }
+
+  updateArray(object: any) {
+    const index = this.attends.findIndex(e => e.id === object.id)
+    if (index > -1) {
+      this.attends[index] = {...this.attends[index], ...object}
+    }
   }
 
   filterPerson(personId: number | string, persons: Array<Person>) {

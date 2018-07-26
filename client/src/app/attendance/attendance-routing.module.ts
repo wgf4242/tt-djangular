@@ -6,7 +6,6 @@ import { MonthDetailComponent } from 'app/attendance/month-detail/month-detail.c
 import { MonthListComponent } from 'app/attendance/month-list/month-list.component';
 import { MonthSummaryComponent } from 'app/attendance/month-summary/month-summary.component';
 import { AuthGuard } from '../_guards/auth.guard';
-import { EditFormComponent } from './add-normal/attend-form/edit-form.component';
 import { MonthAddComponent } from './month-add/month-add.component';
 
 const routes: Routes = [
@@ -24,7 +23,6 @@ const routes: Routes = [
           { path: 'months/add', component: MonthAddComponent, data: { title: '添加月份' } },
           { path: 'months/:id', component: MonthSummaryComponent, data: { title: '本月汇总' } },
           { path: 'add', component: AddNormalComponent, data: { title: '添加记录' } },
-          { path: 'edit/:id', component: EditFormComponent, data: { title: '编辑记录' } },
           { path: 'detail', component: MonthDetailComponent, data: { title: '明细表格' } },
 
         ],
