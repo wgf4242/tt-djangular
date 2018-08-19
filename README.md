@@ -26,6 +26,7 @@ sudo /etc/init.d/nginx restart
 ## BUG
 
 ## Todo Feature
+正常巡视的故障巡视换位置
 Attend 删除  太丑陋了
 Defects 查询后应跳转回第一页
 

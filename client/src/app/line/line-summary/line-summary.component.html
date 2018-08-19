@@ -10,7 +10,7 @@
     <span>到</span>
 
     <mat-form-field>
-      <input matInput class="center" [matDatepicker]="myDatepickerTo" (focus)="myDatepickerTo.open()" formControlName="end_date" [value]="form.value.start_date">
+      <input matInput class="center" [matDatepicker]="myDatepickerTo" (focus)="myDatepickerTo.open()" formControlName="end_date" [value]="form.value.end_date">
       <mat-datepicker-toggle matSuffix [for]="myDatepickerTo"></mat-datepicker-toggle>
       <mat-datepicker #myDatepickerTo></mat-datepicker>
     </mat-form-field>
