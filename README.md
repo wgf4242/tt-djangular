@@ -26,7 +26,8 @@ sudo /etc/init.d/nginx restart
 ## BUG
 
 ## Todo Feature
-正常巡视的故障巡视换位置
+线路巡视添加 下拉线路
+添加工作量，下拉查询至上一年的下拉
 Attend 删除  太丑陋了
 Defects 查询后应跳转回第一页
 
@@ -37,6 +38,7 @@ Defects 查询后应跳转回第一页
 1. 操作导引
 Done Added: Autocomplete support enter complete first.
 Done Added: Update array in html after updating backend in month detail.
+Done 正常巡视的故障巡视换位置
 
 ## Todo backend
 权限验证 'DEFAULT_PERMISSION_CLASSES': [],

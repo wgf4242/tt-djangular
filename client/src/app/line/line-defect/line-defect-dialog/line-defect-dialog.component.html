@@ -1,3 +1,69 @@
-<p>
-  line-defect-dialog works!
-</p>
+<h1 mat-dialog-title>添加记录</h1>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit(form, $event)" novalidate>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-select placeholder="类别" formControlName="line">
+        <mat-option *ngFor="let type of types" [value]="type.id"> {{type.label}} </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="线路名称" formControlName="line">
+        <mat-option *ngFor="let line of lines" [value]="line.value"> {{line.viewValue}} </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="分支名称" formControlName="branch">
+        <mat-option *ngFor="let branch of branches" [value]="branch.value"> {{branch.viewValue}} </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput formControlName="position" placeholder="杆号" type="number">
+      <mat-error *ngIf="form.controls['position'].value >= 400">
+        杆号需要小于400
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="缺陷分类" formControlName="category">
+        <mat-option *ngFor="let category of categories" [value]="category.value"> {{category.viewValue}} </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput formControlName="description" placeholder="缺陷内容">
+    </mat-form-field>
+    <!-- <div class="form-group">
+      <button class="btn btn-primary" *ngFor="let item of cat_suggest" type="button" (click)="addDescription($event)">{{item}}</button>
+    </div> -->
+
+    <mat-form-field>
+      <input matInput formControlName="comment" placeholder="备注">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput formControlName="date" placeholder="发现日期">
+      <!-- 需要改为datepicker -->
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput formControlName="finish_date" placeholder="处理日期">
+      <!-- 需要改为datepicker -->
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput formControlName="person" placeholder="巡视人员">
+      <!-- 需要改为datepicker -->
+    </mat-form-field>
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-raised-button [disabled]="form.invalid || form.pristine" type="submit" class="btn btn-primary">提交</button>
+    <button mat-raised-button [disabled]="form.invalid || form.pristine" type="button" class="btn btn-primary" title="再记一条" (click)="onDuplicate()">
+      <mat-icon>content_copy</mat-icon>
+    </button>
+  </div>
+</form>
