@@ -1,7 +1,7 @@
 export class Line {
-  id: number;
+  id: string;
   name: string;
-  branch?: number[];
+  branch?: string[];
   production_date: number;
   transformer: number;
   single_disconnector: number;
@@ -16,21 +16,21 @@ export class Line {
 }
 
 export class Branch {
-  id: number;
+  id: string;
   name: string;
 }
 
 export class DefectsCategory {
-  id: number;
+  id: string;
   name: string;
 }
 export class DefectsType {
-  id: number;
+  id: string;
   name: string;
 }
 
 export class Defect {
-  id: number;
+  id: string;
   line: number;
   branch: number;
   position: number;
@@ -40,7 +40,7 @@ export class Defect {
   finish_date: string;
   person: string;
   category: number;
-  type: number;
+  type: string;
 }
 
 export class Facility {
@@ -53,7 +53,7 @@ export class Facility {
   date: string;
 }
 export class FacilityCategory {
-  id: number;
+  id: string;
   name: string;
 }
 

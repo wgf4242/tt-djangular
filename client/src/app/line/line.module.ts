@@ -52,6 +52,7 @@ import { LineTransformerComponent } from './line-transformer/line-transformer.co
     RecordFormDialogComponent,
     ProductionFormDialogComponent,
     SnackBarTipComponent,
+    LineDefectDialogComponent,
   ]
 
 })

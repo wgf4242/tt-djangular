@@ -1,5 +1,6 @@
 <h3>缺陷管理</h3>
-<a [routerLink]="['add']">添加记录</a>
+<!-- <a [routerLink]="['add']">添加记录</a> -->
+<button mat-raised-button color="primary" (click)="openDefectDialog('')">添加记录</button>
 <hr>
 
 <form #form="ngForm" novalidate (ngSubmit)="search(form)">
@@ -67,7 +68,8 @@
       <td>{{object.finish_date}}</td>
       <td>{{object.person}}</td>
       <td>{{object.category}}</td>
-      <td><a [routerLink]="['/line/defect/', object.id]"><i class="material-icons black">edit</i></a></td>
+      <td><a href="javascript:void" (click)="openDefectDialog(object.id)"><i class="material-icons black">edit</i></a></td>
+      <!-- <td><a [routerLink]="['/line/defect/', object.id]"><i class="material-icons black">edit</i></a></td> -->
 
     </tr>
 

@@ -6,3 +6,6 @@ export const toNumber = (...arr) => {
   }, 0);
 };
 
+export const filterLineBranches = (allbranches, filterbranches) => {
+
+}

@@ -121,8 +121,8 @@ export class LineService {
     return this.http.post<ProductionRecord>('api/production-records/', obj).pipe(catchError(this.handleError));
   }
 
-  getDefectType(): Observable<DefectsType> {
-    return this.http.get<DefectsType>('api/defects-type/').pipe(catchError(this.handleError));
+  getDefectType(): Observable<DefectsType[]> {
+    return this.http.get<DefectsType[]>('api/defects-type/').pipe(catchError(this.handleError));
   }
 
   addTransformer(obj: Transformer): Observable<Transformer> {

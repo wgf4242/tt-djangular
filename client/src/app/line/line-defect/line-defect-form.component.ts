@@ -29,7 +29,7 @@ export class LineDefectFormComponent implements OnInit {
 
   finish_date: string;
   categories: DefectsCategory[];
-  types: DefectsType;
+  types: DefectsType[];
 
   submitted_list: Defect[] = [];
   datePickerConfig = { 'format': 'YYYY-MM-DD', 'firstDayOfWeek': 'mo', 'locale': 'zh-cn' };
@@ -122,7 +122,8 @@ export class LineDefectFormComponent implements OnInit {
   }
 
   getCurrentBranches(lineid: string) {
-    const id = Number(lineid);
+    const id = lineid;
+    // const id = Number(lineid);
     return this.lines.pipe(
       switchMap(lines => lines.filter(e => e.id === id)),
       map(lines => lines.branch),
