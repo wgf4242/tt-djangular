@@ -1,4 +1,4 @@
-from apps.attendance.models import MonthInfo, Attend
+from apps.attendance.models import MonthInfo, Attend, Person
 from django.contrib import admin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -48,3 +48,4 @@ class AttendAdmin(admin.ModelAdmin):
 #     form = MyInvoiceAdminForm
 admin.site.register(Attend, AttendAdmin)
 admin.site.register(MonthInfo)
+admin.site.register(Person)

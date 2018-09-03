@@ -13,7 +13,7 @@ class AttendQuerySet(models.query.QuerySet):
         q = None
         if month_id:
             q = Q(month__id=month_id)
-        elif start_date:
+        if start_date and end_date:
             q = Q(date__gte=start_date) & Q(date__lte=end_date) | q
         return self.filter(q)
 
@@ -40,18 +40,26 @@ class MonthManager(models.Manager):
 
 
 class Person(models.Model):
+    """
+    人员管理
+    """
     name = models.CharField(max_length=100, unique=True)
     no = models.IntegerField(validators=[MaxValueValidator(999)], default=0, verbose_name="序号")
-    active = models.BooleanField(default=True)
+    active = models.BooleanField(default=True, verbose_name="隐藏")
 
     class Meta:
         ordering = ['no']
+        verbose_name = '人员管理'
+        verbose_name_plural = verbose_name
 
     def __str__(self):
         return self.name
 
 
 class MonthInfo(models.Model):
+    """
+    月份管理
+    """
     monthname = models.CharField(max_length=100, verbose_name='月份名称')
     comment = models.CharField(max_length=100, blank=True, default="杜文有监督员加100元")
     log_user = models.CharField(max_length=100, blank=True)
@@ -71,6 +79,9 @@ class MonthInfo(models.Model):
 
 
 class Attend(models.Model):
+    """
+    出勤管理
+    """
     date = models.DateField(verbose_name='日期', )
     person = models.ForeignKey(Person, on_delete=models.CASCADE, verbose_name='姓名')
     attend = models.IntegerField(validators=[MaxValueValidator(999)], verbose_name='出勤', null=True, blank=True,

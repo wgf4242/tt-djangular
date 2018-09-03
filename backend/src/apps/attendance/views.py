@@ -43,6 +43,8 @@ class AttendList(generics.ListCreateAPIView):
 class AttendSumList(generics.ListCreateAPIView):
     serializer_class = AttendSumSerializer
     permission_classes = []
+    filter_class = AttendFilter
+
 
     def get_queryset(self):
         return Attend.objects.sum(self.kwargs.get('month_id'))

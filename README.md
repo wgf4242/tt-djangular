@@ -26,6 +26,9 @@ sudo /etc/init.d/nginx restart
 ## BUG
 
 ## Todo Feature
+文档添加，从后台进入人员管理，勾选隐藏来，隐藏人员
+将person组加进去。
+
 线路巡视添加 下拉线路
 添加工作量，下拉查询至上一年的下拉
 Attend 删除  太丑陋了
@@ -39,6 +42,7 @@ Defects 查询后应跳转回第一页
 Done Added: Autocomplete support enter complete first.
 Done Added: Update array in html after updating backend in month detail.
 Done 正常巡视的故障巡视换位置
+Done 后台添加了中文说明
 
 ## Todo backend
 权限验证 'DEFAULT_PERMISSION_CLASSES': [],

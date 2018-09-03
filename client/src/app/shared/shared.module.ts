@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MyIdPipe } from '../pipes/idpipe.pipe';
 import { MyfilterPipe } from '../pipes/myfilter.pipe';
 import { LineFormComponent } from './line-form/line-form.component';
+import { MydatepickerComponent } from './mydatepicker/mydatepicker.component';
 
 
 @NgModule({
@@ -18,11 +19,13 @@ import { LineFormComponent } from './line-form/line-form.component';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatDatepickerModule,
   ],
   declarations: [
     MyfilterPipe,
     MyIdPipe,
     LineFormComponent,
+    MydatepickerComponent,
   ],
   exports: [
     CommonModule,
@@ -51,6 +54,7 @@ import { LineFormComponent } from './line-form/line-form.component';
     MyIdPipe,
     LayoutModule,
     LineFormComponent,
+    MydatepickerComponent,
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'zh-CN'},
