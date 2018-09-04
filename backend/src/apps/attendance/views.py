@@ -43,11 +43,16 @@ class AttendList(generics.ListCreateAPIView):
 class AttendSumList(generics.ListCreateAPIView):
     serializer_class = AttendSumSerializer
     permission_classes = []
-    filter_class = AttendFilter
-
 
     def get_queryset(self):
-        return Attend.objects.sum(self.kwargs.get('month_id'))
+        start_date = self.request.query_params.get('date_range_0')
+        end_date = self.request.query_params.get('date_range_1')
+        if start_date and end_date:
+            objects_sum = Attend.objects.sum(self.kwargs.get('month_id'), start_date,
+                                             end_date)
+        else:
+            objects_sum = Attend.objects.sum(self.kwargs.get('month_id'))
+        return objects_sum
 
 
 class AttendViewSet(viewsets.ModelViewSet):

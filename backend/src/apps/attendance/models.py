@@ -10,7 +10,7 @@ from django.db.models import Q
 
 class AttendQuerySet(models.query.QuerySet):
     def search(self, month_id, start_date=None, end_date=None):
-        q = None
+        q = Q()
         if month_id:
             q = Q(month__id=month_id)
         if start_date and end_date:
@@ -25,8 +25,8 @@ class AttendManager(models.Manager):
     def search(self, month_id, start_date, end_date):
         return self.get_queryset().search(month_id, start_date, end_date)
 
-    def sum(self, month_id):
-        queryset = self.get_queryset().search(month_id).values("person__id", "person__name", "person__no").annotate( \
+    def sum(self, month_id, start_date=None, end_date=None):
+        queryset = self.get_queryset().search(month_id, start_date, end_date).values("person__id", "person__name", "person__no").annotate( \
             Sum('attend'), Sum('workhour'), Sum('climbhour')).values( \
             'person__id', 'person__name', 'attend__sum', 'workhour__sum', 'climbhour__sum').order_by('person__no')
         return queryset

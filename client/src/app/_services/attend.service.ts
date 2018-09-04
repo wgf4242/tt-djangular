@@ -61,6 +61,12 @@ export class AttendService {
     return this.http.get<PageAttendSumObj>(url);
   }
 
+  getAttendsSumByParams(p: {}): Observable<PageAttendSumObj> {
+    const params = new HttpParams({fromObject: p});
+    const url = `api/sum_attends/`;
+    return this.http.get<PageAttendSumObj>(url, {params: params});
+  }
+
   private extractData(res: Response) {
     const body = res.json();
     console.log(body);

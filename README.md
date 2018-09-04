@@ -39,10 +39,7 @@ Defects 查询后应跳转回第一页
 2. 登录前可以浏览，登录后可以编辑 增加删除改查
 1. 巡视加遗留问题，已经核对，详情。 
 1. 操作导引
-Done Added: Autocomplete support enter complete first.
-Done Added: Update array in html after updating backend in month detail.
-Done 正常巡视的故障巡视换位置
-Done 后台添加了中文说明
+
 
 ## Todo backend
 权限验证 'DEFAULT_PERMISSION_CLASSES': [],

@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { Person } from '../../_models/person';
 import { PersonService } from '../../_services/person.service';
 import { NgForm } from '@angular/forms';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   templateUrl: './month-summary.component.html'
@@ -61,7 +62,9 @@ export class MonthSummaryComponent implements OnInit {
 
   search(form: NgForm) {
     console.log(form.value);
-    return null;
+    this.attendService.getAttendsSumByParams(form.value).subscribe(page => {
+       this.page = page;
+       this.month = null;
+    });
   }
-
 }

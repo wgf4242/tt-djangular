@@ -29,8 +29,8 @@ export class MydatepickerComponent implements ControlValueAccessor, OnInit {
   ngOnInit() { }
 
 
-  outValue(v: any) {
+  outValue(v: string) {
     console.log(v);
-    this.propagateChange(v);
+    this.propagateChange(v.replace(/\//g, '-'));
   }
 }

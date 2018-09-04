@@ -39,7 +39,6 @@ router.register(r'facilities', apps.line.views.FacilityViewSet, base_name="facil
 router.register(r'facilities-cat', apps.line.views.FacilityCategoryViewSet, base_name="facility-cat")
 router.register(r'transformers', apps.line.views.TransformerViewSet, base_name="transformer")
 router.register(r'records', apps.line.views.RecordViewSet, base_name="record")
-router.register(r'records', apps.line.views.RecordViewSet, base_name="record")
 router.register(r'line-faults', apps.line.views.LineFaultViewSet, base_name="line-fault")
 
 urlpatterns = [
@@ -49,6 +48,7 @@ urlpatterns = [
     url(r'^robot/',make_view(robot)),
 
     url(r'^api/persons/?$', apps.attendance.views.PersonList.as_view(), name='person-list'),
+    url(r'^api/sum_attends/?$', apps.attendance.views.AttendSumList.as_view(), name='attend-sum'),
     url(r'^api/attends/sum/(?P<month_id>[0-9]+)/?$', apps.attendance.views.AttendSumList.as_view(), name='attend-sum'),
     url(r'^api/branches/?$', apps.line.views.BranchList.as_view()),
 

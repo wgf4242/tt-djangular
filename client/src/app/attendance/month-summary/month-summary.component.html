@@ -50,19 +50,12 @@
 
 <form #form="ngForm" novalidate (ngSubmit)="search(form)">
     <h3>工时查询范围：</h3>
-    <!-- <mat-form-field name="date_range_0">
-    <input matInput placeholder="从">
-  </mat-form-field>
-  <mat-form-field name="date_range_1">
-    <input matInput placeholder="到">
-  </mat-form-field> -->
-  从<app-mydatepicker ngModel name="from" placehoder="从"></app-mydatepicker>到
-  <app-mydatepicker ngModel name="to" placehoder="到"></app-mydatepicker>
+  从<app-mydatepicker ngModel name="date_range_0" placehoder="从"></app-mydatepicker>到
+  <app-mydatepicker ngModel name="date_range_1" placehoder="到"></app-mydatepicker>
 
   <button type="submit" class="btn btn-primary">
-    <!--<mat-icon svgIcon="search"></mat-icon>-->
-    <!--<mat-icon color="white">search</mat-icon>-->
     <i class="material-icons white">search</i>
   </button>
-  {{form.value | json}}
+
+  <!-- {{form.value | json}} -->
 </form>
