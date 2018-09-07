@@ -87,6 +87,7 @@ export class LineDefectComponent implements OnInit {
       .subscribe(res => {
         console.log(res);
         if (id) {
+          // Edit Defect
           this.lineService.updateDefect(res).subscribe(
             v => {
               console.log(v);
@@ -95,10 +96,12 @@ export class LineDefectComponent implements OnInit {
             err => this.openSnackBar('添加失败')
           );
         } else {
+          // Add Defect
           this.lineService.addDefect(res).subscribe(
             v => {
               console.log(v);
               this.openSnackBar();
+              this.objects.results.unshift(v);
             },
             err => this.openSnackBar('添加失败')
           );

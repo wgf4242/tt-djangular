@@ -1,7 +1,8 @@
 # 独立使用 django 的 model
 import sys
 import os
-database_init = 'create database if not exists myform'
+database_init = 'create database if not exists myform default charset utf8 COLLATE utf8_general_ci'
+# database_init = 'create database if not exists myform'
 
 pwd = os.path.dirname(os.path.relpath(__file__))
 sys.path.append(pwd + "../")

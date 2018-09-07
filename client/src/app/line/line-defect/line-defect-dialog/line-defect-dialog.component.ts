@@ -5,7 +5,7 @@ import {
   MAT_DIALOG_DATA,
   MatDatepicker
 } from '@angular/material';
-import { LineService } from 'app/_services/line.service';
+import { LineService, CatSuggest } from 'app/_services/line.service';
 import { Line, Branch, DefectsCategory, DefectsType, Defect } from 'app/_models/line';
 import { switchMap, map } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -17,6 +17,8 @@ import { filterLineBranches } from 'app/utils/string.utils';
   styles: []
 })
 export class LineDefectDialogComponent implements OnInit {
+  categorie_suggestions: CatSuggest[];
+  cat_suggest: String[];
   defect: Defect;
   form: FormGroup;
   lines: Line[];
@@ -38,7 +40,7 @@ export class LineDefectDialogComponent implements OnInit {
       line: ['', Validators.required],
       branch: ['', Validators.required],
       category: ['', Validators.required],
-      position: ['', Validators.compose([Validators.required, Validators.max(400)])],
+      position: ['', Validators.compose([Validators.required, Validators.max(300)])],
       description: ['', Validators.required],
       comment: [],
       date: ['', Validators.required],
@@ -49,6 +51,7 @@ export class LineDefectDialogComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.data);
+    this.lineService.getCatSuggest().subscribe(v => this.categorie_suggestions = v);
     this.lineService.getLines().pipe(
       switchMap(lines => {
         this.lines = lines;
@@ -99,4 +102,19 @@ export class LineDefectDialogComponent implements OnInit {
     const branches = this.lines.filter(l => l.id === line)[0].branch;
     this.branches = this.allbranches.filter(v => branches.indexOf(v.id) > -1)
   }
+
+  onChangeCat($event) {
+    const select_id = $event.value;
+    const name = this.categories.find(cat => String(cat.id) === String(select_id));
+    this.cat_suggest = this.categorie_suggestions.find(c => c.name === name.name).select;
+  }
+
+  addDescription(str: String) {
+    if (this.form.controls['description']) {
+      this.form.controls['description'].setValue(this.form.controls['description'].value + str + ',');
+    } else {
+      this.form.controls['description'].setValue(str + ',');
+    }
+  }
+
 }

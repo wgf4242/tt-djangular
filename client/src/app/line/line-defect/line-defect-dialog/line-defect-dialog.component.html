@@ -22,13 +22,13 @@
 
     <mat-form-field>
       <input matInput formControlName="position" placeholder="杆号" type="number">
-      <mat-error *ngIf="form.controls['position'].value >= 400">
-        杆号需要小于400
+      <mat-error *ngIf="form.controls['position'].value >= 300">
+        杆号需要小于300
       </mat-error>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-select placeholder="缺陷分类" formControlName="category">
+      <mat-select placeholder="缺陷分类" formControlName="category" (selectionChange)="onChangeCat($event)">
         <mat-option *ngFor="let category of categories" [value]="category.id"> {{category.name}} </mat-option>
       </mat-select>
     </mat-form-field>
@@ -36,6 +36,11 @@
     <mat-form-field>
       <input matInput formControlName="description" placeholder="缺陷内容">
     </mat-form-field>
+
+    <div style="margin-right: 8px;">
+      <button mat-flat-button color="primary" *ngFor="let item of cat_suggest" (click)="addDescription(item)">{{item}}</button>
+    </div>
+
     <!-- <div class="form-group">
       <button class="btn btn-primary" *ngFor="let item of cat_suggest" type="button" (click)="addDescription($event)">{{item}}</button>
     </div> -->
@@ -44,15 +49,15 @@
       <input matInput formControlName="comment" placeholder="备注">
     </mat-form-field>
 
-    <mat-form-field>
+    <app-mydatepicker formControlName="date" [placeholder]="'发现日期'"></app-mydatepicker>
+    <!-- <mat-form-field>
       <input matInput formControlName="date" placeholder="发现日期">
-      <!-- 需要改为datepicker -->
-    </mat-form-field>
+    </mat-form-field> -->
 
-    <mat-form-field>
+    <app-mydatepicker formControlName="finish_date" [placeholder]="'处理日期'"></app-mydatepicker>
+    <!-- <mat-form-field>
       <input matInput formControlName="finish_date" placeholder="处理日期">
-      <!-- 需要改为datepicker -->
-    </mat-form-field>
+    </mat-form-field> -->
 
     <mat-form-field>
       <input matInput formControlName="person" placeholder="巡视人员">

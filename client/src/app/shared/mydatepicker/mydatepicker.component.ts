@@ -1,4 +1,4 @@
-import { Component, OnInit, forwardRef } from '@angular/core';
+import { Component, OnInit, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -13,6 +13,7 @@ import { ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular
   ],
 })
 export class MydatepickerComponent implements ControlValueAccessor, OnInit {
+  @Input() placeholder = '选择日期';
   private propagateChange = (_: any) => { };
 
   writeValue(obj: any): void {
