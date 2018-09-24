@@ -40,6 +40,21 @@ class AttendAdmin(admin.ModelAdmin):
 
     update_status.short_description = "Update status"
 
+    def get_actions(self, request):
+        actions = super(AttendAdmin, self).get_actions(request)
+        if 'delete_selected' in actions:
+            del actions['delete_selected']
+        return actions
+
+
+class DeleteNotAllowedModelAdmin(admin.ModelAdmin):
+    # Other stuff here
+    def get_actions(self, request):
+        actions = super(DeleteNotAllowedModelAdmin, self).get_actions(request)
+        if 'delete_selected' in actions:
+            del actions['delete_selected']
+        return actions
+
 
 # class ArticleAdmin(admin.ModelAdmin):
 #     # list_display = ['date', 'person', 'month']
@@ -47,5 +62,5 @@ class AttendAdmin(admin.ModelAdmin):
 #     actions = [make_published, export_as_json, export_selected_objects]
 #     form = MyInvoiceAdminForm
 admin.site.register(Attend, AttendAdmin)
-admin.site.register(MonthInfo)
-admin.site.register(Person)
+admin.site.register(MonthInfo, DeleteNotAllowedModelAdmin)
+admin.site.register(Person, DeleteNotAllowedModelAdmin)
