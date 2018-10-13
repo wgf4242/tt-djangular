@@ -24,6 +24,7 @@ sudo /etc/init.d/nginx restart
 # TODO
 
 ## BUG
+投产验收，日期未格式化，改成我的自定义控件
 
 ## Todo Feature
 文档添加，从后台进入人员管理，勾选隐藏来，隐藏人员
