@@ -22,6 +22,7 @@ python3 manage.py collectstatic
 sudo /etc/init.d/nginx restart
 
 # TODO
+添加检修没有按钮
 
 ## BUG
 投产验收，日期未格式化，改成我的自定义控件
