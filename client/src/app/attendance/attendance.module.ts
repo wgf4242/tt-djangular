@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { AttendSingleFormComponent } from 'app/attendance/add-normal/attend-form/attend-form-single';
 import { AttandenceHomeComponent } from 'app/attendance/attendance-home.component';
 import { AttendanceRoutingModule } from 'app/attendance/attendance-routing.module';

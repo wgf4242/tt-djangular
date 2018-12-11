@@ -70,7 +70,7 @@ export class LineDefectDialogComponent implements OnInit {
         if (this.data.id) {
           return this.lineService.getDefect(this.data.id)
         }
-        return of(0); // 创建对象
+        return of(null); // 创建对象
       }),
       map((res: any) => {
         if (res !== 0) {
