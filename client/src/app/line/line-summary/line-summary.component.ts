@@ -14,6 +14,7 @@ import { LineService } from '../../_services/line.service';
 import { FaultFormDialogComponent, FaultType } from './fault-form-dialog/fault-form-dialog.component';
 import { ProductionFormDialogComponent } from './production-form-dialog/production-form-dialog.component';
 import { RecordFormDialogComponent } from './record-form-dialog/record-form-dialog.component';
+import * as dateFns from 'date-fns';
 
 @Component({
   selector: 'app-line-summary',
@@ -109,6 +110,19 @@ export class LineSummaryComponent implements OnInit {
 
     this.lineService.getRecords(params).pipe(
       tap(v => this.temp_work = v.map(i => `${i.name}${i.sum}${i.unit}`).join(',')),
+      // tap(v => this.suggestions = v.map(i => { return { label: i.name, unit: i.unit } })),
+      distinctUntilChanged()
+    ).subscribe();
+
+    // 更新 this.suggestions, 将时间提前为1年
+    const suggestions_date_from = dateFns.format(dateFns.subYears(new Date(), 1), 'YYYY-MM-DD');
+    const suggestions_date_to = dateFns.format(new Date(), 'YYYY-MM-DD');
+    const suggestions_date = {'start_date': suggestions_date_from, 'end_date': suggestions_date_to};
+    const params_suggestions_date = new HttpParams({
+      fromObject: suggestions_date
+    });
+
+    this.lineService.getRecords(params_suggestions_date).pipe(
       tap(v => this.suggestions = v.map(i => { return { label: i.name, unit: i.unit } })),
       distinctUntilChanged()
     ).subscribe();
