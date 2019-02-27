@@ -23,6 +23,8 @@ sudo /etc/init.d/nginx restart
 
 # TODO
 添加检修没有按钮
+月报统计 巡视添加的日期都不对。
+缺陷提交边上没有复制按钮。
 
 ## BUG
 12月最后一天，没有月报统计里的searchbar没有显示 12/31
