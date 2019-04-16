@@ -1,0 +1,6 @@
+*\backend\Include
+*\backend\Lib
+*\backend\Scripts
+*\backend\tcl
+*\backend\pip-selfcheck.json
+*\client\node_modules
