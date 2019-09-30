@@ -1,5 +1,6 @@
 # See http:/help.github.com/ignore-files/ for more about ignoring files.
 
+**/local_settings.py
 backend/src/static/ang
 client/..\\backend\\src\\static\\ang/
 
@@ -55,7 +56,6 @@ CLIENT/Thumbs.db
 **/.vscode/
 **/__pycache__/
 **/migrations/
-**/db.sqlite3
 **/_gsdata_/
 *.sublime-workspace
 **/ang/

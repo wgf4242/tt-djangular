@@ -84,16 +84,25 @@ WSGI_APPLICATION = 'testform.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'myform',
-        'USER': 'root',
-        'PASSWORD': 'WGF1234',
-        'HOST': '127.0.0.1',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'myform',
+#         'USER': 'root',
+#         # 'PASSWORD': 'WGF1234',
+#         'PASSWORD': 'WGF!4321', # 密码
+#         'HOST': '127.0.0.1',
+#         # test 管理员 admin/hello123
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -167,3 +176,8 @@ REST_FRAMEWORK = {
 }
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticsites/")
+
+try:
+    from local_settings import *
+except Exception as e:
+    pass
