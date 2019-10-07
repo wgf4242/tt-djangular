@@ -4,6 +4,11 @@
 backend/src/static/ang
 client/..\\backend\\src\\static\\ang/
 
+# backend
+backend/.Python
+backend/bin/
+**/.DS_Store
+
 # compiled output
 client/dist
 client/tmp
