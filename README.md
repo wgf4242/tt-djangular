@@ -1,3 +1,7 @@
+# Environmnet
+Python 3.5.2
+
+
 # path on Server
 cd /home/root/sites/tt-djangular
 python3 manage.py makemigrations
